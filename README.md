@@ -1,4 +1,4 @@
-# Avente Consulting Virtual Carnival
+# Virtual Carnival
 
 This project combines Phaser 3 with [TypeScript](https://www.typescriptlang.org/) and uses [Rollup](https://rollupjs.org) for bundling.
 
