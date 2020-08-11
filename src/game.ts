@@ -1,4 +1,5 @@
 import "phaser";
+import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 
 import Player from "./Player";
 import RoomScene from "./RoomScene";
@@ -83,6 +84,15 @@ const config = {
   height: 600,
   physics: { default: "arcade", arcade: { gravity: { y: 0 } } },
   scene: [MainScene, RoomScene],
+  plugins: {
+    scene: [
+      {
+        key: "rexUI",
+        plugin: UIPlugin,
+        mapping: "rexUI",
+      },
+    ],
+  },
 };
 
 const game = new Phaser.Game(config);

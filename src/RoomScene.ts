@@ -2,11 +2,13 @@ import "phaser";
 
 import Player from "./Player";
 import NPC from "./NPC";
+import Dialog from "./Dialog";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
   spawnPoint: { x: number; y: number };
   npc: NPC;
+  dialog: Dialog;
 
   constructor() {
     super("room");
@@ -67,7 +69,15 @@ export default class RoomScene extends Phaser.Scene {
       "objects",
       (obj) => obj.name === "npc"
     );
-    this.npc = new NPC(this, npcSpawn.x, npcSpawn.y, this.player.sprite);
+
+    const dialog = new Dialog(
+      this,
+      map.widthInPixels / 2,
+      map.heightInPixels / 2
+    );
+    this.npc = new NPC(this, npcSpawn.x, npcSpawn.y, this.player.sprite, () =>
+      dialog.create()
+    );
   }
 
   update() {

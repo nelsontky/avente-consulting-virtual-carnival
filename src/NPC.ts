@@ -6,15 +6,20 @@ export default class NPC {
   scene: Phaser.Scene;
   touchPlayerObj: { isTouching: boolean; prevX?: number; prevY?: number };
   spaceKey: Phaser.Input.Keyboard.Key;
+  interactionCallback: Function;
+  isInteractionOngoing: boolean;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
-    player: Phaser.Physics.Arcade.Sprite
+    player: Phaser.Physics.Arcade.Sprite,
+    interactionCallback: Function
   ) {
     this.scene = scene;
     this.player = player;
+    this.interactionCallback = interactionCallback;
+    this.isInteractionOngoing = false;
 
     this.sprite = this.scene.physics.add
       .staticSprite(x, y, "chloe", 1)
@@ -53,7 +58,6 @@ export default class NPC {
     });
 
     this.touchPlayerObj = { isTouching: false };
-
     this.spaceKey = this.scene.input.keyboard.addKey("SPACE");
   }
 
@@ -82,8 +86,17 @@ export default class NPC {
   }
 
   update() {
-    if (this.touchPlayerObj.isTouching && this.spaceKey.isDown) {
+    // Interaction
+    if (
+      this.touchPlayerObj.isTouching &&
+      this.spaceKey.isDown &&
+      !this.isInteractionOngoing
+    ) {
+      this.isInteractionOngoing = true;
       this.sprite.anims.play(this.checkDirectionToFace());
+      this.interactionCallback().then(
+        () => (this.isInteractionOngoing = false)
+      );
     }
 
     // Check if still colliding with player
