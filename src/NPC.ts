@@ -1,11 +1,11 @@
 import "phaser";
-import Player from "./Player";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
   player: Phaser.Physics.Arcade.Sprite;
   scene: Phaser.Scene;
   touchPlayerObj: { isTouching: boolean; prevX?: number; prevY?: number };
+  spaceKey: Phaser.Input.Keyboard.Key;
 
   constructor(
     scene: Phaser.Scene,
@@ -53,6 +53,8 @@ export default class NPC {
     });
 
     this.touchPlayerObj = { isTouching: false };
+
+    this.spaceKey = this.scene.input.keyboard.addKey("SPACE");
   }
 
   checkDirectionToFace():
@@ -80,7 +82,7 @@ export default class NPC {
   }
 
   update() {
-    if (this.touchPlayerObj.isTouching) {
+    if (this.touchPlayerObj.isTouching && this.spaceKey.isDown) {
       this.sprite.anims.play(this.checkDirectionToFace());
     }
 
