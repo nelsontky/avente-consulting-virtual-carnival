@@ -12,9 +12,10 @@ export default class Dialog {
     ).choiceText;
 
     this.scene = scene;
+
     this.config = {
-      x,
-      y,
+      x: Math.floor(x),
+      y: Math.floor(y),
 
       background: this.scene.rexUI.add.roundRectangle(
         0,
@@ -27,6 +28,8 @@ export default class Dialog {
 
       content: this.scene.add.text(0, 0, dialogData.content, {
         fontSize: "12px",
+        fontFamily: "Arial",
+        wordWrap: { width: 300 },
       }),
 
       choices: dialogData.choices.map((choice) =>
@@ -35,14 +38,14 @@ export default class Dialog {
       actions: [this.createLabel("Close")],
 
       space: {
-        content: 25,
-        choices: 25,
-        choice: 15,
+        content: 26,
+        choices: 26,
+        choice: 16,
 
-        left: 25,
-        right: 25,
-        top: 25,
-        bottom: 25,
+        left: 26,
+        right: 26,
+        top: 26,
+        bottom: 26,
       },
 
       expand: {
@@ -98,6 +101,7 @@ export default class Dialog {
 
       text: this.scene.add.text(0, 0, text, {
         fontSize: "12px",
+        fontFamily: "Arial",
       }),
 
       space: {

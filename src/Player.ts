@@ -82,9 +82,8 @@ export default class Player {
     const speed = 175;
 
     if (this.isFrozen) {
-      this.sprite.setVelocityY(0);
-      this.sprite.setVelocityX(0);
-      
+      this.sprite.setVelocity(0);
+      this.sprite.anims.play(this.stationaryDirection);
       // Vertical movement
     } else if (this.cursors.left.isDown && this.cursors.up.isDown) {
       this.sprite.anims.play("left", true);

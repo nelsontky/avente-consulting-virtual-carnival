@@ -82,6 +82,9 @@ const config = {
   type: Phaser.AUTO,
   width: 600,
   height: 600,
+  render: {
+    pixelArt: true,
+  },
   physics: { default: "arcade", arcade: { gravity: { y: 0 } } },
   scene: [MainScene, RoomScene],
   plugins: {
