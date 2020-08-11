@@ -124,5 +124,7 @@ export default class Player {
       this.sprite.setVelocity(0);
       this.sprite.anims.play(this.stationaryDirection);
     }
+
+    this.sprite.body.velocity.normalize().scale(speed);
   }
 }

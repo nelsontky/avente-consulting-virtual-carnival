@@ -72,5 +72,6 @@ export default class RoomScene extends Phaser.Scene {
 
   update() {
     this.player.update();
+    this.npc.update();
   }
 }
