@@ -1,8 +1,9 @@
 import "phaser";
+import Player from "./Player";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
-  player: Phaser.Physics.Arcade.Sprite;
+  player: Player;
   scene: Phaser.Scene;
   touchPlayerObj: { isTouching: boolean; prevX?: number; prevY?: number };
   spaceKey: Phaser.Input.Keyboard.Key;
@@ -13,7 +14,7 @@ export default class NPC {
     scene: Phaser.Scene,
     x: number,
     y: number,
-    player: Phaser.Physics.Arcade.Sprite,
+    player: Player,
     interactionCallback: Function
   ) {
     this.scene = scene;
@@ -27,12 +28,12 @@ export default class NPC {
 
     this.scene.physics.add.collider(
       this.sprite,
-      this.player,
+      this.player.sprite,
       () =>
         (this.touchPlayerObj = {
           isTouching: true,
-          prevX: this.player.x,
-          prevY: this.player.y,
+          prevX: this.player.sprite.x,
+          prevY: this.player.sprite.y,
         })
     );
 
@@ -66,8 +67,8 @@ export default class NPC {
     | "chloe_face_right"
     | "chloe_face_up"
     | "chloe_face_down" {
-    const playerX = this.player.x;
-    const playerY = this.player.y;
+    const playerX = this.player.sprite.x;
+    const playerY = this.player.sprite.y;
     const { x, y } = this.sprite;
 
     const angleFromNpc = Math.atan2(y - playerY, x - playerX);
@@ -93,16 +94,18 @@ export default class NPC {
       !this.isInteractionOngoing
     ) {
       this.isInteractionOngoing = true;
+      this.player.isFrozen = true;
       this.sprite.anims.play(this.checkDirectionToFace());
-      this.interactionCallback().then(
-        () => (this.isInteractionOngoing = false)
-      );
+      this.interactionCallback().then(() => {
+        this.isInteractionOngoing = false;
+        this.player.isFrozen = false;
+      });
     }
 
     // Check if still colliding with player
     if (
-      this.touchPlayerObj.prevX !== this.player.x ||
-      this.touchPlayerObj.prevY !== this.player.y
+      this.touchPlayerObj.prevX !== this.player.sprite.x ||
+      this.touchPlayerObj.prevY !== this.player.sprite.y
     ) {
       this.touchPlayerObj = { isTouching: false };
     }

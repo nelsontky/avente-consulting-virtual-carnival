@@ -75,7 +75,7 @@ export default class RoomScene extends Phaser.Scene {
       map.widthInPixels / 2,
       map.heightInPixels / 2
     );
-    this.npc = new NPC(this, npcSpawn.x, npcSpawn.y, this.player.sprite, () =>
+    this.npc = new NPC(this, npcSpawn.x, npcSpawn.y, this.player, () =>
       dialog.create()
     );
   }

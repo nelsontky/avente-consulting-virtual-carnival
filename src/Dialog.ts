@@ -54,12 +54,13 @@ export default class Dialog {
           this.createLabel(this.scene, "4"),
           this.createLabel(this.scene, "5"),
           this.createLabel(this.scene, "6"),
-          this.createLabel(this.scene, "Close"),
         ],
+        actions: [this.createLabel(this.scene, "Close")],
 
         space: {
           title: 25,
           content: 25,
+          choices: 25,
           choice: 15,
 
           left: 25,
@@ -85,10 +86,10 @@ export default class Dialog {
           },
           this.scene
         )
-        .on("button.over", function (button, groupName, index) {
+        .on("button.over", (button, groupName, index) => {
           button.getElement("background").setStrokeStyle(1, 0xffffff);
         })
-        .on("button.out", function (button, groupName, index) {
+        .on("button.out", (button, groupName, index) => {
           button.getElement("background").setStrokeStyle();
         });
     });

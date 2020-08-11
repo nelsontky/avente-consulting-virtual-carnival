@@ -5,12 +5,14 @@ export default class Player {
   scene: Phaser.Scene;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   stationaryDirection: "face_up" | "face_left" | "face_down" | "face_right";
+  isFrozen: boolean;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.scene = scene;
     this.sprite = this.scene.physics.add
       .sprite(x, y, "player", 1)
       .setSize(30, 40);
+    this.isFrozen = false;
 
     this.scene.anims.create({
       key: "left",
@@ -79,8 +81,12 @@ export default class Player {
   update() {
     const speed = 175;
 
-    // Vertical movement
-    if (this.cursors.left.isDown && this.cursors.up.isDown) {
+    if (this.isFrozen) {
+      this.sprite.setVelocityY(0);
+      this.sprite.setVelocityX(0);
+      
+      // Vertical movement
+    } else if (this.cursors.left.isDown && this.cursors.up.isDown) {
       this.sprite.anims.play("left", true);
       this.stationaryDirection = "face_left";
       this.sprite.setVelocityY(-speed);
