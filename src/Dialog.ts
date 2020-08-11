@@ -1,95 +1,81 @@
+import { IDialog } from "./NPCDataInterface";
+
 export default class Dialog {
   scene: any;
   dialog: any;
-  x: number;
-  y: number;
+  config: any;
+  correctAnswer: string;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: Phaser.Scene, x: number, y: number, dialogData: IDialog) {
+    this.correctAnswer = dialogData.choices.find(
+      (choice) => choice.isAnswer
+    ).choiceText;
+
     this.scene = scene;
-    this.x = x;
-    this.y = y;
+    this.config = {
+      x,
+      y,
+
+      background: this.scene.rexUI.add.roundRectangle(
+        0,
+        0,
+        100,
+        100,
+        20,
+        0x3e2723
+      ),
+
+      content: this.scene.add.text(0, 0, dialogData.content, {
+        fontSize: "12px",
+      }),
+
+      choices: dialogData.choices.map((choice) =>
+        this.createLabel(choice.choiceText)
+      ),
+      actions: [this.createLabel("Close")],
+
+      space: {
+        content: 25,
+        choices: 25,
+        choice: 15,
+
+        left: 25,
+        right: 25,
+        top: 25,
+        bottom: 25,
+      },
+
+      expand: {
+        content: false, // Content is a pure text object
+      },
+    };
   }
 
-  create(): Promise<boolean> {
-    this.dialog = this.scene.rexUI.add
-      .dialog({
-        x: this.x,
-        y: this.y,
-
-        background: this.scene.rexUI.add.roundRectangle(
-          0,
-          0,
-          100,
-          100,
-          20,
-          0x3e2723
-        ),
-
-        title: this.scene.rexUI.add.label({
-          background: this.scene.rexUI.add.roundRectangle(
-            0,
-            0,
-            100,
-            40,
-            20,
-            0x1b0000
-          ),
-          text: this.scene.add.text(0, 0, "Question 10", {
-            fontSize: "24px",
-          }),
-          space: {
-            left: 15,
-            right: 15,
-            top: 10,
-            bottom: 10,
-          },
-        }),
-
-        content: this.scene.add.text(0, 0, "1 + 1 + 1 + 1 + 1 = ", {
-          fontSize: "24px",
-        }),
-
-        choices: [
-          this.createLabel(this.scene, "3"),
-          this.createLabel(this.scene, "4"),
-          this.createLabel(this.scene, "5"),
-          this.createLabel(this.scene, "6"),
-        ],
-        actions: [this.createLabel(this.scene, "Close")],
-
-        space: {
-          title: 25,
-          content: 25,
-          choices: 25,
-          choice: 15,
-
-          left: 25,
-          right: 25,
-          top: 25,
-          bottom: 25,
-        },
-
-        expand: {
-          content: false, // Content is a pure text object
-        },
-      })
-      .layout();
+  // Resolves to true if answer was correct, false otherwise
+  create(): Promise<"correct" | "wrong" | "closed"> {
+    this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
 
     return new Promise((resolve, reject) => {
       this.dialog
         .on(
           "button.click",
-          (button, groupName, index) => {
-            console.log(button.text);
+          (button: { text: string }, groupName: string) => {
             this.destroy();
-            resolve(true);
+            if (button.text === this.correctAnswer) {
+              // Is correct answer
+              resolve("correct");
+            } else if (groupName === "actions") {
+              resolve("closed");
+            } else {
+              resolve("wrong");
+            }
           },
           this.scene
         )
-        .on("button.over", (button, groupName, index) => {
+        .on("button.over", (button: any) => {
           button.getElement("background").setStrokeStyle(1, 0xffffff);
         })
-        .on("button.out", (button, groupName, index) => {
+        .on("button.out", (button: any) => {
           button.getElement("background").setStrokeStyle();
         });
     });
@@ -99,12 +85,19 @@ export default class Dialog {
     this.dialog.scaleDownDestroy();
   }
 
-  createLabel(scene: any, text: string, backgroundColor?: string) {
-    return scene.rexUI.add.label({
-      background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0x6a4f4b),
+  createLabel(text: string) {
+    return this.scene.rexUI.add.label({
+      background: this.scene.rexUI.add.roundRectangle(
+        0,
+        0,
+        100,
+        40,
+        20,
+        0x6a4f4b
+      ),
 
-      text: scene.add.text(0, 0, text, {
-        fontSize: "24px",
+      text: this.scene.add.text(0, 0, text, {
+        fontSize: "12px",
       }),
 
       space: {

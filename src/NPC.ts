@@ -1,5 +1,8 @@
 import "phaser";
+
 import Player from "./Player";
+import NPCDataInterface from "./NPCDataInterface";
+import Dialog from "./Dialog";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
@@ -7,23 +10,29 @@ export default class NPC {
   scene: Phaser.Scene;
   touchPlayerObj: { isTouching: boolean; prevX?: number; prevY?: number };
   spaceKey: Phaser.Input.Keyboard.Key;
-  interactionCallback: Function;
   isInteractionOngoing: boolean;
+  data: NPCDataInterface;
+  mapWidth: number;
+  mapHeight: number;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     player: Player,
-    interactionCallback: Function
+    data: NPCDataInterface,
+    mapWidth: number,
+    mapHeight: number
   ) {
     this.scene = scene;
     this.player = player;
-    this.interactionCallback = interactionCallback;
     this.isInteractionOngoing = false;
+    this.data = data;
+    this.mapWidth = mapWidth;
+    this.mapHeight = mapHeight;
 
     this.sprite = this.scene.physics.add
-      .staticSprite(x, y, "chloe", 1)
+      .staticSprite(x, y, this.data.name, 1)
       .setSize(30, 40);
 
     this.scene.physics.add.collider(
@@ -38,23 +47,23 @@ export default class NPC {
     );
 
     this.scene.anims.create({
-      key: "chloe_face_up",
-      frames: [{ key: "chloe", frame: 0 }],
+      key: `${this.data.name}_face_up`,
+      frames: [{ key: this.data.name, frame: 0 }],
       frameRate: 20,
     });
     this.scene.anims.create({
-      key: "chloe_face_down",
-      frames: [{ key: "chloe", frame: 1 }],
+      key: `${this.data.name}_face_down`,
+      frames: [{ key: this.data.name, frame: 1 }],
       frameRate: 20,
     });
     this.scene.anims.create({
-      key: "chloe_face_left",
-      frames: [{ key: "chloe", frame: 2 }],
+      key: `${this.data.name}_face_left`,
+      frames: [{ key: this.data.name, frame: 2 }],
       frameRate: 20,
     });
     this.scene.anims.create({
-      key: "chloe_face_right",
-      frames: [{ key: "chloe", frame: 3 }],
+      key: `${this.data.name}_face_right`,
+      frames: [{ key: this.data.name, frame: 3 }],
       frameRate: 20,
     });
 
@@ -62,11 +71,7 @@ export default class NPC {
     this.spaceKey = this.scene.input.keyboard.addKey("SPACE");
   }
 
-  checkDirectionToFace():
-    | "chloe_face_left"
-    | "chloe_face_right"
-    | "chloe_face_up"
-    | "chloe_face_down" {
+  checkDirectionToFace(): string {
     const playerX = this.player.sprite.x;
     const playerY = this.player.sprite.y;
     const { x, y } = this.sprite;
@@ -76,13 +81,13 @@ export default class NPC {
     const actualDegrees = degrees < 0 ? degrees + 360 : degrees;
 
     if (actualDegrees >= 0 && actualDegrees < 90) {
-      return "chloe_face_left";
+      return `${this.data.name}_face_left`;
     } else if (actualDegrees >= 90 && actualDegrees < 180) {
-      return "chloe_face_up";
+      return `${this.data.name}_face_up`;
     } else if (actualDegrees >= 180 && actualDegrees < 270) {
-      return "chloe_face_right";
+      return `${this.data.name}_face_right`;
     } else {
-      return "chloe_face_down";
+      return `${this.data.name}_face_down`;
     }
   }
 
@@ -96,7 +101,7 @@ export default class NPC {
       this.isInteractionOngoing = true;
       this.player.isFrozen = true;
       this.sprite.anims.play(this.checkDirectionToFace());
-      this.interactionCallback().then(() => {
+      this.runDialog().then(() => {
         this.isInteractionOngoing = false;
         this.player.isFrozen = false;
       });
@@ -108,6 +113,31 @@ export default class NPC {
       this.touchPlayerObj.prevY !== this.player.sprite.y
     ) {
       this.touchPlayerObj = { isTouching: false };
+    }
+  }
+
+  async runDialog() {
+    let currDialog = this.data.dialogs;
+
+    while (currDialog !== undefined) {
+      const dialog = new Dialog(
+        this.scene,
+        this.mapWidth / 2,
+        this.mapHeight / 2,
+        currDialog
+      );
+      const outcome = await dialog.create();
+
+      switch (outcome) {
+        case "correct":
+          currDialog = currDialog.dialogAfterCorrect;
+          break;
+        case "wrong":
+          currDialog = currDialog.dialogAfterWrong;
+          break;
+        default:
+          return;
+      }
     }
   }
 }
