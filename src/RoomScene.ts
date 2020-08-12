@@ -66,24 +66,24 @@ export default class RoomScene extends Phaser.Scene {
       this
     );
 
-    const npcSpawn: any = map.findObject(
-      "objects",
-      (obj) => obj.name === "npc"
-    );
+    // const npcSpawn: any = map.findObject(
+    //   "objects",
+    //   (obj) => obj.name === "npc"
+    // );
 
-    this.npc = new NPC(
-      this,
-      npcSpawn.x,
-      npcSpawn.y,
-      this.player,
-      MIN_HEIN,
-      map.widthInPixels,
-      map.heightInPixels
-    );
+    // this.npc = new NPC(
+    //   this,
+    //   npcSpawn.x,
+    //   npcSpawn.y,
+    //   this.player,
+    //   MIN_HEIN,
+    //   map.widthInPixels,
+    //   map.heightInPixels
+    // );
   }
 
   update() {
     this.player.update();
-    this.npc.update();
+    // this.npc.update();
   }
 }

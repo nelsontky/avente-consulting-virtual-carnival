@@ -3,6 +3,7 @@ import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 
 import Player from "./Player";
 import RoomScene from "./RoomScene";
+import loadFiles from "./loadFiles";
 
 export default class MainScene extends Phaser.Scene {
   controls: Phaser.Cameras.Controls.FixedKeyControl;
@@ -18,78 +19,115 @@ export default class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("tiles", "assets/tiles/tuxmon-sample-32px.png");
-    this.load.tilemapTiledJSON("map", "assets/tiles/world.json");
-    this.load.spritesheet("player", "assets/atlas.png", {
-      frameWidth: 32,
-      frameHeight: 43,
-    });
-
-    // NPCs
-    this.load.spritesheet("Adrian", "assets/NPCs/Adrian.png", {
-      frameWidth: 33,
-      frameHeight: 61,
-    });
-    this.load.spritesheet("Ben", "assets/NPCs/Ben.png", {
-      frameWidth: 30,
-      frameHeight: 55,
-    });
-    this.load.spritesheet("Chloe", "assets/NPCs/Chloe.png", {
-      frameWidth: 28,
-      frameHeight: 56,
-    });
-    this.load.spritesheet("Donald", "assets/NPCs/Donald.png", {
-      frameWidth: 30,
-      frameHeight: 61,
-    });
-    this.load.spritesheet("Greg", "assets/NPCs/Greg.png", {
-      frameWidth: 30,
-      frameHeight: 56,
-    });
-    this.load.spritesheet("Kingston", "assets/NPCs/Kingston.png", {
-      frameWidth: 30,
-      frameHeight: 53,
-    });
-    this.load.spritesheet("Min Hein", "assets/NPCs/Min Hein.png", {
-      frameWidth: 30,
-      frameHeight: 62,
-    });
-    this.load.spritesheet("Samantha", "assets/NPCs/Samantha.png", {
-      frameWidth: 28,
-      frameHeight: 52,
-    });
-    this.load.spritesheet("Svarnim", "assets/NPCs/Svarnim.png", {
-      frameWidth: 28,
-      frameHeight: 52,
-    });
-    this.load.spritesheet("Wai Siang", "assets/NPCs/Wai Siang.png", {
-      frameWidth: 30,
-      frameHeight: 53,
-    });
+    loadFiles(this);
   }
 
   create() {
     const map = this.make.tilemap({
       key: "map",
     });
-    const tileset = map.addTilesetImage("tuxmon-sample-32px", "tiles");
-    const belowLayer = map.createStaticLayer("below", tileset, 0, 0);
-    const worldLayer = map.createStaticLayer("world", tileset, 0, 0);
-    const aboveLayer = map.createStaticLayer("above", tileset, 0, 0);
-    aboveLayer.setDepth(10);
+    const allTileSets = [
+      map.addTilesetImage("Hoenn", "Hoenn"),
+      map.addTilesetImage("Pandamaru Circus 2", "Pandamaru Circus 2"),
+      map.addTilesetImage("Pandamaru Circus 1", "Pandamaru Circus 1"),
+      map.addTilesetImage(
+        "Pandamaru Merry-Go-Round",
+        "Pandamaru Merry-Go-Round"
+      ),
+      map.addTilesetImage("Pandamaru Market 1", "Pandamaru Market 1"),
+      map.addTilesetImage("Pandamaru Magic Tent", "Pandamaru Magic Tent"),
+      map.addTilesetImage("Outdoor1", "Outdoor1"),
+      map.addTilesetImage("Emerald (Tommy)", "Emerald (Tommy)"),
+      map.addTilesetImage("Outside (Hoenn)", "Outside (Hoenn)"),
+      map.addTilesetImage("Complete Johto Tileset", "Complete Johto Tileset"),
+      map.addTilesetImage("Pandamaru Egypt", "Pandamaru Egypt"),
+      map.addTilesetImage("carmin sur mer", "carmin sur mer"),
+      map.addTilesetImage("Pandamaru Port Props", "Pandamaru Port Props"),
+      map.addTilesetImage("Pandamaru Goods 1", "Pandamaru Goods 1"),
+      map.addTilesetImage("Brown cave sand", "Brown cave sand"),
+      map.addTilesetImage("Dirt cave highlight", "Dirt cave highlight"),
+      map.addTilesetImage(
+        "celianna_templetiles_torches",
+        "celianna_templetiles_torches"
+      ),
+      map.addTilesetImage("TileC Celianna", "TileC Celianna"),
+      map.addTilesetImage("pandamaru tree 1", "pandamaru tree 1"),
+      map.addTilesetImage("pandamaru tree 2", "pandamaru tree 2"),
+      map.addTilesetImage(
+        "pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre",
+        "pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre"
+      ),
+      map.addTilesetImage("pandamaru tree 3", "pandamaru tree 3"),
+      map.addTilesetImage("pandamaru tree 4", "pandamaru tree 4"),
+      map.addTilesetImage("pandamaru tree 5", "pandamaru tree 5"),
+      map.addTilesetImage("pandamaru tree goods", "pandamaru tree goods"),
+      map.addTilesetImage("Pandamaru Playground", "Pandamaru Playground"),
+      map.addTilesetImage("DP_Intérieur", "DP_Intérieur"),
+      map.addTilesetImage("Pandamaru Enclosure 2", "Pandamaru Enclosure 2"),
+      map.addTilesetImage("Pandamaru Train", "Pandamaru Train"),
+      map.addTilesetImage("Pandamaru Train Wagon", "Pandamaru Train Wagon"),
+      map.addTilesetImage("Hoenn Shipp", "Hoenn Shipp"),
+    ];
 
-    worldLayer.setCollisionByProperty({ collides: true });
+    const Ground7 = map.createStaticLayer("7 Ground", allTileSets, 0, 0);
+    const Ground6 = map.createStaticLayer("6 Ground", allTileSets, 0, 0);
+    const Ground5 = map.createStaticLayer("5 Ground", allTileSets, 0, 0);
+    const Object4 = map.createStaticLayer("4 Object", allTileSets, 0, 0);
+    const ObjectEgyptStatueAndSea3 = map.createStaticLayer(
+      "3 Object(Egypt Statue and Sea)",
+      allTileSets,
+      0,
+      0
+    );
+    const ObjectsPolesAndTrees2 = map.createStaticLayer(
+      "2 Objects Poles and Trees",
+      allTileSets,
+      0,
+      0
+    );
+    const SkyPassable1 = map.createStaticLayer(
+      "1 Sky / Passable",
+      allTileSets,
+      0,
+      0
+    );
+    const SkyPassable0 = map.createStaticLayer(
+      "0 Sky Passable",
+      allTileSets,
+      0,
+      0
+    );
+
+    SkyPassable1.setDepth(10);
+    SkyPassable0.setDepth(11);
+
+    Object4.setCollisionByExclusion([-1]);
+    ObjectEgyptStatueAndSea3.setCollisionByExclusion([-1]);
+    ObjectsPolesAndTrees2.setCollisionByExclusion([-1]);
+
+    const debugGraphics = this.add.graphics().setAlpha(0.75);
+    [Object4, ObjectEgyptStatueAndSea3, ObjectsPolesAndTrees2].forEach(
+      (layer) =>
+        layer.renderDebug(debugGraphics, {
+          tileColor: null, // Color of non-colliding tiles
+          collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+          faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
+        })
+    );
 
     const spawnPoint: any = map.findObject(
       "objects",
       (obj) => obj.name === "spawn"
     );
     if (this.spawnPoint === undefined) {
-      this.player = new Player(this, spawnPoint.x, spawnPoint.y);
+      this.player = new Player(this, 1200, 1200);
     } else {
       this.player = new Player(this, this.spawnPoint.x, this.spawnPoint.y);
     }
-    this.physics.add.collider(this.player.sprite, worldLayer);
+
+    this.physics.add.collider(this.player.sprite, Object4);
+    this.physics.add.collider(this.player.sprite, ObjectEgyptStatueAndSea3);
+    this.physics.add.collider(this.player.sprite, ObjectsPolesAndTrees2);
 
     // Set up camera
     const camera = this.cameras.main;
@@ -97,27 +135,27 @@ export default class MainScene extends Phaser.Scene {
     camera.startFollow(this.player.sprite);
 
     // Set up rooms
-    const doorObjects = map.filterObjects("objects", (obj: any) =>
-      obj.properties.some((prop: any) => prop.name === "doorId")
-    );
-    doorObjects.forEach((obj: any) => {
-      const sprites = map.createFromObjects("objects", obj.id, null);
-      const group = this.physics.add.staticGroup();
-      group.addMultiple(sprites);
-      group.setVisible(false);
-      this.physics.add.overlap(
-        this.player.sprite,
-        group,
-        (_, door: any) => {
-          const doorId = door.data.list[0].value;
-          this.scene.start("room", {
-            spawnPoint: { x: door.x, y: door.y + 40 },
-          });
-        },
-        null,
-        this
-      );
-    });
+    // const doorObjects = map.filterObjects("objects", (obj: any) =>
+    //   obj.properties.some((prop: any) => prop.name === "doorId")
+    // );
+    // doorObjects.forEach((obj: any) => {
+    //   const sprites = map.createFromObjects("objects", obj.id, null);
+    //   const group = this.physics.add.staticGroup();
+    //   group.addMultiple(sprites);
+    //   group.setVisible(false);
+    //   this.physics.add.overlap(
+    //     this.player.sprite,
+    //     group,
+    //     (_, door: any) => {
+    //       const doorId = door.data.list[0].value;
+    //       this.scene.start("room", {
+    //         spawnPoint: { x: door.x, y: door.y + 40 },
+    //       });
+    //     },
+    //     null,
+    //     this
+    //   );
+    // });
   }
 
   update() {
@@ -127,8 +165,8 @@ export default class MainScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  width: 600,
-  height: 600,
+  width: 1200,
+  height: 1200,
   render: {
     pixelArt: true,
   },
