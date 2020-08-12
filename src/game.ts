@@ -26,13 +26,45 @@ export default class MainScene extends Phaser.Scene {
     });
 
     // NPCs
-    this.load.spritesheet("Min Hein", "assets/tiles/NPCs/Min Hein.png", {
+    this.load.spritesheet("Adrian", "assets/NPCs/Adrian.png", {
+      frameWidth: 33,
+      frameHeight: 61,
+    });
+    this.load.spritesheet("Ben", "assets/NPCs/Ben.png", {
+      frameWidth: 30,
+      frameHeight: 55,
+    });
+    this.load.spritesheet("Chloe", "assets/NPCs/Chloe.png", {
+      frameWidth: 28,
+      frameHeight: 56,
+    });
+    this.load.spritesheet("Donald", "assets/NPCs/Donald.png", {
+      frameWidth: 30,
+      frameHeight: 61,
+    });
+    this.load.spritesheet("Greg", "assets/NPCs/Greg.png", {
+      frameWidth: 30,
+      frameHeight: 56,
+    });
+    this.load.spritesheet("Kingston", "assets/NPCs/Kingston.png", {
+      frameWidth: 30,
+      frameHeight: 53,
+    });
+    this.load.spritesheet("Min Hein", "assets/NPCs/Min Hein.png", {
       frameWidth: 30,
       frameHeight: 62,
     });
-    this.load.spritesheet("Chloe", "assets/tiles/NPCs/Chloe.png", {
+    this.load.spritesheet("Samantha", "assets/NPCs/Samantha.png", {
       frameWidth: 28,
-      frameHeight: 56,
+      frameHeight: 52,
+    });
+    this.load.spritesheet("Svarnim", "assets/NPCs/Svarnim.png", {
+      frameWidth: 28,
+      frameHeight: 52,
+    });
+    this.load.spritesheet("Wai Siang", "assets/NPCs/Wai Siang.png", {
+      frameWidth: 30,
+      frameHeight: 53,
     });
   }
 
