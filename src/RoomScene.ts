@@ -3,7 +3,7 @@ import "phaser";
 import Player from "./Player";
 import NPC from "./NPC";
 import Dialog from "./Dialog";
-import { CHLOE_DATA } from "./NPCData";
+import { MIN_HEIN } from "./NPCData";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
@@ -76,7 +76,7 @@ export default class RoomScene extends Phaser.Scene {
       npcSpawn.x,
       npcSpawn.y,
       this.player,
-      CHLOE_DATA,
+      MIN_HEIN,
       map.widthInPixels,
       map.heightInPixels
     );
