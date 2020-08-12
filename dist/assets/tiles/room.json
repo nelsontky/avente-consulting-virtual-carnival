@@ -32,6 +32,12 @@
                  "id":3,
                  "name":"spawn",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"isSpawn",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -40,16 +46,58 @@
                  "y":256
                 }, 
                 {
-                 "height":0,
-                 "id":4,
-                 "name":"npc",
-                 "point":true,
+                 "gid":722,
+                 "height":61,
+                 "id":5,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"isNpc",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":0,
-                 "x":168,
-                 "y":72
+                 "width":33,
+                 "x":152,
+                 "y":96
+                }, 
+                {
+                 "gid":722,
+                 "height":61,
+                 "id":7,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"isNpc",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":33,
+                 "x":240,
+                 "y":168
+                }, 
+                {
+                 "gid":722,
+                 "height":61,
+                 "id":8,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"isNpc",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":33,
+                 "x":56,
+                 "y":168
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -58,7 +106,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":5,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
@@ -4165,6 +4213,11 @@
                          "name":"collides",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"isDoor",
+                         "type":"bool",
+                         "value":false
                         }]
                 }, 
                 {
@@ -6562,6 +6615,19 @@
                         }]
                 }],
          "tilewidth":32
+        }, 
+        {
+         "columns":4,
+         "firstgid":721,
+         "image":"NPCs\/Adrian.png",
+         "imageheight":61,
+         "imagewidth":132,
+         "margin":0,
+         "name":"Adrian",
+         "spacing":0,
+         "tilecount":4,
+         "tileheight":61,
+         "tilewidth":33
         }],
  "tilewidth":32,
  "type":"map",

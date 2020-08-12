@@ -73,11 +73,13 @@ export default class MainScene extends Phaser.Scene {
       key: "map",
     });
     const tileset = map.addTilesetImage("tuxmon-sample-32px", "tiles");
-    const belowLayer = map.createStaticLayer("below_world", tileset, 0, 0);
+    const belowLayer = map.createStaticLayer("below", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("world", tileset, 0, 0);
-    const aboveLayer = map.createStaticLayer("above_world", tileset, 0, 0);
+    const aboveLayer = map.createStaticLayer("above", tileset, 0, 0);
     aboveLayer.setDepth(10);
+
     worldLayer.setCollisionByProperty({ collides: true });
+
     const spawnPoint: any = map.findObject(
       "objects",
       (obj) => obj.name === "spawn"
@@ -87,28 +89,35 @@ export default class MainScene extends Phaser.Scene {
     } else {
       this.player = new Player(this, this.spawnPoint.x, this.spawnPoint.y);
     }
-
     this.physics.add.collider(this.player.sprite, worldLayer);
 
+    // Set up camera
     const camera = this.cameras.main;
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
 
-    const doors = this.physics.add.staticGroup();
-    worldLayer.forEachTile((tile: any) => {
-      if (tile.properties.isDoor) {
-        doors.create(tile.getCenterX(), tile.getCenterY(), "door");
-        this.spawnPoint = { x: tile.getCenterX(), y: tile.getCenterY() + 40 };
-      }
-    });
-    doors.toggleVisible();
-    this.physics.add.overlap(
-      this.player.sprite,
-      doors,
-      () => this.scene.start("room", { spawnPoint: this.spawnPoint }),
-      null,
-      this
+    // Set up rooms
+    const doorObjects = map.filterObjects("objects", (obj: any) =>
+      obj.properties.some((prop: any) => prop.name === "doorId")
     );
+    doorObjects.forEach((obj: any) => {
+      const sprites = map.createFromObjects("objects", obj.id, null);
+      const group = this.physics.add.staticGroup();
+      group.addMultiple(sprites);
+      group.setVisible(false);
+      this.physics.add.overlap(
+        this.player.sprite,
+        group,
+        (_, door: any) => {
+          const doorId = door.data.list[0].value;
+          this.scene.start("room", {
+            spawnPoint: { x: door.x, y: door.y + 40 },
+          });
+        },
+        null,
+        this
+      );
+    });
   }
 
   update() {
