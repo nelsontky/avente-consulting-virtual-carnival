@@ -2,8 +2,8 @@ import NPCDataInterface from "./NPCDataInterface";
 
 const nextButtonOnlyChoices = [{ choiceText: "Next", isAnswer: true }];
 
-export const CHLOE_DATA: NPCDataInterface = {
-  name: "Chloe",
+export const MIN_HEIN: NPCDataInterface = {
+  name: "Min Hein",
   dialogs: {
     content: `Hi! I'm Min Hein, the Strat-Acad Liaison Association Director of Avente Consulting!`,
     choices: nextButtonOnlyChoices,

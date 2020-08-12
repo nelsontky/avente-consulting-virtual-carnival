@@ -24,7 +24,7 @@ export default class MainScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 43,
     });
-    this.load.spritesheet("Chloe", "assets/tiles/NPCs/chloe.png", {
+    this.load.spritesheet("Chloe", "assets/tiles/NPCs/Chloe.png", {
       frameWidth: 28,
       frameHeight: 56,
     });
