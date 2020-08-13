@@ -132,7 +132,8 @@ export default class NPC {
         this.scene,
         this.mapWidth / 2,
         this.mapHeight / 2,
-        currDialog
+        currDialog,
+        !!currDialog.dialogAfterCorrect || !!currDialog.dialogAfterWrong
       );
       const outcome = await dialog.create();
 
@@ -167,6 +168,7 @@ export default class NPC {
         this.mapWidth / 2,
         this.mapHeight / 2,
         currDialog,
+        true,
         true
       );
       const outcome = await dialog.create();
@@ -204,7 +206,8 @@ export default class NPC {
       {
         content: genPersonalityQuizResults(results[0].category),
         choices: nextButtonOnlyChoices,
-      }
+      },
+      false
     );
     await resultDialog.create();
 

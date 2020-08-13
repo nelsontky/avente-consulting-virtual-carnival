@@ -6,13 +6,15 @@ export default class Dialog {
   config: any;
   correctAnswer: string;
   isPersonalityQuiz: boolean;
+  isShowCloseButton: boolean;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     dialogData: IDialog,
-    isPersonalityQuiz?: boolean
+    isShowCloseButton: boolean,
+    isPersonalityQuiz?: boolean,
   ) {
     try {
       this.correctAnswer = dialogData.choices.find(
@@ -22,6 +24,7 @@ export default class Dialog {
       // No correct answer
     }
     this.isPersonalityQuiz = !!isPersonalityQuiz;
+    this.isShowCloseButton = isShowCloseButton;
     this.scene = scene;
     this.config = {
       x: Math.floor(x),
@@ -45,7 +48,7 @@ export default class Dialog {
       choices: dialogData.choices.map((choice) =>
         this.createLabel(choice.choiceText)
       ),
-      actions: [this.createLabel("Close")],
+      actions: this.isShowCloseButton ? [this.createLabel("Close")]: undefined,
 
       space: {
         content: 26,
@@ -64,7 +67,7 @@ export default class Dialog {
     };
   }
 
-  // Resolves to true if answer was correct, false otherwise
+  // Resolves to true if answer was correct, false otherwise. If is personality quiz, resolve to choice text
   create(): Promise<string> {
     this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
 
