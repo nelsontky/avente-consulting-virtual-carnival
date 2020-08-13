@@ -224,10 +224,35 @@ export default class NPC {
   }
 
   async runDialogPunnag() {
-    await new QuizDialog(
+    const outcome = await new Dialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2,
+      {
+        content: `Hi! I’m Punnag, the President of Avente Consulting and the head of Strat-Acad Department! In this station, you have 30seconds to answer as many questions as possible!`,
+        choices: [{ choiceText: `Let's begin!`, isAnswer: true }],
+      },
+      true
+    ).create();
+    if (outcome === "closed") {
+      return;
+    }
+
+    const score = await new QuizDialog(
       this.scene,
       this.mapWidth / 2,
       this.mapHeight / 2
     ).run();
+
+    await new Dialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2,
+      {
+        content: `Your score is ${score}`,
+        choices: [{ choiceText: `Next`, isAnswer: true }],
+      },
+      false
+    ).create();
   }
 }

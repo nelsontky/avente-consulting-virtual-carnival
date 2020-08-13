@@ -781,6 +781,13 @@ class SingleQuizDialog {
     this.dialog.hideChoice(this.config.choices.length - 1);
 
     return new Promise<number>((resolve, reject) => {
+      const listenerCb = () => {
+        this.destroy();
+        removeEventListener("stop-quiz", listenerCb);
+        resolve(this.score);
+      };
+      addEventListener("stop-quiz", listenerCb);
+
       this.dialog
         .on(
           "button.click",
@@ -789,10 +796,9 @@ class SingleQuizDialog {
             groupName: string,
             index: number
           ) => {
-            console.log(this.dialog.getElement("title"));
-
             if (groupName === "actions") {
               this.destroy();
+              removeEventListener("stop-quiz", listenerCb);
               resolve(-1);
             }
             if (!this.isAnswered) {
@@ -822,6 +828,7 @@ class SingleQuizDialog {
             } else {
               if (button.text === "Next") {
                 this.destroy();
+                removeEventListener("stop-quiz", listenerCb);
                 resolve(this.score);
               }
             }
@@ -879,34 +886,64 @@ export default class QuizDialog {
   x: number;
   y: number;
   currScore: number;
+  secondsLeft: number;
+  timeLeftText: Phaser.GameObjects.Text;
+  timer: NodeJS.Timeout;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     this.scene = scene;
     this.x = x;
     this.y = y;
     this.currScore = 0;
+    this.secondsLeft = 30;
     shuffle(questions);
+
+    this.timeLeftText = scene.add.text(
+      x - 300 + 30,
+      y - 300 + 30,
+      "Time left: " + this.secondsLeft,
+      {
+        fontSize: "24px",
+        fontFamily: "Arial",
+      }
+    );
+    this.timeLeftText.setDepth(30);
   }
 
   async run() {
+    this.timer = setInterval(() => {
+      this.secondsLeft -= 1;
+      this.timeLeftText.setText("Time left: " + this.secondsLeft);
+      if (this.secondsLeft === 0) {
+        dispatchEvent(new Event("stop-quiz"));
+      }
+    }, 1000);
+
     for (let question of questions) {
-      const newScore = await new SingleQuizDialog(
+      const currQuestion = new SingleQuizDialog(
         this.scene,
         this.x,
         this.y,
         question.question,
         question.options,
         this.currScore
-      ).create();
+      );
+      const newScore = await currQuestion.create();
 
-      if (newScore === -1) {
+      this.currScore = newScore;
+      if (newScore === -1 || this.secondsLeft === 0) {
         break;
       }
-      this.currScore = newScore;
     }
 
+    this.killTimer();
     return this.currScore;
   }
+
+  killTimer = () => {
+    clearInterval(this.timer);
+    this.timeLeftText.destroy();
+  };
 }
 
 function shuffle(array: Array<any>) {

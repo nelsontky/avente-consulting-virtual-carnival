@@ -132,7 +132,7 @@ export default class MainScene extends Phaser.Scene {
     this.physics.add.collider(this.player.sprite, Object4);
     this.physics.add.collider(this.player.sprite, ObjectEgyptStatueAndSea3);
     this.physics.add.collider(this.player.sprite, ObjectsPolesAndTrees2);
-
+    
     // Set up camera
     const camera = this.cameras.main;
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
