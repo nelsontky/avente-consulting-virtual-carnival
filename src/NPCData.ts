@@ -318,16 +318,24 @@ export const SAMANTHA: NPCDataInterface = {
     content: `Hi! I’m Samantha, the Marketing Director of Avente Consulting!`,
     choices: nextButtonOnlyChoices,
     dialogAfterCorrect: {
-      content: `What is a Student Consultant and how to become one?
+      content:
+        `What is a Student Consultant and how to become one?
     · If you’re interested in consultancy work especially when working with SMEs, you may join us on our journey as student consultants!
-    · SMU students can join Avente Consulting as a Student Consultant trainee where, upon completion of the curriculum, they become student consultants well-equipped to take on the AEI consulting projects. Join us to become the 3rd Batch of Student Consultants at this link!
-    · As a student consultant, you will go through an 8-week curriculum curated by our Strategy and Academic Team and proceed into specialized tracks to make you a better consultant!
-    · To find out more about the recruitment process, head over to this link to our info session deck!
-        o LINK
-    · If you are already interested, sign up as a student consultant here!
-        o LINK
-    · Have fun!`,
-      choices: nextButtonOnlyChoices,
+    · SMU students can join Avente Consulting as a Student Consultant trainee where, upon completion of the curriculum, they become student consultants well-equipped to take on the AEI consulting projects. Join us to become the 3rd Batch of Student Consultants at the link below!
+    · As a student consultant, you will go through an 8-week curriculum curated by our Strategy and Academic Team and proceed into specialized tracks to make you a better consultant!` +
+        `\n\n` +
+        `Have fun!`,
+      choices: [
+        {
+          choiceText: `To find out more about the recruitment process, click this link to our info session deck!`,
+          isAnswer: false,
+        },
+        {
+          choiceText: `If you are already interested, sign up as a student consultant by clicking here!`,
+          isAnswer: false,
+        },
+        { choiceText: `Next`, isAnswer: true },
+      ],
     },
   },
 };

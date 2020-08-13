@@ -133,7 +133,8 @@ export default class NPC {
         this.mapWidth / 2,
         this.mapHeight / 2,
         currDialog,
-        !!currDialog.dialogAfterCorrect || !!currDialog.dialogAfterWrong
+        !!currDialog.dialogAfterCorrect || !!currDialog.dialogAfterWrong,
+        this.data.name === "Samantha"
       );
       const outcome = await dialog.create();
 
@@ -169,6 +170,7 @@ export default class NPC {
         this.mapHeight / 2,
         currDialog,
         true,
+        false,
         true
       );
       const outcome = await dialog.create();

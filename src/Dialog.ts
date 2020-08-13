@@ -7,6 +7,7 @@ export default class Dialog {
   correctAnswer: string;
   isPersonalityQuiz: boolean;
   isShowCloseButton: boolean;
+  isSamantha: boolean;
 
   constructor(
     scene: Phaser.Scene,
@@ -14,7 +15,8 @@ export default class Dialog {
     y: number,
     dialogData: IDialog,
     isShowCloseButton: boolean,
-    isPersonalityQuiz?: boolean,
+    isSamantha?: boolean,
+    isPersonalityQuiz?: boolean
   ) {
     try {
       this.correctAnswer = dialogData.choices.find(
@@ -24,6 +26,7 @@ export default class Dialog {
       // No correct answer
     }
     this.isPersonalityQuiz = !!isPersonalityQuiz;
+    this.isSamantha = !!isSamantha;
     this.isShowCloseButton = isShowCloseButton;
     this.scene = scene;
     this.config = {
@@ -48,7 +51,7 @@ export default class Dialog {
       choices: dialogData.choices.map((choice) =>
         this.createLabel(choice.choiceText)
       ),
-      actions: this.isShowCloseButton ? [this.createLabel("Close")]: undefined,
+      actions: this.isShowCloseButton ? [this.createLabel("Close")] : undefined,
 
       space: {
         content: 26,
@@ -75,17 +78,26 @@ export default class Dialog {
       this.dialog
         .on(
           "button.click",
-          (button: { text: string }, groupName: string) => {
-            this.destroy();
+          (button: { text: string }, groupName: string, index: number) => {
             if (groupName === "actions") {
+              this.destroy();
               resolve("closed");
             } else if (this.isPersonalityQuiz) {
+              this.destroy();
               // resolve to option text if is personality quiz
               resolve(button.text);
             } else if (button.text === this.correctAnswer) {
+              this.destroy();
               // Is correct answer
               resolve("correct");
+            } else if (this.isSamantha) {
+              if (index === 0) {
+                window.open("https://google.com");
+              } else if (index === 1) {
+                window.open("https://duckduckgo.com");
+              }
             } else {
+              this.destroy();
               resolve("wrong");
             }
           },
