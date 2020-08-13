@@ -296,7 +296,7 @@ export const DONALD: NPCDataInterface = {
           { choiceText: `Oooo how interesting, tell me more!`, isAnswer: true },
         ],
         dialogAfterCorrect: {
-          content: `Avente’s Unábridged series, like Experience Digital, is a sharing series introduced by SMU Avente Consulting where ndustry experts are invited to share insights and perspectives on the overarching theme of digitalization.`,
+          content: `Avente’s Unábridged series, like Experience Digital, is a sharing series introduced by SMU Avente Consulting where industry experts are invited to share insights and perspectives on the overarching theme of digitalization.`,
           choices: nextButtonOnlyChoices,
           dialogAfterCorrect: {
             content: `Pinnacle is Avente’s new series of curated seminars. In partnership with renown industry experts, we hope to challenge and prepare students for the rigorous industry.`,

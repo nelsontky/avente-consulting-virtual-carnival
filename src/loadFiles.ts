@@ -2,16 +2,12 @@ import "phaser";
 
 export default function loadFiles(scene: Phaser.Scene) {
   scene.load.image("tiles", "assets/tiles/test/tuxmon-sample-32px.png");
-  scene.load.tilemapTiledJSON("map", "assets/tiles/Nelson Half Map.json");
+  scene.load.tilemapTiledJSON("map", "assets/tiles/Nelson Half Map 2.json");
   scene.load.spritesheet("player", "assets/atlas.png", {
     frameWidth: 32,
     frameHeight: 43,
   });
   // Tilesets
-  scene.load.image(
-    "Hoenn",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Tilesets/Hoenn.png"
-  );
   scene.load.image(
     "Pandamaru Circus 2",
     "assets/tiles/Image/Pandamaru Circus 2.png"
@@ -33,20 +29,12 @@ export default function loadFiles(scene: Phaser.Scene) {
     "assets/tiles/Image/Pandamaru Magic Tent.png"
   );
   scene.load.image(
-    "Outdoor1",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Tilesets/Outdoor1.png"
-  );
-  scene.load.image(
     "Emerald (Tommy)",
     "assets/tiles/Editted Image/Emerald (Tommy).png"
   );
   scene.load.image(
-    "Outside (Hoenn)",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Tilesets/Outside (Hoenn).png"
-  );
-  scene.load.image(
-    "Complete Johto Tileset",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Tilesets/Complete Johto Tileset.png"
+    "Outside (Hoenn) (Tommy)",
+    "assets/tiles/Editted Image/Outside (Hoenn) (Tommy).png"
   );
   scene.load.image("Pandamaru Egypt", "assets/tiles/Image/Pandamaru Egypt.png");
   scene.load.image(
@@ -106,7 +94,6 @@ export default function loadFiles(scene: Phaser.Scene) {
     "Pandamaru Playground",
     "assets/tiles/Image/Pandamaru Playground.png"
   );
-  scene.load.image("DP_Intérieur", "assets/tiles/undefined");
   scene.load.image(
     "Pandamaru Enclosure 2",
     "assets/tiles/Image/Pandamaru Enclosure 2.png"
@@ -117,6 +104,26 @@ export default function loadFiles(scene: Phaser.Scene) {
     "assets/tiles/Image/Pandamaru Train Wagon.png"
   );
   scene.load.image("Hoenn Shipp", "assets/tiles/Image/Hoenn Shipp.png");
+  scene.load.image(
+    "Hoeen (1) (Tommy)",
+    "assets/tiles/Editted Image/Hoeen (1) (Tommy).png"
+  );
+  scene.load.image(
+    "Boats (Tommy)",
+    "assets/tiles/Editted Image/Boats (Tommy).png"
+  );
+  scene.load.image(
+    "062-CF_Lava01",
+    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/062-CF_Lava01.png"
+  );
+  scene.load.image(
+    "Brown Oval Tracks (Tommy)",
+    "assets/tiles/Editted Image/Brown Oval Tracks (Tommy).png"
+  );
+  scene.load.image(
+    "Tentages (Tommy)",
+    "assets/tiles/Editted Image/Tentages (Tommy).png"
+  );
 
   // NPCs
   scene.load.spritesheet("Adrian", "assets/NPCs/Adrian.png", {

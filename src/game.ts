@@ -27,7 +27,6 @@ export default class MainScene extends Phaser.Scene {
       key: "map",
     });
     const allTileSets = [
-      map.addTilesetImage("Hoenn", "Hoenn"),
       map.addTilesetImage("Pandamaru Circus 2", "Pandamaru Circus 2"),
       map.addTilesetImage("Pandamaru Circus 1", "Pandamaru Circus 1"),
       map.addTilesetImage(
@@ -36,10 +35,8 @@ export default class MainScene extends Phaser.Scene {
       ),
       map.addTilesetImage("Pandamaru Market 1", "Pandamaru Market 1"),
       map.addTilesetImage("Pandamaru Magic Tent", "Pandamaru Magic Tent"),
-      map.addTilesetImage("Outdoor1", "Outdoor1"),
       map.addTilesetImage("Emerald (Tommy)", "Emerald (Tommy)"),
-      map.addTilesetImage("Outside (Hoenn)", "Outside (Hoenn)"),
-      map.addTilesetImage("Complete Johto Tileset", "Complete Johto Tileset"),
+      map.addTilesetImage("Outside (Hoenn) (Tommy)", "Outside (Hoenn) (Tommy)"),
       map.addTilesetImage("Pandamaru Egypt", "Pandamaru Egypt"),
       map.addTilesetImage("carmin sur mer", "carmin sur mer"),
       map.addTilesetImage("Pandamaru Port Props", "Pandamaru Port Props"),
@@ -62,11 +59,18 @@ export default class MainScene extends Phaser.Scene {
       map.addTilesetImage("pandamaru tree 5", "pandamaru tree 5"),
       map.addTilesetImage("pandamaru tree goods", "pandamaru tree goods"),
       map.addTilesetImage("Pandamaru Playground", "Pandamaru Playground"),
-      map.addTilesetImage("DP_Intérieur", "DP_Intérieur"),
       map.addTilesetImage("Pandamaru Enclosure 2", "Pandamaru Enclosure 2"),
       map.addTilesetImage("Pandamaru Train", "Pandamaru Train"),
       map.addTilesetImage("Pandamaru Train Wagon", "Pandamaru Train Wagon"),
       map.addTilesetImage("Hoenn Shipp", "Hoenn Shipp"),
+      map.addTilesetImage("Hoeen (1) (Tommy)", "Hoeen (1) (Tommy)"),
+      map.addTilesetImage("Boats (Tommy)", "Boats (Tommy)"),
+      map.addTilesetImage("062-CF_Lava01", "062-CF_Lava01"),
+      map.addTilesetImage(
+        "Brown Oval Tracks (Tommy)",
+        "Brown Oval Tracks (Tommy)"
+      ),
+      map.addTilesetImage("Tentages (Tommy)", "Tentages (Tommy)"),
     ];
 
     const Ground7 = map.createStaticLayer("7 Ground", allTileSets, 0, 0);
@@ -105,22 +109,22 @@ export default class MainScene extends Phaser.Scene {
     ObjectEgyptStatueAndSea3.setCollisionByExclusion([-1]);
     ObjectsPolesAndTrees2.setCollisionByExclusion([-1]);
 
-    const debugGraphics = this.add.graphics().setAlpha(0.75);
-    [Object4, ObjectEgyptStatueAndSea3, ObjectsPolesAndTrees2].forEach(
-      (layer) =>
-        layer.renderDebug(debugGraphics, {
-          tileColor: null, // Color of non-colliding tiles
-          collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-          faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
-        })
-    );
+    // const debugGraphics = this.add.graphics().setAlpha(0.75);
+    // [Object4, ObjectEgyptStatueAndSea3, ObjectsPolesAndTrees2].forEach(
+    //   (layer) =>
+    //     layer.renderDebug(debugGraphics, {
+    //       tileColor: null, // Color of non-colliding tiles
+    //       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+    //       faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
+    //     })
+    // );
 
     const spawnPoint: any = map.findObject(
       "objects",
       (obj) => obj.name === "spawn"
     );
     if (this.spawnPoint === undefined) {
-      this.player = new Player(this, 1200, 1200);
+      this.player = new Player(this, spawnPoint.x, spawnPoint.y);
     } else {
       this.player = new Player(this, this.spawnPoint.x, this.spawnPoint.y);
     }
@@ -139,7 +143,7 @@ export default class MainScene extends Phaser.Scene {
     //   obj.properties.some((prop: any) => prop.name === "doorId")
     // );
     // doorObjects.forEach((obj: any) => {
-    //   const sprites = map.createFromObjects("objects", obj.id, null);
+    // const sprites = map.createFromObjects("objects", obj.id, null);
     //   const group = this.physics.add.staticGroup();
     //   group.addMultiple(sprites);
     //   group.setVisible(false);
@@ -165,8 +169,8 @@ export default class MainScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  width: 1200,
-  height: 1200,
+  width: 600,
+  height: 600,
   render: {
     pixelArt: true,
   },
