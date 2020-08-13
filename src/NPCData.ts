@@ -1,6 +1,6 @@
 import NPCDataInterface from "./NPCDataInterface";
 
-const nextButtonOnlyChoices = [{ choiceText: "Next", isAnswer: true }];
+export const nextButtonOnlyChoices = [{ choiceText: "Next", isAnswer: true }];
 
 export const MIN_HEIN: NPCDataInterface = {
   name: "Min Hein",
@@ -218,8 +218,6 @@ export const CHLOE: NPCDataInterface = {
   },
 };
 
-// ADRIAN - personality quiz
-
 export const WAI_SIANG: NPCDataInterface = {
   name: "Wai Siang",
   dialogs: {
@@ -333,3 +331,168 @@ export const SAMANTHA: NPCDataInterface = {
     },
   },
 };
+
+export const ADRIAN: NPCDataInterface = {
+  name: "Adrian",
+  dialogs: {
+    content: `Hi! I’m Adrian, the People Strategy Director of Avente Consulting and one of the three Co-Chairs of Avente Welfare Day 2020! As my title suggests, the very notion of people intrigues me! Here’s a small quiz to discover your consultant type based on your personality!`,
+    choices: nextButtonOnlyChoices,
+    dialogAfterCorrect: {
+      content: `Where do your talents lie?`,
+      choices: [
+        {
+          choiceText: `Computer systems, coding`,
+          isAnswer: true,
+          category: "IT",
+        },
+        {
+          choiceText: `Business structures and processes`,
+          isAnswer: true,
+          category: "Management",
+        },
+        {
+          choiceText: `Communication and Ideation`,
+          isAnswer: true,
+          category: "HR",
+        },
+        {
+          choiceText: `Numbers and data analysis`,
+          isAnswer: true,
+          category: "Finance",
+        },
+        {
+          choiceText: `Product analysis and pitching`,
+          isAnswer: true,
+          category: "Marketing",
+        },
+      ],
+      dialogAfterCorrect: {
+        content: `How do you speak with others?`,
+        choices: [
+          {
+            choiceText: `Always straight to the point `,
+            isAnswer: true,
+            category: "Management",
+          },
+          {
+            choiceText: `Practical`,
+            isAnswer: true,
+            category: "IT",
+          },
+          {
+            choiceText: `I always justify my statements with facts`,
+            isAnswer: true,
+            category: "Finance",
+          },
+          {
+            choiceText: `Storytelling`,
+            isAnswer: true,
+            category: "Marketing",
+          },
+          {
+            choiceText: `I like to listen`,
+            isAnswer: true,
+            category: "HR",
+          },
+        ],
+        dialogAfterCorrect: {
+          content: `Which is your go-to snack?`,
+          choices: [
+            { choiceText: `I eat a meal for my snacks`, isAnswer: true },
+            { choiceText: `Desserts`, isAnswer: true },
+            { choiceText: `Bubble Tea`, isAnswer: true },
+            { choiceText: `Meat`, isAnswer: true },
+            { choiceText: `Sleep`, isAnswer: true },
+          ],
+          dialogAfterCorrect: {
+            content: `Which object best describes yourself? `,
+            choices: [
+              {
+                choiceText: `Calculator`,
+                isAnswer: true,
+                category: "Finance",
+              },
+              {
+                choiceText: `Lift`,
+                isAnswer: true,
+                category: "Management",
+              },
+              {
+                choiceText: `Mail`,
+                isAnswer: true,
+                category: "HR",
+              },
+              {
+                choiceText: `Camera`,
+                isAnswer: true,
+                category: "Marketing",
+              },
+              {
+                choiceText: `Tablet`,
+                isAnswer: true,
+                category: "IT",
+              },
+            ],
+            dialogAfterCorrect: {
+              content: `What would your favorite TED talk be about? `,
+              choices: [
+                {
+                  choiceText: `Intuitive AI`,
+                  isAnswer: true,
+                  category: "IT",
+                },
+                {
+                  choiceText: `Humanities in Tech`,
+                  isAnswer: true,
+                  category: "HR",
+                },
+                {
+                  choiceText: `Curiosity-driven Research`,
+                  isAnswer: true,
+                  category: "Marketing",
+                },
+                {
+                  choiceText: `Art of solving problem`,
+                  isAnswer: true,
+                  category: "Management",
+                },
+                {
+                  choiceText: `Importance of Statistics`,
+                  isAnswer: true,
+                  category: "Finance",
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+export function genPersonalityQuizResults(
+  category: "IT" | "Finance" | "Management" | "HR" | "Marketing"
+) {
+  return {
+    IT:
+      `Wow! Looks like you’re most likely an IT consultant!` +
+      `\n` +
+      `Your interest in technology and tact in analyzing business’s IT systems makes you a good fit for an IT consultant! These consultants need to analyze a business’s IT structure and balance that with their client's needs to design and implement technological solutions!`,
+    Finance:
+      `Wow! Looks like you’re most likely a Financial consultant!` +
+      `\n` +
+      `Your interest in numbers and focusing on the importance of statistics makes you a good fit for a Financial consultant! These consultants suggest and render financial services to clients based on their financial situation!`,
+    Management:
+      `Wow! Looks like you’re most likely a Management consultant!` +
+      `\n` +
+      `Your interest in creative thinking and problem-solving makes you a good fit for a Management Consultant! These consultants are visionaries and usually discuss innovative ideas with business leaders. Oftentimes, you will need to recommend a variety of strategies that change the organization's structure and/or operation, for improved profits and better system efficiencies.`,
+    HR:
+      `Wow! Looks like you’re most likely a Human Resource consultant!` +
+      `\n` +
+      `Your interest in communication and human resource makes you a good fit for a Human Resource Consultant! These consultants are often professionals hired outside of a business or organization and are tasked with solving or meeting human resources-related needs!`,
+    Marketing:
+      `Wow! Looks like you’re most likely a Marketing consultant!` +
+      `\n` +
+      `Your interest in research and product analysis makes you a good fit for a Marketing Consultant! These consultants focus on evaluating marketing efforts, constantly on their toes to suggest improvements and implement marketing campaigns. They are always up for the new things and keep up in the trends!`,
+  }[category];
+}

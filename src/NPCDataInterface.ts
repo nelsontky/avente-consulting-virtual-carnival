@@ -1,6 +1,10 @@
 export interface IDialog {
   content: string;
-  choices: { choiceText: string; isAnswer: boolean }[];
+  choices: {
+    choiceText: string;
+    isAnswer: boolean;
+    category?: "IT" | "Finance" | "Management" | "HR" | "Marketing"; // For Adrian only
+  }[];
   dialogAfterCorrect?: IDialog;
   dialogAfterWrong?: IDialog;
 }

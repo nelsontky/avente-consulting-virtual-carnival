@@ -3,6 +3,7 @@ import "phaser";
 import Player from "./Player";
 import NPCDataInterface from "./NPCDataInterface";
 import Dialog from "./Dialog";
+import { genPersonalityQuizResults, nextButtonOnlyChoices } from "./NPCData";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
@@ -101,10 +102,17 @@ export default class NPC {
       this.isInteractionOngoing = true;
       this.player.isFrozen = true;
       this.sprite.anims.play(this.checkDirectionToFace());
-      this.runDialog().then(() => {
-        this.isInteractionOngoing = false;
-        this.player.isFrozen = false;
-      });
+      if (this.data.name !== "Adrian") {
+        this.runDialog().then(() => {
+          this.isInteractionOngoing = false;
+          this.player.isFrozen = false;
+        });
+      } else {
+        this.runDialogAdrian().then(() => {
+          this.isInteractionOngoing = false;
+          this.player.isFrozen = false;
+        });
+      }
     }
 
     // Check if still colliding with player
@@ -139,5 +147,67 @@ export default class NPC {
           return;
       }
     }
+  }
+  async runDialogAdrian() {
+    let results: {
+      category: "IT" | "Finance" | "Management" | "HR" | "Marketing";
+      count: number;
+    }[] = [
+      { category: "IT", count: 0 },
+      { category: "Finance", count: 0 },
+      { category: "Management", count: 0 },
+      { category: "HR", count: 0 },
+      { category: "Marketing", count: 0 },
+    ];
+    let currDialog = this.data.dialogs;
+
+    while (currDialog !== undefined) {
+      const dialog = new Dialog(
+        this.scene,
+        this.mapWidth / 2,
+        this.mapHeight / 2,
+        currDialog,
+        true
+      );
+      const outcome = await dialog.create();
+
+      if (outcome === "closed") {
+        return;
+      }
+
+      // Add score to result
+      const categoryChosen = currDialog.choices.find(
+        (choice) => outcome === choice.choiceText
+      ).category;
+
+      // Skip snack question
+      if (categoryChosen !== undefined) {
+        let resultToAddTo = results.find(
+          (res) => res.category === categoryChosen
+        );
+        resultToAddTo.count = resultToAddTo.count + 1;
+      }
+
+      currDialog = currDialog.dialogAfterCorrect;
+    }
+
+    // Output result
+    results.sort((r1, r2) =>
+      r2.count !== r1.count
+        ? r2.count - r1.count
+        : r1.category.localeCompare(r2.category)
+    );
+    const resultDialog = new Dialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2,
+      {
+        content: genPersonalityQuizResults(results[0].category),
+        choices: nextButtonOnlyChoices,
+      }
+    );
+    await resultDialog.create();
+
+    return;
   }
 }

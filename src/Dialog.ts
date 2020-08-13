@@ -5,8 +5,15 @@ export default class Dialog {
   dialog: any;
   config: any;
   correctAnswer: string;
+  isPersonalityQuiz: boolean;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, dialogData: IDialog) {
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    dialogData: IDialog,
+    isPersonalityQuiz?: boolean
+  ) {
     try {
       this.correctAnswer = dialogData.choices.find(
         (choice) => choice.isAnswer
@@ -14,9 +21,8 @@ export default class Dialog {
     } catch {
       // No correct answer
     }
-
+    this.isPersonalityQuiz = !!isPersonalityQuiz;
     this.scene = scene;
-
     this.config = {
       x: Math.floor(x),
       y: Math.floor(y),
@@ -59,7 +65,7 @@ export default class Dialog {
   }
 
   // Resolves to true if answer was correct, false otherwise
-  create(): Promise<"correct" | "wrong" | "closed"> {
+  create(): Promise<string> {
     this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
 
     return new Promise((resolve, reject) => {
@@ -68,7 +74,10 @@ export default class Dialog {
           "button.click",
           (button: { text: string }, groupName: string) => {
             this.destroy();
-            if (button.text === this.correctAnswer) {
+            if (this.isPersonalityQuiz) {
+              // resolve to option text if is personality quiz
+              resolve(button.text);
+            } else if (button.text === this.correctAnswer) {
               // Is correct answer
               resolve("correct");
             } else if (groupName === "actions") {

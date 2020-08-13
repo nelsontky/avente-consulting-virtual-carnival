@@ -1,4 +1,5 @@
 import {
+  ADRIAN,
   BENEDICT,
   CHLOE,
   DONALD,
@@ -13,6 +14,7 @@ import {
 // Key: roomId, Value: NPCs in the room
 export default {
   0: [
+    ADRIAN,
     BENEDICT,
     CHLOE,
     DONALD,
