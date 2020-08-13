@@ -1,9 +1,11 @@
+import { Tilemaps } from "phaser";
+
 interface IQuestion {
   question: string;
   options: { option: string; isAnswer: boolean }[];
 }
 
-const questions: IQuestion[] = [
+let questions: IQuestion[] = [
   {
     question: "Name of Avente's Parent Organization",
     options: [
@@ -690,27 +692,30 @@ class SingleQuizDialog {
   question: string;
   dialog: any;
   options: { option: string; isAnswer: boolean }[];
-  isNextDisabled: boolean;
+  isAnswered: boolean;
   x: number;
   y: number;
+  score: number;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     question: string,
-    options: { option: string; isAnswer: boolean }[]
+    options: { option: string; isAnswer: boolean }[],
+    score: number
   ) {
     this.scene = scene;
     this.question = question;
     this.options = options;
-    this.isNextDisabled = true;
+    this.isAnswered = false;
     this.x = x;
     this.y = y;
+    this.score = score;
   }
 
   // Resolves to true if answer was correct, false otherwise.
-  create(): Promise<boolean> {
+  create(): Promise<number> {
     this.config = {
       x: Math.floor(this.x),
       y: Math.floor(this.y),
@@ -724,19 +729,40 @@ class SingleQuizDialog {
         0x3e2723
       ),
 
+      title: this.scene.rexUI.add.label({
+        background: this.scene.rexUI.add.roundRectangle(
+          0,
+          0,
+          100,
+          40,
+          20,
+          0x1b0000
+        ),
+        text: this.scene.add.text(0, 0, "Score: " + this.score, {
+          fontSize: "12px",
+        }),
+        space: {
+          left: 15,
+          right: 15,
+          top: 10,
+          bottom: 10,
+        },
+      }),
+
       content: this.scene.add.text(0, 0, this.question, {
         fontSize: "12px",
         fontFamily: "Arial",
         wordWrap: { width: 400 },
       }),
 
-      choices: this.options.map((choice) => this.createLabel(choice.option)),
-      actions: [
-        this.createLabel("Next", this.isNextDisabled),
-        this.createLabel("Close"),
+      choices: [
+        ...this.options.map((choice) => this.createLabel(choice.option)),
+        this.createLabel("Next"),
       ],
+      actions: [this.createLabel("Close")],
 
       space: {
+        title: 26,
         content: 26,
         choices: 26,
         choice: 16,
@@ -752,19 +778,67 @@ class SingleQuizDialog {
       },
     };
     this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
+    this.dialog.hideChoice(this.config.choices.length - 1);
 
-    return new Promise((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this.dialog
         .on(
           "button.click",
-          (button: { text: string }, groupName: string, index: number) => {},
+          (
+            button: { text: string; getElement: Function },
+            groupName: string,
+            index: number
+          ) => {
+            console.log(this.dialog.getElement("title"));
+
+            if (groupName === "actions") {
+              this.destroy();
+              resolve(-1);
+            }
+            if (!this.isAnswered) {
+              const correctIndex = this.options.findIndex(
+                (option) => option.isAnswer
+              );
+              for (let i = 0; i < this.config.choices.length - 1; i++) {
+                if (i === correctIndex) {
+                  this.dialog
+                    .getChoice(i)
+                    .getElement("background")
+                    .setStrokeStyle(1, 0x00ff00); // set green outline
+                } else {
+                  this.dialog
+                    .getChoice(i)
+                    .getElement("background")
+                    .setStrokeStyle(1, 0xff0000); // set red outline
+                }
+              }
+              this.dialog.showChoice(this.config.choices.length - 1);
+              this.isAnswered = true;
+
+              if (index === correctIndex) {
+                this.score += 1;
+                this.dialog.getElement("title").setText("Score: " + this.score);
+              }
+            } else {
+              if (button.text === "Next") {
+                this.destroy();
+                resolve(this.score);
+              }
+            }
+          },
           this.scene
         )
-        .on("button.over", (button: any) => {
-          button.getElement("background").setStrokeStyle(1, 0xffffff);
+        .on("button.over", (button: any, groupName: string, index: number) => {
+          (!this.isAnswered ||
+            groupName === "actions" ||
+            index === this.config.choices.length - 1) &&
+            button.getElement("background").setStrokeStyle(1, 0xffffff);
         })
-        .on("button.out", (button: any) => {
-          button.getElement("background").setStrokeStyle();
+        .on("button.out", (button: any, groupName: string, index: number) => {
+          (!this.isAnswered ||
+            groupName === "actions" ||
+            index === this.config.choices.length - 1) &&
+            button.getElement("background").setStrokeStyle();
         });
     });
   }
@@ -773,7 +847,7 @@ class SingleQuizDialog {
     this.dialog.scaleDownDestroy();
   }
 
-  createLabel(text: string, isDisabled?: boolean) {
+  createLabel(text: string) {
     return this.scene.rexUI.add.label({
       background: this.scene.rexUI.add.roundRectangle(
         0,
@@ -781,8 +855,7 @@ class SingleQuizDialog {
         100,
         40,
         20,
-        0x6a4f4b,
-        isDisabled ? 80 : null
+        0x6a4f4b
       ),
 
       text: this.scene.add.text(0, 0, text, {
@@ -799,4 +872,55 @@ class SingleQuizDialog {
       },
     });
   }
+}
+
+export default class QuizDialog {
+  scene: any;
+  x: number;
+  y: number;
+  currScore: number;
+
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    this.scene = scene;
+    this.x = x;
+    this.y = y;
+    this.currScore = 0;
+    shuffle(questions);
+  }
+
+  async run() {
+    for (let question of questions) {
+      const newScore = await new SingleQuizDialog(
+        this.scene,
+        this.x,
+        this.y,
+        question.question,
+        question.options,
+        this.currScore
+      ).create();
+
+      if (newScore === -1) {
+        break;
+      }
+      this.currScore = newScore;
+    }
+
+    return this.currScore;
+  }
+}
+
+function shuffle(array: Array<any>) {
+  const length = array == null ? 0 : array.length;
+  if (!length) {
+    return [];
+  }
+  let index = -1;
+  const lastIndex = length - 1;
+  while (++index < length) {
+    const rand = index + Math.floor(Math.random() * (lastIndex - index + 1));
+    const value = array[rand];
+    array[rand] = array[index];
+    array[index] = value;
+  }
+  return array;
 }

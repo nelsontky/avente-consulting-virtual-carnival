@@ -4,6 +4,7 @@ import Player from "./Player";
 import NPCDataInterface from "./NPCDataInterface";
 import Dialog from "./Dialog";
 import { genPersonalityQuizResults, nextButtonOnlyChoices } from "./NPCData";
+import QuizDialog from "./QuizDialog";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
@@ -102,13 +103,18 @@ export default class NPC {
       this.isInteractionOngoing = true;
       this.player.isFrozen = true;
       this.sprite.anims.play(this.checkDirectionToFace());
-      if (this.data.name !== "Adrian") {
-        this.runDialog().then(() => {
+      if (this.data.name === "Adrian") {
+        this.runDialogAdrian().then(() => {
+          this.isInteractionOngoing = false;
+          this.player.isFrozen = false;
+        });
+      } else if (this.data.name === "Punnag") {
+        this.runDialogPunnag().then(() => {
           this.isInteractionOngoing = false;
           this.player.isFrozen = false;
         });
       } else {
-        this.runDialogAdrian().then(() => {
+        this.runDialog().then(() => {
           this.isInteractionOngoing = false;
           this.player.isFrozen = false;
         });
@@ -150,6 +156,7 @@ export default class NPC {
       }
     }
   }
+
   async runDialogAdrian() {
     let results: {
       category: "IT" | "Finance" | "Management" | "HR" | "Marketing";
@@ -214,5 +221,13 @@ export default class NPC {
     await resultDialog.create();
 
     return;
+  }
+
+  async runDialogPunnag() {
+    await new QuizDialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2
+    ).run();
   }
 }
