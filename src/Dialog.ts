@@ -70,7 +70,6 @@ export default class Dialog {
     };
   }
 
-  // Resolves to true if answer was correct, false otherwise. If is personality quiz, resolve to choice text
   create(): Promise<string> {
     this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
 

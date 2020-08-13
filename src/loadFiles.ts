@@ -166,4 +166,16 @@ export default function loadFiles(scene: Phaser.Scene) {
     frameWidth: 30,
     frameHeight: 53,
   });
+  scene.load.spritesheet("Punnag", "assets/NPCs/Punnag.png", {
+    frameWidth: 30,
+    frameHeight: 54,
+  });
+  scene.load.spritesheet("Harris", "assets/NPCs/Harris.png", {
+    frameWidth: 30,
+    frameHeight: 54,
+  });
+  scene.load.spritesheet("Maneesha", "assets/NPCs/Maneesha.png", {
+    frameWidth: 28,
+    frameHeight: 55,
+  });
 }

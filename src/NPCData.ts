@@ -478,6 +478,11 @@ export const ADRIAN: NPCDataInterface = {
   },
 };
 
+export const PUNNAG: NPCDataInterface = { // Special quiz mini game
+  name: "Punnag",
+  dialogs: { content: null, choices: null },
+};
+
 export function genPersonalityQuizResults(
   category: "IT" | "Finance" | "Management" | "HR" | "Marketing"
 ) {
