@@ -85,10 +85,6 @@ export const KINGSTON: NPCDataInterface = {
           dialogAfterCorrect: {
             content: `Have a chat with Benedict about the events that we are rolling out!`,
             choices: nextButtonOnlyChoices,
-            dialogAfterCorrect: {
-              content: `Have a chat with Benedict about the events that we are rolling out!`,
-              choices: nextButtonOnlyChoices,
-            },
           },
         },
         dialogAfterWrong: {
@@ -478,7 +474,8 @@ export const ADRIAN: NPCDataInterface = {
   },
 };
 
-export const PUNNAG: NPCDataInterface = { // Special quiz mini game
+export const PUNNAG: NPCDataInterface = {
+  // Special quiz mini game
   name: "Punnag",
   dialogs: { content: null, choices: null },
 };
