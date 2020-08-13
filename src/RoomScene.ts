@@ -3,25 +3,32 @@ import "phaser";
 import Player from "./Player";
 import NPC from "./NPC";
 import Dialog from "./Dialog";
-import { MIN_HEIN } from "./NPCData";
+import roomData from "./roomData";
+import NPCDataInterface from "./NPCDataInterface";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
-  spawnPoint: { x: number; y: number };
-  npc: NPC;
+  overWorldDoorLocation: { x: number; y: number };
+  roomId: number;
+  npcs: NPC[];
   dialog: Dialog;
 
   constructor() {
     super("room");
+    this.npcs = [];
   }
 
-  init({ spawnPoint }: any) {
-    this.spawnPoint = spawnPoint;
+  init(data: {
+    doorId: number;
+    overWorldDoorLocation: { x: number; y: number };
+  }) {
+    this.overWorldDoorLocation = data.overWorldDoorLocation;
+    this.roomId = data.doorId;
   }
 
   preload() {
-    this.load.image("tiles", "assets/tiles/tuxmon-sample-32px.png");
-    this.load.tilemapTiledJSON("room", "assets/tiles/room.json");
+    this.load.image("tiles", "assets/tiles/test/tuxmon-sample-32px.png");
+    this.load.tilemapTiledJSON("room", "assets/tiles/test/room.json");
     this.load.spritesheet("player", "assets/atlas.png", {
       frameWidth: 32,
       frameHeight: 43,
@@ -34,17 +41,24 @@ export default class RoomScene extends Phaser.Scene {
     });
     const tileset = map.addTilesetImage("tuxmon-sample-32px", "tiles");
     const belowLayer = map.createStaticLayer("below_world", tileset, 0, 0);
+    const blocking = map.createStaticLayer("blocking", tileset, 0, 0);
+
+    blocking.setCollisionByExclusion([-1]);
+
     const spawnPoint: any = map.findObject(
       "objects",
       (obj) => obj.name === "spawn"
     );
 
     this.player = new Player(this, spawnPoint.x, spawnPoint.y);
+    this.physics.add.collider(this.player.sprite, blocking);
 
     const camera = this.cameras.main;
     camera.setBounds(
-      -300 + map.widthInPixels / 2,
-      -300 + map.heightInPixels / 2,
+      // -300 + map.widthInPixels / 2,
+      // -300 + map.heightInPixels / 2,
+      0,
+      0,
       map.widthInPixels,
       map.heightInPixels,
       true
@@ -57,33 +71,39 @@ export default class RoomScene extends Phaser.Scene {
         doors.create(tile.getCenterX(), tile.getCenterY(), "door");
       }
     });
+
     doors.toggleVisible();
     this.physics.add.overlap(
       this.player.sprite,
       doors,
-      () => this.scene.start("main", { spawnPoint: this.spawnPoint }),
+      () =>
+        this.scene.start("main", { spawnPoint: this.overWorldDoorLocation }),
       null,
       this
     );
 
-    // const npcSpawn: any = map.findObject(
-    //   "objects",
-    //   (obj) => obj.name === "npc"
-    // );
+    const npcSpawnPoints: { x: number; y: number }[] = map
+      .filterObjects("objects", (obj) => obj.name === "npc")
+      .map(({ x, y }: any) => ({ x, y }));
 
-    // this.npc = new NPC(
-    //   this,
-    //   npcSpawn.x,
-    //   npcSpawn.y,
-    //   this.player,
-    //   MIN_HEIN,
-    //   map.widthInPixels,
-    //   map.heightInPixels
-    // );
+    const npcsInRoom: NPCDataInterface[] = roomData[this.roomId];
+    for (let i = 0; i < npcsInRoom.length; i++) {
+      this.npcs.push(
+        new NPC(
+          this,
+          npcSpawnPoints[i].x,
+          npcSpawnPoints[i].y,
+          this.player,
+          npcsInRoom[i],
+          map.widthInPixels,
+          map.heightInPixels
+        )
+      );
+    }
   }
 
   update() {
     this.player.update();
-    // this.npc.update();
+    this.npcs.forEach((npc) => npc.update());
   }
 }

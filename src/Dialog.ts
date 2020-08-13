@@ -7,9 +7,13 @@ export default class Dialog {
   correctAnswer: string;
 
   constructor(scene: Phaser.Scene, x: number, y: number, dialogData: IDialog) {
-    this.correctAnswer = dialogData.choices.find(
-      (choice) => choice.isAnswer
-    ).choiceText;
+    try {
+      this.correctAnswer = dialogData.choices.find(
+        (choice) => choice.isAnswer
+      ).choiceText;
+    } catch {
+      // No correct answer
+    }
 
     this.scene = scene;
 
@@ -29,7 +33,7 @@ export default class Dialog {
       content: this.scene.add.text(0, 0, dialogData.content, {
         fontSize: "12px",
         fontFamily: "Arial",
-        wordWrap: { width: 300 },
+        wordWrap: { width: 400 },
       }),
 
       choices: dialogData.choices.map((choice) =>
@@ -102,6 +106,7 @@ export default class Dialog {
       text: this.scene.add.text(0, 0, text, {
         fontSize: "12px",
         fontFamily: "Arial",
+        wordWrap: { width: 400 },
       }),
 
       space: {

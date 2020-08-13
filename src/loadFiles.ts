@@ -130,7 +130,7 @@ export default function loadFiles(scene: Phaser.Scene) {
     frameWidth: 33,
     frameHeight: 61,
   });
-  scene.load.spritesheet("Ben", "assets/NPCs/Ben.png", {
+  scene.load.spritesheet("Benedict", "assets/NPCs/Benedict.png", {
     frameWidth: 30,
     frameHeight: 55,
   });
@@ -142,7 +142,7 @@ export default function loadFiles(scene: Phaser.Scene) {
     frameWidth: 30,
     frameHeight: 61,
   });
-  scene.load.spritesheet("Greg", "assets/NPCs/Greg.png", {
+  scene.load.spritesheet("Gregory", "assets/NPCs/Gregory.png", {
     frameWidth: 30,
     frameHeight: 56,
   });

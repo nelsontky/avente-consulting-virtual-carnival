@@ -90,13 +90,13 @@ export const KINGSTON: NPCDataInterface = {
               choices: nextButtonOnlyChoices,
             },
           },
-          dialogAfterWrong: {
-            content: `Sorry champ, Avente’s mission is actually to “To equip students with a curious, problem solving mindset which explores Digitalization drivers through our case pedagogy. We enable these students through initiatives that target holistic personal growth.”`,
+        },
+        dialogAfterWrong: {
+          content: `Sorry champ, Avente’s mission is actually to “To equip students with a curious, problem solving mindset which explores Digitalization drivers through our case pedagogy. We enable these students through initiatives that target holistic personal growth.”`,
+          choices: nextButtonOnlyChoices,
+          dialogAfterCorrect: {
+            content: `Now that you know about our mission and vision, why not have a chat with Benedict to find out about the events that we are rolling out!`,
             choices: nextButtonOnlyChoices,
-            dialogAfterCorrect: {
-              content: `Now that you know about our mission and vision, why not have a chat with Benedict to find out about the events that we are rolling out!`,
-              choices: nextButtonOnlyChoices,
-            },
           },
         },
       },
@@ -173,13 +173,13 @@ export const GREGORY: NPCDataInterface = {
         content: `Do proceed to Chloe to find out more about the consultancy spectrum!`,
         choices: nextButtonOnlyChoices,
       },
-      dialogAfterWrong: {
-        content: `Aw mate that ain’t it! The correct answer is to aid corporations via execution of a business strategy. The execution differentiates an implementation from advisory contexts.`,
+    },
+    dialogAfterWrong: {
+      content: `Aw mate that ain’t it! The correct answer is to aid corporations via execution of a business strategy. The execution differentiates an implementation from advisory contexts.`,
+      choices: nextButtonOnlyChoices,
+      dialogAfterCorrect: {
+        content: `Do proceed to Chloe to find out more about the consultancy spectrum!`,
         choices: nextButtonOnlyChoices,
-        dialogAfterCorrect: {
-          content: `Do proceed to Chloe to find out more about the consultancy spectrum!`,
-          choices: nextButtonOnlyChoices,
-        },
       },
     },
   },
@@ -205,13 +205,13 @@ export const CHLOE: NPCDataInterface = {
           content: `Speak to Adrian. He will show you the way forward, chosen one!`,
           choices: nextButtonOnlyChoices,
         },
-        dialogAfterWrong: {
-          content: `Shucks, guess the options were pretty tough!  The correct answer is Management! Alongside are 4 more major types of consulting, namely IT, Financial, HR and Marketing!`,
+      },
+      dialogAfterWrong: {
+        content: `Shucks, guess the options were pretty tough!  The correct answer is Management! Alongside are 4 more major types of consulting, namely IT, Financial, HR and Marketing!`,
+        choices: nextButtonOnlyChoices,
+        dialogAfterCorrect: {
+          content: `Speak to Adrian. He will show you the way forward, chosen one!`,
           choices: nextButtonOnlyChoices,
-          dialogAfterCorrect: {
-            content: `Speak to Adrian. He will show you the way forward, chosen one!`,
-            choices: nextButtonOnlyChoices,
-          },
         },
       },
     },
@@ -262,7 +262,7 @@ export const SVARNIM: NPCDataInterface = {
       content: `I came across some information on SMEs too! they are absolutely pivotal towards Singapore’s economy! Interestingly, SMEs constitutes more than 99% of all enterprises in Singapore, while contributing a whopping 48% of its GDP.`,
       choices: nextButtonOnlyChoices,
       dialogAfterCorrect: {
-        content: `Furthermore, SMEs employ about 65% of its workforce, a sizable feat if you would  agree! Chances are, between the two of us, at least one of us is going to end up in an SME upon graduation!`,
+        content: `Furthermore, SMEs employ about 65% of its workforce, a sizable feat if you would agree! Chances are, between the two of us, at least one of us is going to end up in an SME upon graduation!`,
         choices: [
           {
             choiceText: `Wow, I never knew that, they’re more important than I expected!`,
@@ -320,8 +320,7 @@ export const SAMANTHA: NPCDataInterface = {
     content: `Hi! I’m Samantha, the Marketing Director of Avente Consulting!`,
     choices: nextButtonOnlyChoices,
     dialogAfterCorrect: {
-      content: 
-`What is a Student Consultant and how to become one?
+      content: `What is a Student Consultant and how to become one?
     · If you’re interested in consultancy work especially when working with SMEs, you may join us on our journey as student consultants!
     · SMU students can join Avente Consulting as a Student Consultant trainee where, upon completion of the curriculum, they become student consultants well-equipped to take on the AEI consulting projects. Join us to become the 3rd Batch of Student Consultants at this link!
     · As a student consultant, you will go through an 8-week curriculum curated by our Strategy and Academic Team and proceed into specialized tracks to make you a better consultant!

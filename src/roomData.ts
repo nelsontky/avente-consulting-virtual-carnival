@@ -1,7 +1,26 @@
-// First room has "Adrian", "Ben", "Chloe", second room has... and so on
-export default [
-  ["Adrian", "Ben", "Chloe"],
-  ["Donald", "Greg"],
-  ["Kingston", "Min Hein"],
-  ["Samantha", "Svarnim", "Wai Siang"],
-];
+import {
+  BENEDICT,
+  CHLOE,
+  DONALD,
+  GREGORY,
+  KINGSTON,
+  MIN_HEIN,
+  SAMANTHA,
+  SVARNIM,
+  WAI_SIANG,
+} from "./NPCData";
+
+// Key: roomId, Value: NPCs in the room
+export default {
+  0: [
+    BENEDICT,
+    CHLOE,
+    DONALD,
+    GREGORY,
+    KINGSTON,
+    MIN_HEIN,
+    SAMANTHA,
+    SVARNIM,
+    WAI_SIANG,
+  ],
+};

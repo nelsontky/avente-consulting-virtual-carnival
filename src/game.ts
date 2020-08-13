@@ -14,8 +14,8 @@ export default class MainScene extends Phaser.Scene {
     super("main");
   }
 
-  init({ spawnPoint }: any) {
-    this.spawnPoint = spawnPoint;
+  init(data: { spawnPoint: { x: number; y: number } }) {
+    this.spawnPoint = data.spawnPoint;
   }
 
   preload() {
@@ -139,27 +139,31 @@ export default class MainScene extends Phaser.Scene {
     camera.startFollow(this.player.sprite);
 
     // Set up rooms
-    // const doorObjects = map.filterObjects("objects", (obj: any) =>
-    //   obj.properties.some((prop: any) => prop.name === "doorId")
-    // );
-    // doorObjects.forEach((obj: any) => {
-    // const sprites = map.createFromObjects("objects", obj.id, null);
-    //   const group = this.physics.add.staticGroup();
-    //   group.addMultiple(sprites);
-    //   group.setVisible(false);
-    //   this.physics.add.overlap(
-    //     this.player.sprite,
-    //     group,
-    //     (_, door: any) => {
-    //       const doorId = door.data.list[0].value;
-    //       this.scene.start("room", {
-    //         spawnPoint: { x: door.x, y: door.y + 40 },
-    //       });
-    //     },
-    //     null,
-    //     this
-    //   );
-    // });
+    const doorObjects = map.filterObjects(
+      "objects",
+      (obj: any) =>
+        obj.properties !== undefined &&
+        obj.properties.some((prop: any) => prop.name === "doorId")
+    );
+    doorObjects.forEach((obj: any) => {
+      const sprites = map.createFromObjects("objects", obj.id, null);
+      const group = this.physics.add.staticGroup();
+      group.addMultiple(sprites);
+      group.setVisible(false);
+      this.physics.add.overlap(
+        this.player.sprite,
+        group,
+        (_, door: any) => {
+          const doorId = door.data.list[0].value;
+          this.scene.start("room", {
+            doorId,
+            overWorldDoorLocation: { x: door.x, y: door.y + 40 },
+          });
+        },
+        null,
+        this
+      );
+    });
   }
 
   update() {
