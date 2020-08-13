@@ -74,14 +74,14 @@ export default class Dialog {
           "button.click",
           (button: { text: string }, groupName: string) => {
             this.destroy();
-            if (this.isPersonalityQuiz) {
+            if (groupName === "actions") {
+              resolve("closed");
+            } else if (this.isPersonalityQuiz) {
               // resolve to option text if is personality quiz
               resolve(button.text);
             } else if (button.text === this.correctAnswer) {
               // Is correct answer
               resolve("correct");
-            } else if (groupName === "actions") {
-              resolve("closed");
             } else {
               resolve("wrong");
             }
