@@ -5,6 +5,7 @@ import getFirebase from "./firebase";
 import Player from "./Player";
 import RoomScene from "./RoomScene";
 import loadFiles from "./loadFiles";
+import { getUser, updateUser } from "./dbUtils";
 
 export default class MainScene extends Phaser.Scene {
   controls: Phaser.Cameras.Controls.FixedKeyControl;
@@ -21,6 +22,14 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     loadFiles(this);
+
+    const db = getFirebase().firestore();
+    db.collection("users")
+      .doc(sessionStorage.getItem("uid"))
+      .onSnapshot((doc) => {
+        sessionStorage.setItem("userData", JSON.stringify(doc.data()));
+        console.log(sessionStorage.getItem("userData"));
+      });
   }
 
   create() {
@@ -193,9 +202,40 @@ const config = {
   },
 };
 
-getFirebase().auth().onAuthStateChanged((user) => {
-  if (user) {
-    sessionStorage.setItem("uid", user.uid);
-    const game = new Phaser.Game(config);
+getFirebase()
+  .auth()
+  .onAuthStateChanged(async (user) => {
+    if (user) {
+      await addMatricNumberToDb(user);
+      sessionStorage.setItem("uid", user.uid);
+      const game = new Phaser.Game(config);
+    }
+  });
+
+async function addMatricNumberToDb(user: firebase.User): Promise<string> {
+  function isValidMatricNumber(matricNumber: any) {
+    return (
+      matricNumber !== null && !isNaN(matricNumber) && matricNumber.length === 8
+    );
   }
-});
+  const matricNumber = (await getUser(user.uid)).matricNumber;
+  console.log(matricNumber);
+  console.log(isValidMatricNumber(matricNumber));
+
+  if (isValidMatricNumber(matricNumber)) {
+    return matricNumber;
+  }
+
+  let promptText =
+    "Enter your SMU matric number (8 digits). Make sure you enter the correct number, you will not get to edit this!";
+  let newMatricNumber: any = "";
+  while (!isValidMatricNumber(newMatricNumber)) {
+    newMatricNumber = prompt(promptText);
+    promptText =
+      "Invalid input. Please try again.\nEnter your SMU matric number (8 digits). Make sure you enter the correct number, you will not get to edit this!";
+  }
+
+  updateUser(user.uid, { matricNumber: newMatricNumber });
+
+  return newMatricNumber;
+}

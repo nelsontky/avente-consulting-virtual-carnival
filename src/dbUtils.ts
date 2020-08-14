@@ -4,6 +4,7 @@ const db = getFirebase().firestore();
 
 // Boolean will turn to true if completed
 export interface dbSchema {
+  matricNumber?: string;
   Adrian?: boolean;
   Benedict?: boolean;
   Chloe?: boolean;
@@ -25,6 +26,16 @@ export async function updateUser(uid: string, data: dbSchema) {
     try {
       await db.collection("users").doc(uid).set(data, { merge: true });
       isSuccess = true;
+    } catch {
+      // retry till success
+    }
+  }
+}
+
+export async function getUser(uid: string): Promise<dbSchema> {
+  while (true) {
+    try {
+      return (await db.collection("users").doc(uid).get()).data();
     } catch {
       // retry till success
     }
