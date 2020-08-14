@@ -5,7 +5,7 @@ import NPCDataInterface from "./NPCDataInterface";
 import Dialog from "./Dialog";
 import { genPersonalityQuizResults, nextButtonOnlyChoices } from "./NPCData";
 import QuizDialog from "./QuizDialog";
-import { updateUser } from "./dbUtils";
+import { updateStationData } from "./dbUtils";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
@@ -157,9 +157,11 @@ export default class NPC {
       }
     }
 
-    await updateUser(sessionStorage.getItem("uid"), {
-      stationData: { [this.data.name]: true },
-    });
+    await updateStationData(
+      sessionStorage.getItem("uid"),
+      this.data.name,
+      true
+    );
   }
 
   async runDialogAdrian() {

@@ -3,7 +3,7 @@ import getFirebase from "./firebase";
 const db = getFirebase().firestore();
 
 // Boolean will turn to true if completed
-export interface dbSchema {
+export interface DbSchema {
   matricNumber?: string;
   timeCompleted?: Date;
   stationData?: {
@@ -21,18 +21,12 @@ export interface dbSchema {
   };
 }
 
-export async function updateUser(uid: string, data: dbSchema) {
+export async function updateUser(uid: string, data: DbSchema) {
   let isSuccess = false;
 
   while (!isSuccess) {
     try {
-      const userHasDocument = (await getUser(uid)) !== undefined;
-
-      if (!userHasDocument) {
-        await createUserDoc(uid);
-      }
-
-      await db.collection("users").doc(uid).update(data);
+      await db.collection("users").doc(uid).set(data, { merge: true });
       isSuccess = true;
     } catch {
       // retry till success
@@ -40,23 +34,33 @@ export async function updateUser(uid: string, data: dbSchema) {
   }
 }
 
-export async function getUser(uid: string): Promise<dbSchema> {
+export async function updateStationData(
+  uid: string,
+  name: string,
+  value: boolean
+) {
+  let isSuccess = false;
+
+  while (!isSuccess) {
+    try {
+      await db.collection("users").doc(uid).set({}, { merge: true }); // ensure user has single document
+      await db
+        .collection("users")
+        .doc(uid)
+        .update({ [`stationData."${name}"`]: value });
+      isSuccess = true;
+    } catch (e) {
+      console.log(e);
+      return
+      // retry till success
+    }
+  }
+}
+
+export async function getUser(uid: string): Promise<DbSchema> {
   while (true) {
     try {
       return (await db.collection("users").doc(uid).get()).data();
-    } catch {
-      // retry till success
-    }
-  }
-}
-
-async function createUserDoc(uid: string) {
-  let isSuccess = false;
-
-  while (!isSuccess) {
-    try {
-      await db.collection("users").doc(uid).set({});
-      isSuccess = true;
     } catch {
       // retry till success
     }

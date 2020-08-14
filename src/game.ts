@@ -1,26 +1,23 @@
 import "phaser";
 import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
-import getFirebase from "./firebase";
 
-import Player from "./Player";
+import MainScene from "./MainScene";
 import RoomScene from "./RoomScene";
-import loadFiles from "./loadFiles";
+import getFirebase from "./firebase";
 import { getUser, updateUser } from "./dbUtils";
+import { width, height } from "./config";
+import loadFiles from "./loadFiles";
 
-export default class MainScene extends Phaser.Scene {
-  controls: Phaser.Cameras.Controls.FixedKeyControl;
-  player: Player;
-  spawnPoint: { x: number; y: number };
+export default class Game extends Phaser.Scene {
+  print: Phaser.GameObjects.Text;
+  currScene: any;
 
   constructor() {
-    super("main");
-  }
-
-  init(data: { spawnPoint: { x: number; y: number } }) {
-    this.spawnPoint = data.spawnPoint;
+    super("game");
   }
 
   preload() {
+    this.currScene = this;
     loadFiles(this);
 
     const db = getFirebase().firestore();
@@ -33,169 +30,136 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    const map = this.make.tilemap({
-      key: "map",
-    });
-    const allTileSets = [
-      map.addTilesetImage("Pandamaru Circus 2", "Pandamaru Circus 2"),
-      map.addTilesetImage("Pandamaru Circus 1", "Pandamaru Circus 1"),
-      map.addTilesetImage(
-        "Pandamaru Merry-Go-Round",
-        "Pandamaru Merry-Go-Round"
-      ),
-      map.addTilesetImage("Pandamaru Market 1", "Pandamaru Market 1"),
-      map.addTilesetImage("Pandamaru Magic Tent", "Pandamaru Magic Tent"),
-      map.addTilesetImage("Emerald (Tommy)", "Emerald (Tommy)"),
-      map.addTilesetImage("Outside (Hoenn) (Tommy)", "Outside (Hoenn) (Tommy)"),
-      map.addTilesetImage("Pandamaru Egypt", "Pandamaru Egypt"),
-      map.addTilesetImage("carmin sur mer", "carmin sur mer"),
-      map.addTilesetImage("Pandamaru Port Props", "Pandamaru Port Props"),
-      map.addTilesetImage("Pandamaru Goods 1", "Pandamaru Goods 1"),
-      map.addTilesetImage("Brown cave sand", "Brown cave sand"),
-      map.addTilesetImage("Dirt cave highlight", "Dirt cave highlight"),
-      map.addTilesetImage(
-        "celianna_templetiles_torches",
-        "celianna_templetiles_torches"
-      ),
-      map.addTilesetImage("TileC Celianna", "TileC Celianna"),
-      map.addTilesetImage("pandamaru tree 1", "pandamaru tree 1"),
-      map.addTilesetImage("pandamaru tree 2", "pandamaru tree 2"),
-      map.addTilesetImage(
-        "pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre",
-        "pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre"
-      ),
-      map.addTilesetImage("pandamaru tree 3", "pandamaru tree 3"),
-      map.addTilesetImage("pandamaru tree 4", "pandamaru tree 4"),
-      map.addTilesetImage("pandamaru tree 5", "pandamaru tree 5"),
-      map.addTilesetImage("pandamaru tree goods", "pandamaru tree goods"),
-      map.addTilesetImage("Pandamaru Playground", "Pandamaru Playground"),
-      map.addTilesetImage("Pandamaru Enclosure 2", "Pandamaru Enclosure 2"),
-      map.addTilesetImage("Pandamaru Train", "Pandamaru Train"),
-      map.addTilesetImage("Pandamaru Train Wagon", "Pandamaru Train Wagon"),
-      map.addTilesetImage("Hoenn Shipp", "Hoenn Shipp"),
-      map.addTilesetImage("Hoeen (1) (Tommy)", "Hoeen (1) (Tommy)"),
-      map.addTilesetImage("Boats (Tommy)", "Boats (Tommy)"),
-      map.addTilesetImage("062-CF_Lava01", "062-CF_Lava01"),
-      map.addTilesetImage(
-        "Brown Oval Tracks (Tommy)",
-        "Brown Oval Tracks (Tommy)"
-      ),
-      map.addTilesetImage("Tentages (Tommy)", "Tentages (Tommy)"),
-    ];
+    const dialog = this.currScene.rexUI.add
+      .dialog({
+        x: width / 2,
+        y: height / 2,
 
-    const Ground7 = map.createStaticLayer("7 Ground", allTileSets, 0, 0);
-    const Ground6 = map.createStaticLayer("6 Ground", allTileSets, 0, 0);
-    const Ground5 = map.createStaticLayer("5 Ground", allTileSets, 0, 0);
-    const Object4 = map.createStaticLayer("4 Object", allTileSets, 0, 0);
-    const ObjectEgyptStatueAndSea3 = map.createStaticLayer(
-      "3 Object(Egypt Statue and Sea)",
-      allTileSets,
-      0,
-      0
-    );
-    const ObjectsPolesAndTrees2 = map.createStaticLayer(
-      "2 Objects Poles and Trees",
-      allTileSets,
-      0,
-      0
-    );
-    const SkyPassable1 = map.createStaticLayer(
-      "1 Sky / Passable",
-      allTileSets,
-      0,
-      0
-    );
-    const SkyPassable0 = map.createStaticLayer(
-      "0 Sky Passable",
-      allTileSets,
-      0,
-      0
-    );
+        background: this.currScene.rexUI.add.roundRectangle(
+          0,
+          0,
+          100,
+          100,
+          20,
+          0x1565c0
+        ),
 
-    SkyPassable1.setDepth(10);
-    SkyPassable0.setDepth(11);
+        title: this.currScene.rexUI.add.label({
+          background: this.currScene.rexUI.add.roundRectangle(
+            0,
+            0,
+            100,
+            40,
+            20,
+            0x003c8f
+          ),
+          text: this.add.text(0, 0, "Welcome to Avente Carnival!", {
+            fontSize: "24px",
+          }),
+          space: {
+            left: 15,
+            right: 15,
+            top: 10,
+            bottom: 10,
+          },
+        }),
 
-    Object4.setCollisionByExclusion([-1]);
-    ObjectEgyptStatueAndSea3.setCollisionByExclusion([-1]);
-    ObjectsPolesAndTrees2.setCollisionByExclusion([-1]);
+        content: this.add.text(
+          0,
+          0,
+          "Click on your preferred character to start the game!",
+          {
+            fontSize: "18px",
+            wordWrap: { width: 400 },
+          }
+        ),
 
-    // const debugGraphics = this.add.graphics().setAlpha(0.75);
-    // [Object4, ObjectEgyptStatueAndSea3, ObjectsPolesAndTrees2].forEach(
-    //   (layer) =>
-    //     layer.renderDebug(debugGraphics, {
-    //       tileColor: null, // Color of non-colliding tiles
-    //       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    //       faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
-    //     })
-    // );
+        actions: [this.createImage("girl"), this.createImage("boy")],
 
-    const spawnPoint: any = map.findObject(
-      "objects",
-      (obj) => obj.name === "spawn"
-    );
-    if (this.spawnPoint === undefined) {
-      this.player = new Player(this, spawnPoint.x, spawnPoint.y, "boy");
-    } else {
-      this.player = new Player(
-        this,
-        this.spawnPoint.x,
-        this.spawnPoint.y,
-        "boy"
-      );
-    }
+        space: {
+          title: 25,
+          content: 25,
+          action: 15,
 
-    this.physics.add.collider(this.player.sprite, Object4);
-    this.physics.add.collider(this.player.sprite, ObjectEgyptStatueAndSea3);
-    this.physics.add.collider(this.player.sprite, ObjectsPolesAndTrees2);
-
-    // Set up camera
-    const camera = this.cameras.main;
-    camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    camera.startFollow(this.player.sprite);
-
-    // Set up rooms
-    const doorObjects = map.filterObjects(
-      "objects",
-      (obj: any) =>
-        obj.properties !== undefined &&
-        obj.properties.some((prop: any) => prop.name === "doorId")
-    );
-    doorObjects.forEach((obj: any) => {
-      const sprites = map.createFromObjects("objects", obj.id, null);
-      const group = this.physics.add.staticGroup();
-      group.addMultiple(sprites);
-      group.setVisible(false);
-      this.physics.add.overlap(
-        this.player.sprite,
-        group,
-        (_, door: any) => {
-          const doorId = door.data.list[0].value;
-          this.scene.start("room", {
-            doorId,
-            overWorldDoorLocation: { x: door.x, y: door.y + 40 },
-          });
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: 20,
         },
-        null,
-        this
-      );
+
+        align: {
+          actions: "center", // 'center'|'left'|'right'
+        },
+
+        expand: {
+          content: false, // Content is a pure text object
+        },
+      })
+      .layout();
+
+    dialog
+      .on("button.click", (_, __, index: number) => {
+        this.scene.start("main", {
+          gender: index === 0 ? "girl" : "boy",
+        });
+      })
+      .on("button.over", (button: any) => {
+        button.getElement("background").setStrokeStyle(1, 0xffffff);
+      })
+      .on("button.out", (button: any) => {
+        button.getElement("background").setStrokeStyle();
+      });
+  }
+
+  createLabel(text: string) {
+    return this.currScene.rexUI.add.label({
+      // width: 40,
+      // height: 40,
+
+      background: this.currScene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+
+      text: this.currScene.add.text(0, 0, text, {
+        fontSize: "24px",
+      }),
+
+      space: {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10,
+      },
     });
   }
 
-  update() {
-    this.player.update();
+  createImage(gender: "boy" | "girl") {
+    return this.currScene.rexUI.add.label({
+      // width: 40,
+      // height: 40,
+
+      background: this.currScene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+
+      text: this.add.image(0, 0, `${gender}-preview`).setScale(2, 2),
+
+      space: {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10,
+      },
+    });
   }
 }
 
 const config = {
   type: Phaser.AUTO,
-  width: 600,
-  height: 600,
+  width,
+  height,
   render: {
     pixelArt: true,
   },
   parent: "game",
   physics: { default: "arcade", arcade: { gravity: { y: 0 } } },
-  scene: [MainScene, RoomScene],
+  scene: [Game, MainScene, RoomScene],
   plugins: {
     scene: [
       {

@@ -29,10 +29,6 @@ export default class RoomScene extends Phaser.Scene {
   preload() {
     this.load.image("tiles", "assets/tiles/test/tuxmon-sample-32px.png");
     this.load.tilemapTiledJSON("room", "assets/tiles/test/room.json");
-    this.load.spritesheet("player", "assets/atlas.png", {
-      frameWidth: 32,
-      frameHeight: 43,
-    });
   }
 
   create() {

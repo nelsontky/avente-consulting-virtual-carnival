@@ -1,3 +1,5 @@
+import { width, height } from "./config";
+
 interface IQuestion {
   question: string;
   options: { option: string; isAnswer: boolean }[];
@@ -1065,8 +1067,8 @@ export default class QuizDialog {
     shuffle(questions);
 
     this.timeLeftText = scene.add.text(
-      x - 300 + 30,
-      y - 300 + 30,
+      x - width / 2 + 30,
+      y - height / 2 + 30,
       "Time left: " + this.secondsLeft,
       {
         fontSize: "24px",

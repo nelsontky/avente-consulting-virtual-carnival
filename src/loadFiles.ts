@@ -12,6 +12,9 @@ export default function loadFiles(scene: Phaser.Scene) {
     frameWidth: 30,
     frameHeight: 53,
   });
+  scene.load.image("boy-preview", "assets/boy-preview.png");
+  scene.load.image("girl-preview", "assets/girl-preview.png");
+
   // Tilesets
   scene.load.image(
     "Pandamaru Circus 2",
