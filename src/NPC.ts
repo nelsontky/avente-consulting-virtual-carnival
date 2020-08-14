@@ -247,15 +247,18 @@ export default class NPC {
       this.mapHeight / 2
     ).run();
 
-    await new Dialog(
-      this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2,
-      {
-        content: `Your score is ${score}`,
-        choices: [{ choiceText: `Next`, isAnswer: true }],
-      },
-      false
-    ).create();
+    if (score > -1) {
+      // -1 is returned when closed
+      await new Dialog(
+        this.scene,
+        this.mapWidth / 2,
+        this.mapHeight / 2,
+        {
+          content: `Your score is ${score}`,
+          choices: [{ choiceText: `Next`, isAnswer: true }],
+        },
+        false
+      ).create();
+    }
   }
 }

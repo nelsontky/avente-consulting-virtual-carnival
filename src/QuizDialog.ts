@@ -1,5 +1,3 @@
-import { Tilemaps } from "phaser";
-
 interface IQuestion {
   question: string;
   options: { option: string; isAnswer: boolean }[];
@@ -221,7 +219,7 @@ let questions: IQuestion[] = [
     options: [
       {
         option:
-          "(a) Identify problems, Gather information, and Implement Sustainable  Solutions",
+          "(a) Identify problems, Gather information, and Implement Sustainable Solutions",
         isAnswer: false,
       },
       {
@@ -680,6 +678,174 @@ let questions: IQuestion[] = [
       },
       {
         option: "(d) Individual Projects",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "What is the proposed SCQA framework used in case competitions?",
+    options: [
+      {
+        option: "(a) Situation, Complication, Question, Answer",
+        isAnswer: true,
+      },
+      {
+        option: "(b) Situation, Consideration, Question, Analyze",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Situation, Consideration, Question, Answer",
+        isAnswer: false,
+      },
+      {
+        option: "(d) None of the above",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "How can you connect with Avente?",
+    options: [
+      {
+        option: "(a) Facebook",
+        isAnswer: false,
+      },
+      {
+        option: "(b) LinkedIn",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Instagram",
+        isAnswer: false,
+      },
+      {
+        option: "(d) All of the above",
+        isAnswer: true,
+      },
+    ],
+  },
+  {
+    question: "What are Avente's consulting strategies grounded in?",
+    options: [
+      {
+        option: "(a) Digital Strategies",
+        isAnswer: true,
+      },
+      {
+        option: "(b) Marketing strategies",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Communication Strategies",
+        isAnswer: false,
+      },
+      {
+        option: "(d) Analysis Strategies",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "What was Avente's 2019 Networking Event called?",
+    options: [
+      {
+        option: "(a) Genesis",
+        isAnswer: true,
+      },
+      {
+        option: "(b) Exodus",
+        isAnswer: false,
+      },
+      {
+        option: "(c)",
+        isAnswer: false,
+      },
+      {
+        option: "(d) Pivot",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "What is our introduction series on Instagram called?",
+    options: [
+      {
+        option: "(a) Humans of Avente",
+        isAnswer: true,
+      },
+      {
+        option: "(b) AventUS",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Hello Avente",
+        isAnswer: false,
+      },
+      {
+        option: "(d) Avente Behind the Scenes",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "What is our Avente logo?",
+    options: [
+      {
+        option: "(a) á",
+        isAnswer: true,
+      },
+      {
+        option: "(b) Apple",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Adidas",
+        isAnswer: false,
+      },
+      {
+        option: "(d) Adobe",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "What stages does our recruitment process include?",
+    options: [
+      {
+        option: "(a) Coffee Chat Stage",
+        isAnswer: true,
+      },
+      {
+        option: "(b) Kopitiam Chat Stage",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Networking stage",
+        isAnswer: false,
+      },
+      {
+        option: "(d) Koufu Chat Stage",
+        isAnswer: false,
+      },
+    ],
+  },
+  {
+    question: "What stages does our recruitment process include?",
+    options: [
+      {
+        option: "(a) Coffee Chat Stage",
+        isAnswer: true,
+      },
+      {
+        option: "(b) Performance stage",
+        isAnswer: false,
+      },
+      {
+        option: "(c) Networking stage",
+        isAnswer: false,
+      },
+      {
+        option: "(d) All of the above",
         isAnswer: false,
       },
     ],
