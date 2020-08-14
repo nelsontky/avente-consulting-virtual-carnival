@@ -1,5 +1,6 @@
 import "phaser";
 import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
+import getFirebase from "./firebase";
 
 import Player from "./Player";
 import RoomScene from "./RoomScene";
@@ -192,4 +193,9 @@ const config = {
   },
 };
 
-const game = new Phaser.Game(config);
+getFirebase().auth().onAuthStateChanged((user) => {
+  if (user) {
+    sessionStorage.setItem("uid", user.uid);
+    const game = new Phaser.Game(config);
+  }
+});

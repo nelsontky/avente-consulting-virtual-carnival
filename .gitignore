@@ -119,3 +119,5 @@ node_modules/
 
 # Build
 /npm-debug.log
+
+firebase.ts
