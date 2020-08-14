@@ -27,7 +27,6 @@ ui.start("#firebaseui-auth-container", uiConfig);
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // Hide/show elements on sign in
-    console.log(user);
     document.getElementById("loader").style.display = "none";
     document.getElementById("firebaseui-auth-container").style.display = "none";
     document.getElementById("game").style.display = "block";
