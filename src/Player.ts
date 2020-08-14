@@ -7,70 +7,77 @@ export default class Player {
   stationaryDirection: "face_up" | "face_left" | "face_down" | "face_right";
   isFrozen: boolean;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    gender: "girl" | "boy"
+  ) {
     this.scene = scene;
-    this.sprite = this.scene.physics.add
-      .sprite(x, y, "player", 1)
-      .setSize(30, 40);
+    this.sprite = this.scene.physics.add.sprite(x, y, gender, 1);
     this.isFrozen = false;
 
     this.scene.anims.create({
       key: "left",
-      frames: this.scene.anims.generateFrameNumbers("player", {
-        frames: [10, 7, 6],
+      frames: this.scene.anims.generateFrameNumbers(gender, {
+        start: 18,
+        end: 26,
       }),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1,
     });
 
     this.scene.anims.create({
       key: "right",
-      frames: this.scene.anims.generateFrameNumbers("player", {
-        frames: [11, 8, 5],
+      frames: this.scene.anims.generateFrameNumbers(gender, {
+        start: 27,
+        end: 35,
       }),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1,
     });
 
     this.scene.anims.create({
       key: "up",
-      frames: this.scene.anims.generateFrameNumbers("player", {
-        frames: [9, 3, 4],
+      frames: this.scene.anims.generateFrameNumbers(gender, {
+        start: 0,
+        end: 8,
       }),
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1,
     });
 
     this.scene.anims.create({
       key: "down",
-      frames: this.scene.anims.generateFrameNumbers("player", {
-        frames: [1, 0, 2],
+      frames: this.scene.anims.generateFrameNumbers(gender, {
+        start: 9,
+        end: 17,
       }),
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1,
     });
 
     this.scene.anims.create({
       key: "face_down",
-      frames: [{ key: "player", frame: 1 }],
+      frames: [{ key: gender, frame: 9 }],
       frameRate: 20,
     });
 
     this.scene.anims.create({
       key: "face_right",
-      frames: [{ key: "player", frame: 11 }],
+      frames: [{ key: gender, frame: 27 }],
       frameRate: 20,
     });
 
     this.scene.anims.create({
       key: "face_left",
-      frames: [{ key: "player", frame: 10 }],
+      frames: [{ key: gender, frame: 18 }],
       frameRate: 20,
     });
 
     this.scene.anims.create({
       key: "face_up",
-      frames: [{ key: "player", frame: 9 }],
+      frames: [{ key: gender, frame: 0 }],
       frameRate: 20,
     });
 

@@ -3,9 +3,14 @@ import "phaser";
 export default function loadFiles(scene: Phaser.Scene) {
   scene.load.image("tiles", "assets/tiles/test/tuxmon-sample-32px.png");
   scene.load.tilemapTiledJSON("map", "assets/tiles/Nelson Half Map 2.json");
-  scene.load.spritesheet("player", "assets/atlas.png", {
-    frameWidth: 32,
-    frameHeight: 43,
+
+  scene.load.spritesheet("girl", "assets/girl.png", {
+    frameWidth: 28,
+    frameHeight: 49,
+  });
+  scene.load.spritesheet("boy", "assets/boy.png", {
+    frameWidth: 30,
+    frameHeight: 53,
   });
   // Tilesets
   scene.load.image(

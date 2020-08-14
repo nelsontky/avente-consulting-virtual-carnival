@@ -50,7 +50,7 @@ export default class RoomScene extends Phaser.Scene {
       (obj) => obj.name === "spawn"
     );
 
-    this.player = new Player(this, spawnPoint.x, spawnPoint.y);
+    this.player = new Player(this, spawnPoint.x, spawnPoint.y, "boy");
     this.physics.add.collider(this.player.sprite, blocking);
 
     const camera = this.cameras.main;

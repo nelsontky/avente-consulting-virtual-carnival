@@ -157,7 +157,9 @@ export default class NPC {
       }
     }
 
-    await updateUser(sessionStorage.getItem("uid"), { [this.data.name]: true });
+    await updateUser(sessionStorage.getItem("uid"), {
+      stationData: { [this.data.name]: true },
+    });
   }
 
   async runDialogAdrian() {

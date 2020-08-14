@@ -134,9 +134,14 @@ export default class MainScene extends Phaser.Scene {
       (obj) => obj.name === "spawn"
     );
     if (this.spawnPoint === undefined) {
-      this.player = new Player(this, spawnPoint.x, spawnPoint.y);
+      this.player = new Player(this, spawnPoint.x, spawnPoint.y, "boy");
     } else {
-      this.player = new Player(this, this.spawnPoint.x, this.spawnPoint.y);
+      this.player = new Player(
+        this,
+        this.spawnPoint.x,
+        this.spawnPoint.y,
+        "boy"
+      );
     }
 
     this.physics.add.collider(this.player.sprite, Object4);
@@ -218,12 +223,14 @@ async function addMatricNumberToDb(user: firebase.User): Promise<string> {
       matricNumber !== null && !isNaN(matricNumber) && matricNumber.length === 8
     );
   }
-  const matricNumber = (await getUser(user.uid)).matricNumber;
-  console.log(matricNumber);
-  console.log(isValidMatricNumber(matricNumber));
+  const userDoc = await getUser(user.uid);
 
-  if (isValidMatricNumber(matricNumber)) {
-    return matricNumber;
+  if (userDoc !== undefined) {
+    const matricNumber = userDoc.matricNumber;
+
+    if (isValidMatricNumber(matricNumber)) {
+      return matricNumber;
+    }
   }
 
   let promptText =
