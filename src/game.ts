@@ -25,7 +25,6 @@ export default class Game extends Phaser.Scene {
       .doc(sessionStorage.getItem("uid"))
       .onSnapshot((doc) => {
         sessionStorage.setItem("userData", JSON.stringify(doc.data()));
-        console.log(sessionStorage.getItem("userData"));
       });
   }
 

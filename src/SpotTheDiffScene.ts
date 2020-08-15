@@ -1,6 +1,5 @@
 import "phaser";
 
-import RoomScene from "./RoomScene";
 import loadFiles from "./loadFiles";
 
 // Interface representing top left and bottom right point of a rectangle
@@ -115,13 +114,12 @@ export default class SpotTheDiffScene extends Phaser.Scene {
 
     if (this.numberFound === diffAreas.length || this.timeLeft <= 0) {
       this.timeLeft = 30;
-      this.scene.restart();
-      this.scene.start("room", {
-        doorId: this.harisData.roomId,
-        overWorldDoorLocation: this.harisData.overWorldDoorLocation,
-        x: this.harisData.x,
-        y: this.harisData.y,
-        score: this.numberFound,
+      this.timer = 0;
+      const score = this.numberFound;
+      this.numberFound = 0;
+      this.scene.stop();
+      this.scene.run("room", {
+        score,
       });
     }
   }

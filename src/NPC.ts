@@ -18,12 +18,6 @@ export default class NPC {
   mapWidth: number;
   mapHeight: number;
   tick: Phaser.GameObjects.Image;
-  harisData: {
-    roomId: number;
-    x: number;
-    y: number;
-    overWorldDoorLocation: { x: number; y: number };
-  };
 
   constructor(
     scene: Phaser.Scene,
@@ -32,13 +26,7 @@ export default class NPC {
     player: Player,
     data: NPCDataInterface,
     mapWidth: number,
-    mapHeight: number,
-    harisData?: {
-      roomId: number;
-      x: number;
-      y: number;
-      overWorldDoorLocation: { x: number; y: number };
-    }
+    mapHeight: number
   ) {
     this.scene = scene;
     this.player = player;
@@ -46,7 +34,6 @@ export default class NPC {
     this.data = data;
     this.mapWidth = mapWidth;
     this.mapHeight = mapHeight;
-    this.harisData = harisData;
 
     this.sprite = this.scene.physics.add.staticSprite(x, y, this.data.name, 1);
 
@@ -133,7 +120,15 @@ export default class NPC {
           this.player.isFrozen = false;
         });
       } else if (this.data.name === "Haris") {
-        this.runDialogHaris();
+        this.runDialogHaris().then(() => {
+          this.isInteractionOngoing = false;
+          this.player.isFrozen = false;
+        });
+      } else if (this.data.name === "Maneesha") {
+        this.runDialogManeesha().then(() => {
+          this.isInteractionOngoing = false;
+          this.player.isFrozen = false;
+        });
       } else {
         this.runDialog().then(() => {
           this.isInteractionOngoing = false;
@@ -308,7 +303,7 @@ export default class NPC {
   }
 
   async runDialogHaris() {
-    await new Dialog(
+    const outcome = await new Dialog(
       this.scene,
       this.mapWidth / 2,
       this.mapHeight / 2,
@@ -316,9 +311,54 @@ export default class NPC {
         content: `Hi! I’m Haris, the Vice President of Avente Consulting and the head of Marcomms Department! This station is a Spot-The-Difference game, and you have 30 seconds to find 10 differences!`,
         choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
       },
+      true
+    ).create();
+
+    if (outcome === "closed") {
+      return;
+    }
+    this.scene.scene.pause();
+    this.scene.scene.run("diff");
+  }
+
+  async runDialogManeesha() {
+    const outcome = await new Dialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2,
+      {
+        content: `Hi! I’m Maneesha, the Honorary General Secretary of Avente Consulting and the head of Operations Department! In this station, you get to play a word search game! You can exit the puzzle at any time.`,
+        choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
+      },
+      true
+    ).create();
+
+    if (outcome === "closed") {
+      return;
+    }
+
+    // Reload iframe
+    const iframe: any = document.getElementById("game-iframe");
+    iframe.src += "";
+
+    // Display iframe
+    document.getElementById("word-search").style.display = "block";
+
+    await new Dialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2,
+      {
+        content: `Hope you had fun with the puzzle!`,
+        choices: [{ choiceText: `Next`, isAnswer: true }],
+      },
       false
     ).create();
 
-    this.scene.scene.start("diff", this.harisData);
+    await updateStationData(
+      sessionStorage.getItem("uid"),
+      this.data.name,
+      true
+    );
   }
 }

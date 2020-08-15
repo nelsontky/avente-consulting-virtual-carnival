@@ -13,9 +13,6 @@ export default class RoomScene extends Phaser.Scene {
   roomId: number;
   npcs: NPC[];
   dialog: Dialog;
-  y: number;
-  x: number;
-  score: number;
   map: Phaser.Tilemaps.Tilemap;
 
   constructor() {
@@ -26,15 +23,9 @@ export default class RoomScene extends Phaser.Scene {
   init(data: {
     doorId: number;
     overWorldDoorLocation: { x: number; y: number };
-    x?: number;
-    y?: number;
-    score?: number;
   }) {
     this.overWorldDoorLocation = data.overWorldDoorLocation;
     this.roomId = data.doorId;
-    this.x = data.x;
-    this.y = data.y;
-    this.score = data.score;
   }
 
   preload() {
@@ -56,11 +47,7 @@ export default class RoomScene extends Phaser.Scene {
       "objects",
       (obj) => obj.name === "spawn"
     );
-    if (this.x === undefined || this.y === undefined) {
-      this.player = new Player(this, spawnPoint.x, spawnPoint.y);
-    } else {
-      this.player = new Player(this, this.x, this.y);
-    }
+    this.player = new Player(this, spawnPoint.x, spawnPoint.y);
     this.physics.add.collider(this.player.sprite, blocking);
 
     const camera = this.cameras.main;
@@ -107,23 +94,15 @@ export default class RoomScene extends Phaser.Scene {
           this.player,
           npcsInRoom[i],
           map.widthInPixels,
-          map.heightInPixels,
-          npcsInRoom[i].name !== "Haris"
-            ? undefined
-            : {
-                roomId: this.roomId,
-                overWorldDoorLocation: this.overWorldDoorLocation,
-                x: npcSpawnPoints[i].x,
-                y: npcSpawnPoints[i].y + 50,
-              }
+          map.heightInPixels
         )
       );
     }
 
     // Open Haris ending dialog
-    if (this.score !== undefined) {
-      this.openHarisLastDialog();
-    }
+    this.events.on("resume", (_, data: { score: number }) =>
+      this.openHarisLastDialog(data.score)
+    );
   }
 
   update() {
@@ -131,7 +110,7 @@ export default class RoomScene extends Phaser.Scene {
     this.npcs.forEach((npc) => npc.update());
   }
 
-  async openHarisLastDialog() {
+  async openHarisLastDialog(score: number) {
     this.player.isFrozen = true;
 
     await new Dialog(
@@ -139,13 +118,13 @@ export default class RoomScene extends Phaser.Scene {
       this.map.widthInPixels / 2,
       this.map.heightInPixels / 2,
       {
-        content: `Your score is ${this.score}!`,
+        content: `Your score is ${score}!`,
         choices: [{ choiceText: `Next`, isAnswer: true }],
       },
       false
     ).create();
 
     this.player.isFrozen = false;
-    await updateStationData(sessionStorage.getItem("uid"), "Haris", this.score);
+    await updateStationData(sessionStorage.getItem("uid"), "Haris", score);
   }
 }
