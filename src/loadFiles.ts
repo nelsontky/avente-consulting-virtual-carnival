@@ -16,6 +16,10 @@ export default function loadFiles(scene: Phaser.Scene) {
   scene.load.image("girl-preview", "assets/girl-preview.png");
   scene.load.image("tick", "assets/tick.png");
 
+  // Spot the diff
+  scene.load.image("changed", "assets/spot_the_difference/changed.png");
+  scene.load.image("original", "assets/spot_the_difference/original.png");
+
   // Tilesets
   scene.load.image(
     "Pandamaru Circus 2",

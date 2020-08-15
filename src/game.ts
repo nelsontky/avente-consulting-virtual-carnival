@@ -3,13 +3,13 @@ import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 
 import MainScene from "./MainScene";
 import RoomScene from "./RoomScene";
+import SpotTheDiffScene from "./SpotTheDiffScene";
 import getFirebase from "./firebase";
 import { getUser, updateUser } from "./dbUtils";
 import { width, height } from "./config";
 import loadFiles from "./loadFiles";
 
 export default class Game extends Phaser.Scene {
-  print: Phaser.GameObjects.Text;
   currScene: any;
 
   constructor() {
@@ -116,7 +116,14 @@ export default class Game extends Phaser.Scene {
       // width: 40,
       // height: 40,
 
-      background: this.currScene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+      background: this.currScene.rexUI.add.roundRectangle(
+        0,
+        0,
+        0,
+        0,
+        20,
+        0x5e92f3
+      ),
 
       text: this.currScene.add.text(0, 0, text, {
         fontSize: "24px",
@@ -136,7 +143,14 @@ export default class Game extends Phaser.Scene {
       // width: 40,
       // height: 40,
 
-      background: this.currScene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+      background: this.currScene.rexUI.add.roundRectangle(
+        0,
+        0,
+        0,
+        0,
+        20,
+        0x5e92f3
+      ),
 
       text: this.add.image(0, 0, `${gender}-preview`).setScale(2, 2),
 
@@ -159,7 +173,7 @@ const config = {
   },
   parent: "game",
   physics: { default: "arcade", arcade: { gravity: { y: 0 } } },
-  scene: [Game, MainScene, RoomScene],
+  scene: [Game, MainScene, RoomScene, SpotTheDiffScene],
   plugins: {
     scene: [
       {
