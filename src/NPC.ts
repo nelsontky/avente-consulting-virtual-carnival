@@ -18,6 +18,12 @@ export default class NPC {
   mapWidth: number;
   mapHeight: number;
   tick: Phaser.GameObjects.Image;
+  harisData: {
+    roomId: number;
+    x: number;
+    y: number;
+    overWorldDoorLocation: { x: number; y: number };
+  };
 
   constructor(
     scene: Phaser.Scene,
@@ -26,7 +32,13 @@ export default class NPC {
     player: Player,
     data: NPCDataInterface,
     mapWidth: number,
-    mapHeight: number
+    mapHeight: number,
+    harisData?: {
+      roomId: number;
+      x: number;
+      y: number;
+      overWorldDoorLocation: { x: number; y: number };
+    }
   ) {
     this.scene = scene;
     this.player = player;
@@ -34,6 +46,7 @@ export default class NPC {
     this.data = data;
     this.mapWidth = mapWidth;
     this.mapHeight = mapHeight;
+    this.harisData = harisData;
 
     this.sprite = this.scene.physics.add
       .staticSprite(x, y, this.data.name, 1)
@@ -77,7 +90,8 @@ export default class NPC {
     // Checkbox
     this.tick = this.scene.add
       .image(this.sprite.x, this.sprite.y - 40, "tick")
-      .setScale(0.2, 0.2);
+      .setScale(0.2, 0.2)
+      .setDepth(20);
     this.tick.setVisible(false);
   }
 
@@ -121,6 +135,8 @@ export default class NPC {
           this.isInteractionOngoing = false;
           this.player.isFrozen = false;
         });
+      } else if (this.data.name === "Haris") {
+        this.runDialogHaris();
       } else {
         this.runDialog().then(() => {
           this.isInteractionOngoing = false;
@@ -292,5 +308,9 @@ export default class NPC {
         score
       );
     }
+  }
+
+  runDialogHaris() {
+    this.scene.scene.start("diff", this.harisData);
   }
 }

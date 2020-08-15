@@ -30,12 +30,27 @@ export default class SpotTheDiffScene extends Phaser.Scene {
   timeLeftText: Phaser.GameObjects.Text;
   timeLeft: number;
   timer: number;
+  harisData: {
+    roomId: number;
+    x: number;
+    y: number;
+    overWorldDoorLocation: { x: number; y: number };
+  };
 
   constructor() {
     super("diff");
     this.numberFound = 0;
     this.timeLeft = 30;
     this.timer = 0;
+  }
+
+  init(harisData: {
+    roomId: number;
+    x: number;
+    y: number;
+    overWorldDoorLocation: { x: number; y: number };
+  }) {
+    this.harisData = harisData;
   }
 
   preload() {
@@ -98,8 +113,15 @@ export default class SpotTheDiffScene extends Phaser.Scene {
       this.timer = 0;
     }
 
-    if (this.numberFound === diffAreas.length || this.timer <= 0) {
-      //exit
+    if (this.numberFound === diffAreas.length || this.timeLeft <= 0) {
+      this.timeLeft = 30;
+      this.scene.restart();
+      this.scene.start("room", {
+        doorId: this.harisData.roomId,
+        overWorldDoorLocation: this.harisData.overWorldDoorLocation,
+        x: this.harisData.x,
+        y: this.harisData.y,
+      });
     }
   }
 

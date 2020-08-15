@@ -12,6 +12,8 @@ export default class RoomScene extends Phaser.Scene {
   roomId: number;
   npcs: NPC[];
   dialog: Dialog;
+  y: number;
+  x: number;
 
   constructor() {
     super("room");
@@ -21,9 +23,13 @@ export default class RoomScene extends Phaser.Scene {
   init(data: {
     doorId: number;
     overWorldDoorLocation: { x: number; y: number };
+    x?: number;
+    y?: number;
   }) {
     this.overWorldDoorLocation = data.overWorldDoorLocation;
     this.roomId = data.doorId;
+    this.x = data.x;
+    this.y = data.y;
   }
 
   preload() {
@@ -44,8 +50,11 @@ export default class RoomScene extends Phaser.Scene {
       "objects",
       (obj) => obj.name === "spawn"
     );
-
-    this.player = new Player(this, spawnPoint.x, spawnPoint.y, "boy");
+    if (this.x === undefined || this.y === undefined) {
+      this.player = new Player(this, spawnPoint.x, spawnPoint.y);
+    } else {
+      this.player = new Player(this, this.x, this.y);
+    }
     this.physics.add.collider(this.player.sprite, blocking);
 
     const camera = this.cameras.main;
@@ -91,7 +100,15 @@ export default class RoomScene extends Phaser.Scene {
           this.player,
           npcsInRoom[i],
           map.widthInPixels,
-          map.heightInPixels
+          map.heightInPixels,
+          npcsInRoom[i].name !== "Haris"
+            ? undefined
+            : {
+                roomId: this.roomId,
+                overWorldDoorLocation: this.overWorldDoorLocation,
+                x: npcSpawnPoints[i].x,
+                y: npcSpawnPoints[i].y + 50,
+              }
         )
       );
     }

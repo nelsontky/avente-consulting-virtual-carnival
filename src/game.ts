@@ -99,6 +99,8 @@ export default class Game extends Phaser.Scene {
 
     dialog
       .on("button.click", (_, __, index: number) => {
+        sessionStorage.setItem("gender", index === 0 ? "girl" : "boy");
+
         this.scene.start("main", {
           gender: index === 0 ? "girl" : "boy",
         });

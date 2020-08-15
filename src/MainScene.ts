@@ -129,14 +129,9 @@ export default class MainScene extends Phaser.Scene {
       (obj) => obj.name === "spawn"
     );
     if (this.spawnPoint === undefined) {
-      this.player = new Player(this, spawnPoint.x, spawnPoint.y, this.gender);
+      this.player = new Player(this, spawnPoint.x, spawnPoint.y);
     } else {
-      this.player = new Player(
-        this,
-        this.spawnPoint.x,
-        this.spawnPoint.y,
-        this.gender
-      );
+      this.player = new Player(this, this.spawnPoint.x, this.spawnPoint.y);
     }
 
     this.physics.add.collider(this.player.sprite, Object4);

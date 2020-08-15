@@ -183,7 +183,7 @@ export default function loadFiles(scene: Phaser.Scene) {
     frameWidth: 30,
     frameHeight: 54,
   });
-  scene.load.spritesheet("Harris", "assets/NPCs/Harris.png", {
+  scene.load.spritesheet("Haris", "assets/NPCs/Haris.png", {
     frameWidth: 30,
     frameHeight: 54,
   });

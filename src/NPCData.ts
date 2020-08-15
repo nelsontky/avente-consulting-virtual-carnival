@@ -480,6 +480,18 @@ export const PUNNAG: NPCDataInterface = {
   dialogs: { content: null, choices: null },
 };
 
+export const HARIS: NPCDataInterface = {
+  // Spot the diff
+  name: "Haris",
+  dialogs: { content: null, choices: null },
+};
+
+export const MANEESHA: NPCDataInterface = {
+  // Word search
+  name: "Maneesha",
+  dialogs: { content: null, choices: null },
+};
+
 export function genPersonalityQuizResults(
   category: "IT" | "Finance" | "Management" | "HR" | "Marketing"
 ) {

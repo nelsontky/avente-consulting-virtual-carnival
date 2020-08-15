@@ -7,16 +7,13 @@ export default class Player {
   stationaryDirection: "face_up" | "face_left" | "face_down" | "face_right";
   isFrozen: boolean;
 
-  constructor(
-    scene: Phaser.Scene,
-    x: number,
-    y: number,
-    gender: "girl" | "boy"
-  ) {
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    const gender = sessionStorage.getItem("gender");
     this.scene = scene;
     this.sprite = this.scene.physics.add
       .sprite(x, y, gender, 9)
-      .setSize(30, 40);
+      .setSize(30, 40)
+      .setDepth(10);
     this.isFrozen = false;
 
     this.scene.anims.create({
