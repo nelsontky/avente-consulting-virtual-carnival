@@ -14,10 +14,65 @@
     <script src="initFirebase.js"></script>
     <script src="auth.js"></script>
     <script src="game.js"></script>
+    <style>
+      iframe {
+        overflow: hidden;
+        width: 900px;
+        height: 895px;
+        border: 1px solid black;
+        position: absolute;
+        top: 75px;
+        left: 75px;
+        -ms-zoom: 0.5;
+        -moz-transform: scale(0.5);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(0.5);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(0.5);
+        -webkit-transform-origin: 0 0;
+      }
+    </style>
   </head>
   <body>
     <div id="firebaseui-auth-container"></div>
     <div id="loader">Loading...</div>
-    <div style="display: none;" id="game"></div>
+    <div style="position: relative;">
+      <div style="display: none;" id="game"></div>
+
+      <div id="word-search" style="display: none;">
+        <iframe
+          src="https://thewordsearch.com/puzzle/1363476/avente-welfare-day/"
+          scrolling="no"
+          id="game-iframe"
+        ></iframe>
+        <div
+          style="
+            position: absolute;
+            top: 75px;
+            left: 76px;
+            width: 449px;
+            height: 100px;
+            background-color: rgb(250, 255, 228);
+          "
+        >
+          <span
+            style="
+              margin-left: 420px;
+              cursor: default;
+              font-size: 32px;
+              font-family: Arial;
+              -webkit-touch-callout: none;
+              -webkit-user-select: none;
+              -khtml-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+            "
+            onclick="document.getElementById('word-search').style.display = 'none'"
+            >x</span
+          >
+        </div>
+      </div>
+    </div>
   </body>
 </html>
