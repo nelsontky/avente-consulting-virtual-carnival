@@ -180,13 +180,24 @@ export default class MainScene extends Phaser.Scene {
     this.player.update();
   }
 
-  getNpcsSpokenTo(): number {
+  isBossRoomUnlocked(): boolean {
     const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
     if (playerData === undefined || playerData.stationData === undefined) {
-      return 0;
+      return false;
     }
 
-    // Remove all falsy values
-    return Object.values(playerData.stationData).filter((data) => data).length;
+    const { stationData } = playerData;
+    return (
+      stationData.Adrian &&
+      stationData.Benedict &&
+      stationData.Chloe &&
+      stationData.Donald &&
+      stationData.Gregory &&
+      stationData.Kingston &&
+      stationData["Min Hern"] &&
+      stationData.Samantha &&
+      stationData.Svarnim &&
+      stationData["Wai Siang"]
+    );
   }
 }
