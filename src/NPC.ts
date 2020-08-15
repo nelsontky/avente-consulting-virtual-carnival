@@ -48,9 +48,7 @@ export default class NPC {
     this.mapHeight = mapHeight;
     this.harisData = harisData;
 
-    this.sprite = this.scene.physics.add
-      .staticSprite(x, y, this.data.name, 1)
-      .setSize(30, 40);
+    this.sprite = this.scene.physics.add.staticSprite(x, y, this.data.name, 1);
 
     this.scene.physics.add.collider(
       this.sprite,
@@ -90,8 +88,7 @@ export default class NPC {
     // Checkbox
     this.tick = this.scene.add
       .image(this.sprite.x, this.sprite.y - 40, "tick")
-      .setScale(0.2, 0.2)
-      .setDepth(20);
+      .setScale(0.2, 0.2);
     this.tick.setVisible(false);
   }
 
@@ -296,7 +293,7 @@ export default class NPC {
         this.mapWidth / 2,
         this.mapHeight / 2,
         {
-          content: `Your score is ${score}`,
+          content: `Your score is ${score}!`,
           choices: [{ choiceText: `Next`, isAnswer: true }],
         },
         false
@@ -310,7 +307,18 @@ export default class NPC {
     }
   }
 
-  runDialogHaris() {
+  async runDialogHaris() {
+    await new Dialog(
+      this.scene,
+      this.mapWidth / 2,
+      this.mapHeight / 2,
+      {
+        content: `Hi! I’m Haris, the Vice President of Avente Consulting and the head of Marcomms Department! This station is a Spot-The-Difference game, and you have 30 seconds to find 10 differences!`,
+        choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
+      },
+      false
+    ).create();
+
     this.scene.scene.start("diff", this.harisData);
   }
 }

@@ -30,6 +30,7 @@ export async function updateUser(uid: string, data: DbSchema) {
       isSuccess = true;
     } catch {
       // retry till success
+      console.log("Retry update user");
     }
   }
 }
@@ -44,15 +45,28 @@ export async function updateStationData(
   while (!isSuccess) {
     try {
       await db.collection("users").doc(uid).set({}, { merge: true }); // ensure user has single document
+
+      if (typeof value === "number") {
+        const currValue = await getUser(uid);
+
+        // Do not update if prev score is higher
+        const shouldUpdate =
+          currValue.stationData !== undefined &&
+          currValue.stationData[name] !== undefined &&
+          currValue.stationData[name] < value;
+
+        if (!shouldUpdate) {
+          return;
+        }
+      }
       await db
         .collection("users")
         .doc(uid)
         .update({ [`stationData.${name}`]: value });
       isSuccess = true;
-    } catch (e) {
-      console.log(e);
-      return
+    } catch {
       // retry till success
+      console.log("Retry update station data");
     }
   }
 }
@@ -63,6 +77,7 @@ export async function getUser(uid: string): Promise<DbSchema> {
       return (await db.collection("users").doc(uid).get()).data();
     } catch {
       // retry till success
+      console.log("Retry get user");
     }
   }
 }

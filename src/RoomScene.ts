@@ -5,6 +5,7 @@ import NPC from "./NPC";
 import Dialog from "./Dialog";
 import roomData from "./roomData";
 import NPCDataInterface from "./NPCDataInterface";
+import { updateStationData } from "./dbUtils";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
@@ -14,6 +15,8 @@ export default class RoomScene extends Phaser.Scene {
   dialog: Dialog;
   y: number;
   x: number;
+  score: number;
+  map: Phaser.Tilemaps.Tilemap;
 
   constructor() {
     super("room");
@@ -25,11 +28,13 @@ export default class RoomScene extends Phaser.Scene {
     overWorldDoorLocation: { x: number; y: number };
     x?: number;
     y?: number;
+    score?: number;
   }) {
     this.overWorldDoorLocation = data.overWorldDoorLocation;
     this.roomId = data.doorId;
     this.x = data.x;
     this.y = data.y;
+    this.score = data.score;
   }
 
   preload() {
@@ -40,6 +45,7 @@ export default class RoomScene extends Phaser.Scene {
     const map = this.make.tilemap({
       key: "room",
     });
+    this.map = map;
     const tileset = map.addTilesetImage("tuxmon-sample-32px", "tiles");
     const belowLayer = map.createStaticLayer("below_world", tileset, 0, 0);
     const blocking = map.createStaticLayer("blocking", tileset, 0, 0);
@@ -69,22 +75,23 @@ export default class RoomScene extends Phaser.Scene {
     );
     camera.startFollow(this.player.sprite);
 
-    const doors = this.physics.add.staticGroup();
-    belowLayer.forEachTile((tile: any) => {
-      if (tile.properties.isDoor) {
-        doors.create(tile.getCenterX(), tile.getCenterY(), "door");
-      }
-    });
-
-    doors.toggleVisible();
-    this.physics.add.overlap(
-      this.player.sprite,
-      doors,
-      () =>
-        this.scene.start("main", { spawnPoint: this.overWorldDoorLocation }),
-      null,
-      this
+    const doorObjects = map.filterObjects(
+      "objects",
+      (obj) => obj.name === "door"
     );
+    doorObjects.forEach((obj: any) => {
+      const sprites = map.createFromObjects("objects", obj.id, { key: "exit" });
+      const group = this.physics.add.staticGroup();
+      group.addMultiple(sprites);
+      this.physics.add.overlap(
+        this.player.sprite,
+        group,
+        () =>
+          this.scene.start("main", { spawnPoint: this.overWorldDoorLocation }),
+        null,
+        this
+      );
+    });
 
     const npcSpawnPoints: { x: number; y: number }[] = map
       .filterObjects("objects", (obj) => obj.name === "npc")
@@ -112,10 +119,33 @@ export default class RoomScene extends Phaser.Scene {
         )
       );
     }
+
+    // Open Haris ending dialog
+    if (this.score !== undefined) {
+      this.openHarisLastDialog();
+    }
   }
 
   update() {
     this.player.update();
     this.npcs.forEach((npc) => npc.update());
+  }
+
+  async openHarisLastDialog() {
+    this.player.isFrozen = true;
+
+    await new Dialog(
+      this,
+      this.map.widthInPixels / 2,
+      this.map.heightInPixels / 2,
+      {
+        content: `Your score is ${this.score}!`,
+        choices: [{ choiceText: `Next`, isAnswer: true }],
+      },
+      false
+    ).create();
+
+    this.player.isFrozen = false;
+    await updateStationData(sessionStorage.getItem("uid"), "Haris", this.score);
   }
 }

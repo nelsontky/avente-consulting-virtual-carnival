@@ -121,6 +121,7 @@ export default class SpotTheDiffScene extends Phaser.Scene {
         overWorldDoorLocation: this.harisData.overWorldDoorLocation,
         x: this.harisData.x,
         y: this.harisData.y,
+        score: this.numberFound,
       });
     }
   }

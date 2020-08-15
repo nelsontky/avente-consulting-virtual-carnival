@@ -10,10 +10,7 @@ export default class Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     const gender = sessionStorage.getItem("gender");
     this.scene = scene;
-    this.sprite = this.scene.physics.add
-      .sprite(x, y, gender, 9)
-      .setSize(30, 40)
-      .setDepth(10);
+    this.sprite = this.scene.physics.add.sprite(x, y, gender, 9);
     this.isFrozen = false;
 
     this.scene.anims.create({
