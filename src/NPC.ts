@@ -5,7 +5,7 @@ import NPCDataInterface from "./NPCDataInterface";
 import Dialog from "./Dialog";
 import { genPersonalityQuizResults, nextButtonOnlyChoices } from "./NPCData";
 import QuizDialog from "./QuizDialog";
-import { updateStationData } from "./dbUtils";
+import { updateStationData, DbSchema } from "./dbUtils";
 
 export default class NPC {
   sprite: Phaser.Physics.Arcade.Sprite;
@@ -17,6 +17,7 @@ export default class NPC {
   data: NPCDataInterface;
   mapWidth: number;
   mapHeight: number;
+  tick: Phaser.GameObjects.Image;
 
   constructor(
     scene: Phaser.Scene,
@@ -72,6 +73,12 @@ export default class NPC {
 
     this.touchPlayerObj = { isTouching: false };
     this.spaceKey = this.scene.input.keyboard.addKey("SPACE");
+
+    // Checkbox
+    this.tick = this.scene.add
+      .image(this.sprite.x, this.sprite.y - 40, "tick")
+      .setScale(0.2, 0.2);
+    this.tick.setVisible(false);
   }
 
   checkDirectionToFace(): string {
@@ -128,6 +135,16 @@ export default class NPC {
       this.touchPlayerObj.prevY !== this.player.sprite.y
     ) {
       this.touchPlayerObj = { isTouching: false };
+    }
+
+    // Render tick
+    const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+    const isDoneWithNpc =
+      playerData !== undefined &&
+      playerData.stationData !== undefined &&
+      playerData.stationData[this.data.name];
+    if (isDoneWithNpc) {
+      this.tick.setVisible(true);
     }
   }
 
@@ -227,6 +244,11 @@ export default class NPC {
     );
     await resultDialog.create();
 
+    await updateStationData(
+      sessionStorage.getItem("uid"),
+      this.data.name,
+      true
+    );
     return;
   }
 
@@ -236,7 +258,7 @@ export default class NPC {
       this.mapWidth / 2,
       this.mapHeight / 2,
       {
-        content: `Hi! I’m Punnag, the President of Avente Consulting and the head of Strat-Acad Department! In this station, you have 30seconds to answer as many questions as possible!`,
+        content: `Hi! I’m Punnag, the President of Avente Consulting and the head of Strat-Acad Department! In this station, you have 30 seconds to answer as many questions as possible!`,
         choices: [{ choiceText: `Let's begin!`, isAnswer: true }],
       },
       true
@@ -263,6 +285,12 @@ export default class NPC {
         },
         false
       ).create();
+
+      await updateStationData(
+        sessionStorage.getItem("uid"),
+        this.data.name,
+        score
+      );
     }
   }
 }

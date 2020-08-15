@@ -1,12 +1,15 @@
 import "phaser";
 
 import Player from "./Player";
+import { DbSchema } from "./dbUtils";
+import { width, height } from "./config";
 
 export default class MainScene extends Phaser.Scene {
   controls: Phaser.Cameras.Controls.FixedKeyControl;
   player: Player;
   gender: "girl" | "boy";
   spawnPoint: { x: number; y: number };
+  progressText: Phaser.GameObjects.Text;
 
   constructor() {
     super("main");
@@ -171,9 +174,37 @@ export default class MainScene extends Phaser.Scene {
         this
       );
     });
+
+    // Progress prompt
+    this.progressText = this.add
+      .text(
+        this.player.sprite.x - Math.floor(width / 2) + 16,
+        this.player.sprite.y - Math.floor(height / 2) + 16,
+        "NPCs spoken to: 0 / 13",
+        {
+          fontSize: "32px",
+          fill: "#000",
+        }
+      )
+      .setBackgroundColor("yellow");
   }
 
   update() {
     this.player.update();
+    this.progressText.setText(`NPCs spoken to: ${this.getNpcsSpokenTo()} / 13`);
+    this.progressText.setPosition(
+      this.player.sprite.x - Math.floor(width / 2) + 16,
+      this.player.sprite.y - Math.floor(height / 2) + 16
+    );
+  }
+
+  getNpcsSpokenTo(): number {
+    const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+    if (playerData === undefined || playerData.stationData === undefined) {
+      return 0;
+    }
+
+    // Remove all falsy values
+    return Object.values(playerData.stationData).filter((data) => data).length;
   }
 }

@@ -14,7 +14,9 @@ export default class Player {
     gender: "girl" | "boy"
   ) {
     this.scene = scene;
-    this.sprite = this.scene.physics.add.sprite(x, y, gender, 1);
+    this.sprite = this.scene.physics.add
+      .sprite(x, y, gender, 9)
+      .setSize(30, 40);
     this.isFrozen = false;
 
     this.scene.anims.create({

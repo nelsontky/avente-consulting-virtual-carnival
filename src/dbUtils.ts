@@ -14,7 +14,7 @@ export interface DbSchema {
     Gregory?: boolean;
     Kingston?: boolean;
     "Min Hern"?: boolean;
-    Punnag?: boolean;
+    Punnag?: number;
     Samantha?: boolean;
     Svarnim?: boolean;
     "Wai Siang"?: boolean;
@@ -37,7 +37,7 @@ export async function updateUser(uid: string, data: DbSchema) {
 export async function updateStationData(
   uid: string,
   name: string,
-  value: boolean
+  value: boolean | number
 ) {
   let isSuccess = false;
 
@@ -47,7 +47,7 @@ export async function updateStationData(
       await db
         .collection("users")
         .doc(uid)
-        .update({ [`stationData."${name}"`]: value });
+        .update({ [`stationData.${name}`]: value });
       isSuccess = true;
     } catch (e) {
       console.log(e);

@@ -14,6 +14,7 @@ export default function loadFiles(scene: Phaser.Scene) {
   });
   scene.load.image("boy-preview", "assets/boy-preview.png");
   scene.load.image("girl-preview", "assets/girl-preview.png");
+  scene.load.image("tick", "assets/tick.png");
 
   // Tilesets
   scene.load.image(
