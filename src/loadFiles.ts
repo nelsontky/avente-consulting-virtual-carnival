@@ -5,6 +5,22 @@ export default function loadFiles(scene: Phaser.Scene) {
     "overworld",
     "assets/tiles/overworld/overworld.json"
   );
+  scene.load.tilemapTiledJSON(
+    "overworld0",
+    "assets/tiles/overworld/overworld0.json"
+  );
+  scene.load.tilemapTiledJSON(
+    "overworld1",
+    "assets/tiles/overworld/overworld1.json"
+  );
+  scene.load.tilemapTiledJSON(
+    "overworld2",
+    "assets/tiles/overworld/overworld2.json"
+  );
+  scene.load.tilemapTiledJSON(
+    "overworld3",
+    "assets/tiles/overworld/overworld3.json"
+  );
   scene.load.tilemapTiledJSON("0", "assets/tiles/rooms/0.json");
   scene.load.tilemapTiledJSON("1", "assets/tiles/rooms/1.json");
   scene.load.tilemapTiledJSON("2", "assets/tiles/rooms/2.json");
