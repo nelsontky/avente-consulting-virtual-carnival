@@ -93,8 +93,6 @@ export default class RoomScene extends Phaser.Scene {
           npcSpawnPoints[i].y,
           this.player,
           npcsInRoom[i],
-          map.widthInPixels,
-          map.heightInPixels
         )
       );
     }
@@ -115,8 +113,6 @@ export default class RoomScene extends Phaser.Scene {
 
     await new Dialog(
       this,
-      this.map.widthInPixels / 2,
-      this.map.heightInPixels / 2,
       {
         content: `Your score is ${score}!`,
         choices: [{ choiceText: `Next`, isAnswer: true }],

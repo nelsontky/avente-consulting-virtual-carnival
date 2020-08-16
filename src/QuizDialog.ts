@@ -861,14 +861,10 @@ class SingleQuizDialog {
   dialog: any;
   options: { option: string; isAnswer: boolean }[];
   isAnswered: boolean;
-  x: number;
-  y: number;
   score: number;
 
   constructor(
     scene: Phaser.Scene,
-    x: number,
-    y: number,
     question: string,
     options: { option: string; isAnswer: boolean }[],
     score: number
@@ -877,16 +873,14 @@ class SingleQuizDialog {
     this.question = question;
     this.options = options;
     this.isAnswered = false;
-    this.x = x;
-    this.y = y;
     this.score = score;
   }
 
   // Resolves to true if answer was correct, false otherwise.
   create(): Promise<number> {
     this.config = {
-      x: Math.floor(this.x),
-      y: Math.floor(this.y),
+      x: Math.floor(this.scene.cameras.main.scrollX + width / 2),
+      y: Math.floor(this.scene.cameras.main.scrollY + height / 2),
 
       background: this.scene.rexUI.add.roundRectangle(
         0,
@@ -1051,24 +1045,20 @@ class SingleQuizDialog {
 
 export default class QuizDialog {
   scene: any;
-  x: number;
-  y: number;
   currScore: number;
   secondsLeft: number;
   timeLeftText: Phaser.GameObjects.Text;
   timer: NodeJS.Timeout;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: Phaser.Scene) {
     this.scene = scene;
-    this.x = x;
-    this.y = y;
     this.currScore = 0;
     this.secondsLeft = 30;
     shuffle(questions);
 
     this.timeLeftText = scene.add.text(
-      x - width / 2 + 30,
-      y - height / 2 + 30,
+      this.scene.cameras.main.scrollX + 16,
+      this.scene.cameras.main.scrollY + 16,
       "Time left: " + this.secondsLeft,
       {
         fontSize: "24px",
@@ -1090,8 +1080,6 @@ export default class QuizDialog {
     for (let question of questions) {
       const currQuestion = new SingleQuizDialog(
         this.scene,
-        this.x,
-        this.y,
         question.question,
         question.options,
         this.currScore

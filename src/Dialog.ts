@@ -1,4 +1,5 @@
 import { IDialog } from "./NPCDataInterface";
+import { height, width } from "./config";
 
 export default class Dialog {
   scene: any;
@@ -11,8 +12,6 @@ export default class Dialog {
 
   constructor(
     scene: Phaser.Scene,
-    x: number,
-    y: number,
     dialogData: IDialog,
     isShowCloseButton: boolean,
     isSamantha?: boolean,
@@ -30,8 +29,8 @@ export default class Dialog {
     this.isShowCloseButton = isShowCloseButton;
     this.scene = scene;
     this.config = {
-      x: Math.floor(x),
-      y: Math.floor(y),
+      x: Math.floor(this.scene.cameras.main.scrollX + width / 2),
+      y: Math.floor(this.scene.cameras.main.scrollY + height / 2),
 
       background: this.scene.rexUI.add.roundRectangle(
         0,

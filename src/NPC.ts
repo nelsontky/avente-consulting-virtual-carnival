@@ -15,8 +15,6 @@ export default class NPC {
   spaceKey: Phaser.Input.Keyboard.Key;
   isInteractionOngoing: boolean;
   data: NPCDataInterface;
-  mapWidth: number;
-  mapHeight: number;
   tick: Phaser.GameObjects.Image;
 
   constructor(
@@ -24,16 +22,12 @@ export default class NPC {
     x: number,
     y: number,
     player: Player,
-    data: NPCDataInterface,
-    mapWidth: number,
-    mapHeight: number
+    data: NPCDataInterface
   ) {
     this.scene = scene;
     this.player = player;
     this.isInteractionOngoing = false;
     this.data = data;
-    this.mapWidth = mapWidth;
-    this.mapHeight = mapHeight;
 
     this.sprite = this.scene.physics.add.staticSprite(x, y, this.data.name, 1);
 
@@ -162,8 +156,6 @@ export default class NPC {
     while (currDialog !== undefined) {
       const dialog = new Dialog(
         this.scene,
-        this.mapWidth / 2,
-        this.mapHeight / 2,
         currDialog,
         !!currDialog.dialogAfterCorrect || !!currDialog.dialogAfterWrong,
         this.data.name === "Samantha"
@@ -205,8 +197,6 @@ export default class NPC {
     while (currDialog !== undefined) {
       const dialog = new Dialog(
         this.scene,
-        this.mapWidth / 2,
-        this.mapHeight / 2,
         currDialog,
         true,
         false,
@@ -242,8 +232,6 @@ export default class NPC {
     );
     const resultDialog = new Dialog(
       this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2,
       {
         content: genPersonalityQuizResults(results[0].category),
         choices: nextButtonOnlyChoices,
@@ -263,8 +251,6 @@ export default class NPC {
   async runDialogPunnag() {
     const outcome = await new Dialog(
       this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2,
       {
         content: `Hi! I’m Punnag, the President of Avente Consulting and the head of Strat-Acad Department! In this station, you have 30 seconds to answer as many questions as possible!`,
         choices: [{ choiceText: `Let's begin!`, isAnswer: true }],
@@ -277,16 +263,12 @@ export default class NPC {
 
     const score = await new QuizDialog(
       this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2
     ).run();
 
     if (score > -1) {
       // -1 is returned when closed
       await new Dialog(
         this.scene,
-        this.mapWidth / 2,
-        this.mapHeight / 2,
         {
           content: `Your score is ${score}!`,
           choices: [{ choiceText: `Next`, isAnswer: true }],
@@ -305,8 +287,6 @@ export default class NPC {
   async runDialogHaris() {
     const outcome = await new Dialog(
       this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2,
       {
         content: `Hi! I’m Haris, the Vice President of Avente Consulting and the head of Marcomms Department! This station is a Spot-The-Difference game, and you have 30 seconds to find 10 differences!`,
         choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
@@ -324,8 +304,6 @@ export default class NPC {
   async runDialogManeesha() {
     const outcome = await new Dialog(
       this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2,
       {
         content: `Hi! I’m Maneesha, the Honorary General Secretary of Avente Consulting and the head of Operations Department! In this station, you get to play a word search game! You can exit the puzzle at any time.`,
         choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
@@ -346,8 +324,6 @@ export default class NPC {
 
     await new Dialog(
       this.scene,
-      this.mapWidth / 2,
-      this.mapHeight / 2,
       {
         content: `Hope you had fun with the puzzle!`,
         choices: [{ choiceText: `Next`, isAnswer: true }],

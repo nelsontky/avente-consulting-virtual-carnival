@@ -1,6 +1,7 @@
 import "phaser";
 
 import loadFiles from "./loadFiles";
+import { height, width } from "./config";
 
 // Interface representing top left and bottom right point of a rectangle
 interface Rectangle {
@@ -88,9 +89,24 @@ export default class SpotTheDiffScene extends Phaser.Scene {
       .setColor("white")
       .setOrigin(0, 0);
 
+    const closeText = this.add
+      .text(width - 30, 16, "X", {
+        fontSize: "20px",
+        fontFamily: "Arial",
+      })
+      .setColor("white")
+      .setOrigin(0, 0)
+      .setInteractive();
+
     this.input.on(
       "gameobjectdown",
-      (pointer: { worldX: number; worldY: number }) => {
+      (pointer: { worldX: number; worldY: number }, gameObject: any) => {
+        // Quit game
+        if (gameObject === closeText) {
+          this.quitGame();
+          return;
+        }
+
         const differenceClicked = diffAreas.find((area) =>
           this.isPointContainedInRectangle(pointer.worldX, pointer.worldY, area)
         );
@@ -113,14 +129,7 @@ export default class SpotTheDiffScene extends Phaser.Scene {
     }
 
     if (this.numberFound === diffAreas.length || this.timeLeft <= 0) {
-      this.timeLeft = 30;
-      this.timer = 0;
-      const score = this.numberFound;
-      this.numberFound = 0;
-      this.scene.stop();
-      this.scene.run("room", {
-        score,
-      });
+      this.quitGame();
     }
   }
 
@@ -145,5 +154,16 @@ export default class SpotTheDiffScene extends Phaser.Scene {
 
     this.numberFound += 1;
     this.scoreText.setText(`Found: ${this.numberFound} / 10`);
+  }
+
+  quitGame() {
+    const score = this.numberFound;
+    this.timeLeft = 30;
+    this.timer = 0;
+    this.numberFound = 0;
+    this.scene.stop();
+    this.scene.run("room", {
+      score,
+    });
   }
 }
