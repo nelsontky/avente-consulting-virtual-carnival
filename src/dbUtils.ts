@@ -98,7 +98,7 @@ export function getNumberOfNpcsCleared() {
     stationData.Donald,
     stationData.Gregory,
     stationData.Kingston,
-    stationData["Min Hern"],
+    stationData["Min Hein"],
     stationData.Samantha,
     stationData.Svarnim,
     stationData["Wai Siang"],
@@ -106,7 +106,7 @@ export function getNumberOfNpcsCleared() {
 }
 
 export function getIsBossRoomUnlocked(): boolean {
-  return this.getNumberOfNpcsCleared() === 10;
+  return getNumberOfNpcsCleared() === 10;
 }
 
 export function getNumberOfBossesCleared() {

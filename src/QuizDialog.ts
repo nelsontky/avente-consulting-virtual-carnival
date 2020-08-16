@@ -1056,15 +1056,18 @@ export default class QuizDialog {
     this.secondsLeft = 30;
     shuffle(questions);
 
-    this.timeLeftText = scene.add.text(
-      this.scene.cameras.main.scrollX + 16,
-      this.scene.cameras.main.scrollY + 16,
-      "Time left: " + this.secondsLeft,
-      {
-        fontSize: "24px",
-        fontFamily: "Arial",
-      }
-    );
+    this.timeLeftText = scene.add
+      .text(
+        this.scene.cameras.main.scrollX + 16,
+        this.scene.cameras.main.scrollY + 16,
+        "Time left: " + this.secondsLeft,
+        {
+          fontSize: "24px",
+          fontFamily: "Arial",
+        }
+      )
+      .setColor("white")
+      .setBackgroundColor("black");
     this.timeLeftText.setDepth(30);
   }
 

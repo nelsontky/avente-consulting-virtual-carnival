@@ -35,10 +35,12 @@ export default class RoomScene extends Phaser.Scene {
   npcs: NPC[];
   dialog: Dialog;
   map: Phaser.Tilemaps.Tilemap;
+  isHarrisDialogOpen: boolean;
 
   constructor() {
     super("room");
     this.npcs = [];
+    this.isHarrisDialogOpen = false;
   }
 
   init(data: {
@@ -68,6 +70,7 @@ export default class RoomScene extends Phaser.Scene {
         break;
       case 3:
         allTileSets = getRoom3(map);
+        break;
       default:
         allTileSets = getRoom4(map);
     }
@@ -180,18 +183,22 @@ export default class RoomScene extends Phaser.Scene {
   }
 
   async openHarisLastDialog(score: number) {
-    this.player.isFrozen = true;
+    if (!this.isHarrisDialogOpen) {
+      this.isHarrisDialogOpen = true;
+      this.player.isFrozen = true;
 
-    await new Dialog(
-      this,
-      {
-        content: `Your score is ${score}!`,
-        choices: [{ choiceText: `Next`, isAnswer: true }],
-      },
-      false
-    ).create();
+      await new Dialog(
+        this,
+        {
+          content: `Your score is ${score}!`,
+          choices: [{ choiceText: `Next`, isAnswer: true }],
+        },
+        false
+      ).create();
 
-    this.player.isFrozen = false;
-    await updateStationData(sessionStorage.getItem("uid"), "Haris", score);
+      await updateStationData(sessionStorage.getItem("uid"), "Haris", score);
+      this.player.isFrozen = false;
+      this.isHarrisDialogOpen = false;
+    }
   }
 }

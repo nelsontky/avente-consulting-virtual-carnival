@@ -7,6 +7,8 @@ import {
   getNumberOfNpcsCleared,
 } from "./dbUtils";
 import { getOverWorld } from "./getAllTileSets";
+import Dialog from "./Dialog";
+import { nextButtonOnlyChoices } from "./NPCData";
 
 export default class MainScene extends Phaser.Scene {
   controls: Phaser.Cameras.Controls.FixedKeyControl;
@@ -15,9 +17,12 @@ export default class MainScene extends Phaser.Scene {
   spawnPoint: { x: number; y: number };
   progressText: Phaser.GameObjects.Text;
   numberOfNpcsText: Phaser.GameObjects.Text;
+  isRoomLockedDialogOpen: boolean;
 
   constructor() {
     super("main");
+
+    this.isRoomLockedDialogOpen = false;
   }
 
   init(data: {
@@ -111,18 +116,43 @@ export default class MainScene extends Phaser.Scene {
       this.physics.add.overlap(
         this.player.sprite,
         group,
-        (_, door: any) => {
-          const doorId = door.data.list[0].value;
-          this.scene.start("room", {
-            doorId,
-            overWorldDoorLocation: { x: door.x, y: door.y + 50 },
-          });
-        },
+        this.enterDoorCallback,
         null,
         this
       );
     });
   }
+
+  enterDoorCallback = async (_, door: any) => {
+    const doorId = door.data.list[0].value;
+
+    if (
+      doorId === 4 &&
+      !getIsBossRoomUnlocked() &&
+      !this.isRoomLockedDialogOpen
+    ) {
+      // Boss room still locked
+      this.player.sprite.setY(this.player.sprite.y + 50);
+      this.isRoomLockedDialogOpen = true;
+      this.player.isFrozen = true;
+      await new Dialog(
+        this,
+        {
+          content: `Room locked! Please talk to all the other NPCs in the other rooms before trying to enter again!`,
+          choices: nextButtonOnlyChoices,
+        },
+        false
+      ).create();
+      this.isRoomLockedDialogOpen = false;
+      this.player.isFrozen = false;
+      return;
+    } else {
+      this.scene.start("room", {
+        doorId,
+        overWorldDoorLocation: { x: door.x, y: door.y + 50 },
+      });
+    }
+  };
 
   update() {
     this.player.update();

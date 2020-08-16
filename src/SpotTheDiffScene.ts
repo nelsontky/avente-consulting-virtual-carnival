@@ -90,11 +90,12 @@ export default class SpotTheDiffScene extends Phaser.Scene {
       .setOrigin(0, 0);
 
     const closeText = this.add
-      .text(width - 30, 16, "X", {
+      .text(width - 100, 16, "Close", {
         fontSize: "20px",
         fontFamily: "Arial",
       })
-      .setColor("white")
+      .setColor("red")
+      .setBackgroundColor("white")
       .setOrigin(0, 0)
       .setInteractive();
 
