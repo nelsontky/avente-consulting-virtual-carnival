@@ -52,9 +52,14 @@ export default class Game extends Phaser.Scene {
             20,
             0x003c8f
           ),
-          text: this.add.text(0, 0, "Welcome to Avente Carnival!", {
-            fontSize: "24px",
-          }),
+          text: this.add.text(
+            0,
+            0,
+            "Welcome to Avente's Virtual Welfare Day!",
+            {
+              fontSize: "24px",
+            }
+          ),
           space: {
             left: 15,
             right: 15,

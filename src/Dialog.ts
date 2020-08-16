@@ -90,9 +90,9 @@ export default class Dialog {
               resolve("correct");
             } else if (this.isSamantha) {
               if (index === 0) {
-                window.open("https://google.com");
+                window.open("https://tinyurl.com/aventeinfodeck");
               } else if (index === 1) {
-                window.open("https://duckduckgo.com");
+                window.open("https://forms.gle/4HBEWNmcgPEdZ2B27");
               }
             } else {
               this.destroy();
