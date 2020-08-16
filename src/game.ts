@@ -5,7 +5,7 @@ import MainScene from "./MainScene";
 import RoomScene from "./RoomScene";
 import SpotTheDiffScene from "./SpotTheDiffScene";
 import getFirebase from "./firebase";
-import { getUser, updateUser } from "./dbUtils";
+import { getUser, updateUser, getIsGameCompleted } from "./dbUtils";
 import { width, height } from "./config";
 import loadFiles from "./loadFiles";
 
@@ -57,7 +57,7 @@ export default class Game extends Phaser.Scene {
             0,
             "Welcome to Avente's Virtual Welfare Day!",
             {
-              fontSize: "24px",
+              fontSize: "20px",
             }
           ),
           space: {
@@ -71,7 +71,11 @@ export default class Game extends Phaser.Scene {
         content: this.add.text(
           0,
           0,
-          "Click on your preferred character to start the game!",
+          `Click on your preferred character to start the game!\n${
+            getIsGameCompleted()
+              ? "The game has been completed and welfare has been redeemed, do you still wish to play the game?"
+              : ""
+          }`,
           {
             fontSize: "18px",
             wordWrap: { width: 400 },

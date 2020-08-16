@@ -144,7 +144,8 @@ export default class NPC {
     const isDoneWithNpc =
       playerData !== undefined &&
       playerData.stationData !== undefined &&
-      playerData.stationData[this.data.name];
+      (playerData.stationData[this.data.name] ||
+        playerData.stationData[this.data.name] === 0);
     if (isDoneWithNpc) {
       this.tick.setVisible(true);
     }
@@ -195,13 +196,7 @@ export default class NPC {
     let currDialog = this.data.dialogs;
 
     while (currDialog !== undefined) {
-      const dialog = new Dialog(
-        this.scene,
-        currDialog,
-        true,
-        false,
-        true
-      );
+      const dialog = new Dialog(this.scene, currDialog, true, false, true);
       const outcome = await dialog.create();
 
       if (outcome === "closed") {
@@ -261,9 +256,7 @@ export default class NPC {
       return;
     }
 
-    const score = await new QuizDialog(
-      this.scene,
-    ).run();
+    const score = await new QuizDialog(this.scene).run();
 
     if (score > -1) {
       // -1 is returned when closed

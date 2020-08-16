@@ -7,17 +7,19 @@ export interface DbSchema {
   matricNumber?: string;
   timeCompleted?: Date;
   stationData?: {
+    "Min Hern"?: boolean;
+    "Wai Siang"?: boolean;
     Adrian?: boolean;
     Benedict?: boolean;
     Chloe?: boolean;
     Donald?: boolean;
     Gregory?: boolean;
+    Haris: number;
     Kingston?: boolean;
-    "Min Hern"?: boolean;
+    Maneesha: boolean;
     Punnag?: number;
     Samantha?: boolean;
     Svarnim?: boolean;
-    "Wai Siang"?: boolean;
   };
 }
 
@@ -51,8 +53,8 @@ export async function updateStationData(
 
         // Do not update if prev score is higher
         const shouldUpdate =
-          currValue.stationData !== undefined &&
-          currValue.stationData[name] !== undefined &&
+          currValue.stationData === undefined ||
+          currValue.stationData[name] === undefined ||
           currValue.stationData[name] < value;
 
         if (!shouldUpdate) {
@@ -80,4 +82,45 @@ export async function getUser(uid: string): Promise<DbSchema> {
       console.log("Retry get user");
     }
   }
+}
+
+export function getNumberOfNpcsCleared() {
+  const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+  if (playerData === undefined || playerData.stationData === undefined) {
+    return 0;
+  }
+
+  const { stationData } = playerData;
+  return [
+    stationData.Adrian,
+    stationData.Benedict,
+    stationData.Chloe,
+    stationData.Donald,
+    stationData.Gregory,
+    stationData.Kingston,
+    stationData["Min Hern"],
+    stationData.Samantha,
+    stationData.Svarnim,
+    stationData["Wai Siang"],
+  ].filter((data: any) => data || data === 0).length;
+}
+
+export function getIsBossRoomUnlocked(): boolean {
+  return this.getNumberOfNpcsCleared() === 10;
+}
+
+export function getNumberOfBossesCleared() {
+  const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+  if (playerData === undefined || playerData.stationData === undefined) {
+    return 0;
+  }
+
+  const { stationData } = playerData;
+  return [stationData.Haris, stationData.Punnag, stationData.Maneesha].filter(
+    (data: any) => data || data === 0
+  ).length;
+}
+
+export function getIsGameCompleted() {
+  return getNumberOfNpcsCleared() === 10 && getNumberOfBossesCleared() === 3;
 }

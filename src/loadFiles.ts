@@ -1,8 +1,15 @@
 import "phaser";
 
 export default function loadFiles(scene: Phaser.Scene) {
-  scene.load.image("tiles", "assets/tiles/test/tuxmon-sample-32px.png");
-  scene.load.tilemapTiledJSON("map", "assets/tiles/Nelson Half Map 2.json");
+  scene.load.tilemapTiledJSON(
+    "overworld",
+    "assets/tiles/overworld/overworld.json"
+  );
+  scene.load.tilemapTiledJSON("0", "assets/tiles/rooms/0.json");
+  scene.load.tilemapTiledJSON("1", "assets/tiles/rooms/1.json");
+  scene.load.tilemapTiledJSON("2", "assets/tiles/rooms/2.json");
+  scene.load.tilemapTiledJSON("3", "assets/tiles/rooms/3.json");
+  scene.load.tilemapTiledJSON("4", "assets/tiles/rooms/4.json");
 
   scene.load.spritesheet("girl", "assets/girl.png", {
     frameWidth: 28,
@@ -27,119 +34,272 @@ export default function loadFiles(scene: Phaser.Scene) {
   // Tilesets
   scene.load.image(
     "Pandamaru Circus 2",
-    "assets/tiles/Image/Pandamaru Circus 2.png"
+    "assets/tiles/overworld/Image/Pandamaru Circus 2.png"
   );
   scene.load.image(
     "Pandamaru Circus 1",
-    "assets/tiles/Image/Pandamaru Circus 1.png"
+    "assets/tiles/overworld/Image/Pandamaru Circus 1.png"
   );
   scene.load.image(
     "Pandamaru Merry-Go-Round",
-    "assets/tiles/Image/Pandamaru Merry-Go-Round.png"
+    "assets/tiles/overworld/Image/Pandamaru Merry-Go-Round.png"
   );
   scene.load.image(
     "Pandamaru Market 1",
-    "assets/tiles/Image/Pandamaru Market 1.png"
+    "assets/tiles/overworld/Image/Pandamaru Market 1.png"
   );
   scene.load.image(
     "Pandamaru Magic Tent",
-    "assets/tiles/Image/Pandamaru Magic Tent.png"
+    "assets/tiles/overworld/Image/Pandamaru Magic Tent.png"
   );
   scene.load.image(
     "Emerald (Tommy)",
-    "assets/tiles/Editted Image/Emerald (Tommy).png"
+    "assets/tiles/overworld/Editted Image/Emerald (Tommy).png"
   );
   scene.load.image(
     "Outside (Hoenn) (Tommy)",
-    "assets/tiles/Editted Image/Outside (Hoenn) (Tommy).png"
+    "assets/tiles/overworld/Editted Image/Outside (Hoenn) (Tommy).png"
   );
-  scene.load.image("Pandamaru Egypt", "assets/tiles/Image/Pandamaru Egypt.png");
+  scene.load.image(
+    "Pandamaru Egypt",
+    "assets/tiles/overworld/Image/Pandamaru Egypt.png"
+  );
   scene.load.image(
     "carmin sur mer",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Tilesets/carmin sur mer.png"
+    "assets/tiles/overworld/Image/Zeak Pokemon Map Pack/Graphics/Tilesets/carmin sur mer.png"
   );
   scene.load.image(
     "Pandamaru Port Props",
-    "assets/tiles/Image/Pandamaru Port Props.png"
+    "assets/tiles/overworld/Image/Pandamaru Port Props.png"
   );
   scene.load.image(
     "Pandamaru Goods 1",
-    "assets/tiles/Image/Pandamaru Goods 1.png"
+    "assets/tiles/overworld/Image/Pandamaru Goods 1.png"
   );
   scene.load.image(
     "Brown cave sand",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/Brown cave sand.png"
+    "assets/tiles/overworld/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/Brown cave sand.png"
   );
   scene.load.image(
     "Dirt cave highlight",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/Dirt cave highlight.png"
+    "assets/tiles/overworld/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/Dirt cave highlight.png"
   );
   scene.load.image(
     "celianna_templetiles_torches",
-    "assets/tiles/Image/celianna_templetiles_torches.png"
+    "assets/tiles/overworld/Image/celianna_templetiles_torches.png"
   );
-  scene.load.image("TileC Celianna", "assets/tiles/Image/TileC Celianna.png");
+  scene.load.image(
+    "TileC Celianna",
+    "assets/tiles/overworld/Image/TileC Celianna.png"
+  );
   scene.load.image(
     "pandamaru tree 1",
-    "assets/tiles/Image/pandamaru tree 1.png"
+    "assets/tiles/overworld/Image/pandamaru tree 1.png"
   );
   scene.load.image(
     "pandamaru tree 2",
-    "assets/tiles/Image/pandamaru tree 2.png"
+    "assets/tiles/overworld/Image/pandamaru tree 2.png"
   );
   scene.load.image(
     "pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre",
-    "assets/tiles/Image/pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre.png"
+    "assets/tiles/overworld/Image/pokemon_tileset_from_public_tiles_by_chaoticcherrycake_d5xdb0y-pre.png"
   );
   scene.load.image(
     "pandamaru tree 3",
-    "assets/tiles/Image/pandamaru tree 3.png"
+    "assets/tiles/overworld/Image/pandamaru tree 3.png"
   );
   scene.load.image(
     "pandamaru tree 4",
-    "assets/tiles/Image/pandamaru tree 4.png"
+    "assets/tiles/overworld/Image/pandamaru tree 4.png"
   );
   scene.load.image(
     "pandamaru tree 5",
-    "assets/tiles/Image/pandamaru tree 5.png"
+    "assets/tiles/overworld/Image/pandamaru tree 5.png"
   );
   scene.load.image(
     "pandamaru tree goods",
-    "assets/tiles/Image/pandamaru tree goods.png"
+    "assets/tiles/overworld/Image/pandamaru tree goods.png"
   );
   scene.load.image(
     "Pandamaru Playground",
-    "assets/tiles/Image/Pandamaru Playground.png"
+    "assets/tiles/overworld/Image/Pandamaru Playground.png"
   );
   scene.load.image(
     "Pandamaru Enclosure 2",
-    "assets/tiles/Image/Pandamaru Enclosure 2.png"
+    "assets/tiles/overworld/Image/Pandamaru Enclosure 2.png"
   );
-  scene.load.image("Pandamaru Train", "assets/tiles/Image/Pandamaru Train.png");
+  scene.load.image(
+    "Pandamaru Train",
+    "assets/tiles/overworld/Image/Pandamaru Train.png"
+  );
   scene.load.image(
     "Pandamaru Train Wagon",
-    "assets/tiles/Image/Pandamaru Train Wagon.png"
+    "assets/tiles/overworld/Image/Pandamaru Train Wagon.png"
   );
-  scene.load.image("Hoenn Shipp", "assets/tiles/Image/Hoenn Shipp.png");
+  scene.load.image(
+    "Hoenn Shipp",
+    "assets/tiles/overworld/Image/Hoenn Shipp.png"
+  );
   scene.load.image(
     "Hoeen (1) (Tommy)",
-    "assets/tiles/Editted Image/Hoeen (1) (Tommy).png"
+    "assets/tiles/overworld/Editted Image/Hoeen (1) (Tommy).png"
   );
   scene.load.image(
     "Boats (Tommy)",
-    "assets/tiles/Editted Image/Boats (Tommy).png"
+    "assets/tiles/overworld/Editted Image/Boats (Tommy).png"
   );
   scene.load.image(
     "062-CF_Lava01",
-    "assets/tiles/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/062-CF_Lava01.png"
-  );
-  scene.load.image(
-    "Brown Oval Tracks (Tommy)",
-    "assets/tiles/Editted Image/Brown Oval Tracks (Tommy).png"
+    "assets/tiles/overworld/Image/Zeak Pokemon Map Pack/Graphics/Autotiles/062-CF_Lava01.png"
   );
   scene.load.image(
     "Tentages (Tommy)",
-    "assets/tiles/Editted Image/Tentages (Tommy).png"
+    "assets/tiles/overworld/Editted Image/Tentages (Tommy).png"
+  );
+  scene.load.image(
+    "Flooring",
+    "assets/tiles/overworld/Editted Image/Flooring.png"
+  );
+  scene.load.image(
+    "Grey Oval Tracks (Tommy)",
+    "assets/tiles/overworld/Editted Image/Grey Oval Tracks (Tommy).png"
+  );
+  scene.load.image("aiseh1", "assets/tiles/overworld/Editted Image/aiseh1.png");
+  scene.load.image(
+    "Pandamaru Retro floor",
+    "assets/tiles/overworld/Image/Pandamaru Retro floor.png"
+  );
+  scene.load.image(
+    "fairytale hero",
+    "assets/tiles/overworld/Editted Image/fairytale hero.png"
+  );
+  scene.load.image(
+    "cherry_blossom_trees_1",
+    "assets/tiles/overworld/Editted Image/cherry_blossom_trees_1.png"
+  );
+  scene.load.image("amap", "assets/tiles/overworld/Editted Image/amap.png");
+  scene.load.image(
+    "Cherrytree",
+    "assets/tiles/overworld/Editted Image/Cherrytree.png"
+  );
+  scene.load.image(
+    "boxy_bold_font",
+    "assets/tiles/overworld/Editted Image/boxy_bold_font.png"
+  );
+  scene.load.image(
+    "Scifi 2",
+    "assets/tiles/overworld/Editted Image/Scifi 2.png"
+  );
+  scene.load.image(
+    "Scifi 1",
+    "assets/tiles/overworld/Editted Image/Scifi 1.png"
+  );
+  scene.load.image(
+    "Scifi 3",
+    "assets/tiles/overworld/Editted Image/Scifi 3.png"
+  );
+  scene.load.image(
+    "modern_cyberpunk_cyanide",
+    "assets/tiles/overworld/Editted Image/modern_cyberpunk_cyanide.png"
+  );
+  scene.load.image("Space", "assets/tiles/overworld/Editted Image/Space.png");
+  scene.load.image(
+    "Space 2",
+    "assets/tiles/overworld/Editted Image/Space 2.png"
+  );
+  scene.load.image(
+    "Pandamaru Fruits",
+    "assets/tiles/overworld/Image/Pandamaru Fruits.png"
+  );
+  scene.load.image(
+    "YouTrip",
+    "assets/tiles/overworld/Editted Image/Logo/YouTrip.png"
+  );
+  scene.load.image(
+    "ezbuy",
+    "assets/tiles/overworld/Editted Image/Logo/ezbuy.png"
+  );
+  scene.load.image(
+    "avalon",
+    "assets/tiles/overworld/Editted Image/Logo/avalon.png"
+  );
+  scene.load.image(
+    "lim kee pau",
+    "assets/tiles/overworld/Editted Image/Logo/lim kee pau.png"
+  );
+
+  // Rooms
+  scene.load.image(
+    "Scifi 2",
+    "assets/tiles/rooms/../overworld/Editted Image/Scifi 2.png"
+  );
+  scene.load.image(
+    "Scifi 1",
+    "assets/tiles/rooms/../overworld/Editted Image/Scifi 1.png"
+  );
+  scene.load.image(
+    "Space 2",
+    "assets/tiles/rooms/../overworld/Editted Image/Space 2.png"
+  );
+  scene.load.image("futuristic", "assets/tiles/rooms/futuristic.png");
+  scene.load.image(
+    "Emerald (Tommy)",
+    "assets/tiles/rooms/../overworld/Editted Image/Emerald (Tommy).png"
+  );
+  scene.load.image(
+    "Pandamaru Enclosure 2",
+    "assets/tiles/rooms/../overworld/Image/Pandamaru Enclosure 2.png"
+  );
+  scene.load.image("egypt", "assets/tiles/rooms/egypt.png");
+  scene.load.image(
+    "Pandamaru Egypt",
+    "assets/tiles/rooms/../overworld/Image/Pandamaru Egypt.png"
+  );
+  scene.load.image(
+    "celianna_templetiles_torches",
+    "assets/tiles/rooms/../overworld/Image/celianna_templetiles_torches.png"
+  );
+  scene.load.image(
+    "Emerald (Tommy)",
+    "assets/tiles/rooms/../overworld/Editted Image/Emerald (Tommy).png"
+  );
+  scene.load.image(
+    "Pandamaru Fruits",
+    "assets/tiles/rooms/../overworld/Image/Pandamaru Fruits.png"
+  );
+  scene.load.image("treetop", "assets/tiles/rooms/treetop.png");
+  scene.load.image(
+    "Space",
+    "assets/tiles/rooms/../overworld/Editted Image/Space.png"
+  );
+  scene.load.image("treetop sofa", "assets/tiles/rooms/treetop sofa.png");
+  scene.load.image(
+    "Emerald (Tommy)",
+    "assets/tiles/rooms/../overworld/Editted Image/Emerald (Tommy).png"
+  );
+  scene.load.image(
+    "Pandamaru Goods 1",
+    "assets/tiles/rooms/../overworld/Image/Pandamaru Goods 1.png"
+  );
+  scene.load.image("Carnival Room", "assets/tiles/rooms/castle.png");
+  scene.load.image(
+    "Pandamaru Enclosure 2",
+    "assets/tiles/rooms/Pandamaru Enclosure 2.png"
+  );
+  scene.load.image("Emerald (Tommy)", "assets/tiles/rooms/Emerald (Tommy).png");
+  scene.load.image(
+    "Pandamaru Magic Tent",
+    "assets/tiles/rooms/../overworld/Image/Pandamaru Magic Tent.png"
+  );
+  scene.load.image("Boss Room", "assets/tiles/rooms/Boss Room.png");
+  scene.load.image("Emerald (Tommy)", "assets/tiles/rooms/Emerald (Tommy).png");
+  scene.load.image(
+    "Pandamaru Merry-Go-Round",
+    "assets/tiles/rooms/Pandamaru Merry-Go-Round.png"
+  );
+  scene.load.image(
+    "Pandamaru Circus 2",
+    "assets/tiles/rooms/../overworld/Image/Pandamaru Circus 2.png"
   );
 
   // NPCs

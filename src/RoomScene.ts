@@ -3,9 +3,30 @@ import "phaser";
 import Player from "./Player";
 import NPC from "./NPC";
 import Dialog from "./Dialog";
-import roomData from "./roomData";
 import NPCDataInterface from "./NPCDataInterface";
 import { updateStationData } from "./dbUtils";
+import {
+  ADRIAN,
+  BENEDICT,
+  CHLOE,
+  DONALD,
+  GREGORY,
+  HARIS,
+  KINGSTON,
+  MANEESHA,
+  MIN_HEIN,
+  PUNNAG,
+  SAMANTHA,
+  SVARNIM,
+  WAI_SIANG,
+} from "./NPCData";
+import {
+  getRoom0,
+  getRoom1,
+  getRoom2,
+  getRoom3,
+  getRoom4,
+} from "./getAllTileSets";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
@@ -28,18 +49,32 @@ export default class RoomScene extends Phaser.Scene {
     this.roomId = data.doorId;
   }
 
-  preload() {
-    this.load.tilemapTiledJSON("room", "assets/tiles/test/room.json");
-  }
-
   create() {
     const map = this.make.tilemap({
-      key: "room",
+      key: "" + this.roomId,
     });
     this.map = map;
-    const tileset = map.addTilesetImage("tuxmon-sample-32px", "tiles");
-    const belowLayer = map.createStaticLayer("below_world", tileset, 0, 0);
-    const blocking = map.createStaticLayer("blocking", tileset, 0, 0);
+
+    let allTileSets: Phaser.Tilemaps.Tileset[];
+    switch (this.roomId) {
+      case 0:
+        allTileSets = getRoom0(map);
+        break;
+      case 1:
+        allTileSets = getRoom1(map);
+        break;
+      case 2:
+        allTileSets = getRoom2(map);
+        break;
+      case 3:
+        allTileSets = getRoom3(map);
+      default:
+        allTileSets = getRoom4(map);
+    }
+
+    const ground = map.createStaticLayer("GROUND", allTileSets);
+    const blocking = map.createStaticLayer("OBJECTS", allTileSets);
+    const sky = map.createStaticLayer("SKY / PASSABLE", allTileSets);
 
     blocking.setCollisionByExclusion([-1]);
 
@@ -80,26 +115,62 @@ export default class RoomScene extends Phaser.Scene {
       );
     });
 
-    const npcSpawnPoints: { x: number; y: number }[] = map
-      .filterObjects("objects", (obj) => obj.name === "npc")
-      .map(({ x, y }: any) => ({ x, y }));
+    const objectsInRoom: {
+      name: string;
+      x: number;
+      y: number;
+    }[] = map
+      .filterObjects("objects", (obj) => obj.name !== undefined)
+      .map(({ name, x, y }: any) => ({ name, x, y }));
 
-    const npcsInRoom: NPCDataInterface[] = roomData[this.roomId];
-    for (let i = 0; i < npcsInRoom.length; i++) {
-      this.npcs.push(
-        new NPC(
-          this,
-          npcSpawnPoints[i].x,
-          npcSpawnPoints[i].y,
-          this.player,
-          npcsInRoom[i],
-        )
-      );
+    for (const obj of objectsInRoom) {
+      switch (obj.name) {
+        case MIN_HEIN.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, MIN_HEIN));
+          break;
+        case KINGSTON.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, KINGSTON));
+          break;
+        case BENEDICT.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, BENEDICT));
+          break;
+        case GREGORY.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, GREGORY));
+          break;
+        case CHLOE.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, CHLOE));
+          break;
+        case WAI_SIANG.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, WAI_SIANG));
+          break;
+        case SVARNIM.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, SVARNIM));
+          break;
+        case DONALD.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, DONALD));
+          break;
+        case SAMANTHA.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, SAMANTHA));
+          break;
+        case ADRIAN.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, ADRIAN));
+          break;
+        case PUNNAG.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, PUNNAG));
+          break;
+        case HARIS.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, HARIS));
+          break;
+        case MANEESHA.name:
+          this.npcs.push(new NPC(this, obj.x, obj.y, this.player, MANEESHA));
+          break;
+      }
     }
-
     // Open Haris ending dialog
-    this.events.on("resume", (_, data: { score: number }) =>
-      this.openHarisLastDialog(data.score)
+    this.events.on(
+      "resume",
+      (_, data: { score: number }) =>
+        this.roomId === 4 && this.openHarisLastDialog(data.score)
     );
   }
 

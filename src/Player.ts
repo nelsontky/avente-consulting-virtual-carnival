@@ -84,55 +84,57 @@ export default class Player {
   update() {
     const speed = 175;
 
-    if (this.isFrozen) {
-      this.sprite.setVelocity(0);
-      this.sprite.anims.play(this.stationaryDirection);
-      // Vertical movement
-    } else if (this.cursors.left.isDown && this.cursors.up.isDown) {
-      this.sprite.anims.play("left", true);
-      this.stationaryDirection = "face_left";
-      this.sprite.setVelocityY(-speed);
-      this.sprite.setVelocityX(-speed);
-    } else if (this.cursors.right.isDown && this.cursors.up.isDown) {
-      this.sprite.anims.play("right", true);
-      this.stationaryDirection = "face_right";
-      this.sprite.setVelocityY(-speed);
-      this.sprite.setVelocityX(speed);
-    } else if (this.cursors.left.isDown && this.cursors.down.isDown) {
-      this.sprite.anims.play("left", true);
-      this.stationaryDirection = "face_left";
-      this.sprite.setVelocityY(speed);
-      this.sprite.setVelocityX(-speed);
-    } else if (this.cursors.right.isDown && this.cursors.down.isDown) {
-      this.sprite.setVelocityY(speed);
-      this.sprite.setVelocityX(speed);
-      this.sprite.anims.play("right", true);
-      this.stationaryDirection = "face_right";
-    } else if (this.cursors.up.isDown) {
-      this.sprite.setVelocityX(0);
-      this.sprite.setVelocityY(-speed);
-      this.sprite.anims.play("up", true);
-      this.stationaryDirection = "face_up";
-    } else if (this.cursors.down.isDown) {
-      this.sprite.setVelocityX(0);
-      this.sprite.setVelocityY(speed);
-      this.sprite.anims.play("down", true);
-      this.stationaryDirection = "face_down";
-    } else if (this.cursors.left.isDown) {
-      this.sprite.setVelocityY(0);
-      this.sprite.setVelocityX(-speed);
-      this.sprite.anims.play("left", true);
-      this.stationaryDirection = "face_left";
-    } else if (this.cursors.right.isDown) {
-      this.sprite.setVelocityY(0);
-      this.sprite.setVelocityX(speed);
-      this.sprite.anims.play("right", true);
-      this.stationaryDirection = "face_right";
-    } else {
-      this.sprite.setVelocity(0);
-      this.sprite.anims.play(this.stationaryDirection);
-    }
+    if (this.sprite.body !== undefined) {
+      if (this.isFrozen) {
+        this.sprite.setVelocity(0);
+        this.sprite.anims.play(this.stationaryDirection);
+        // Vertical movement
+      } else if (this.cursors.left.isDown && this.cursors.up.isDown) {
+        this.sprite.anims.play("left", true);
+        this.stationaryDirection = "face_left";
+        this.sprite.setVelocityY(-speed);
+        this.sprite.setVelocityX(-speed);
+      } else if (this.cursors.right.isDown && this.cursors.up.isDown) {
+        this.sprite.anims.play("right", true);
+        this.stationaryDirection = "face_right";
+        this.sprite.setVelocityY(-speed);
+        this.sprite.setVelocityX(speed);
+      } else if (this.cursors.left.isDown && this.cursors.down.isDown) {
+        this.sprite.anims.play("left", true);
+        this.stationaryDirection = "face_left";
+        this.sprite.setVelocityY(speed);
+        this.sprite.setVelocityX(-speed);
+      } else if (this.cursors.right.isDown && this.cursors.down.isDown) {
+        this.sprite.setVelocityY(speed);
+        this.sprite.setVelocityX(speed);
+        this.sprite.anims.play("right", true);
+        this.stationaryDirection = "face_right";
+      } else if (this.cursors.up.isDown) {
+        this.sprite.setVelocityX(0);
+        this.sprite.setVelocityY(-speed);
+        this.sprite.anims.play("up", true);
+        this.stationaryDirection = "face_up";
+      } else if (this.cursors.down.isDown) {
+        this.sprite.setVelocityX(0);
+        this.sprite.setVelocityY(speed);
+        this.sprite.anims.play("down", true);
+        this.stationaryDirection = "face_down";
+      } else if (this.cursors.left.isDown) {
+        this.sprite.setVelocityY(0);
+        this.sprite.setVelocityX(-speed);
+        this.sprite.anims.play("left", true);
+        this.stationaryDirection = "face_left";
+      } else if (this.cursors.right.isDown) {
+        this.sprite.setVelocityY(0);
+        this.sprite.setVelocityX(speed);
+        this.sprite.anims.play("right", true);
+        this.stationaryDirection = "face_right";
+      } else {
+        this.sprite.setVelocity(0);
+        this.sprite.anims.play(this.stationaryDirection);
+      }
 
-    this.sprite.body.velocity.normalize().scale(speed);
+      this.sprite.body.velocity.normalize().scale(speed);
+    }
   }
 }
