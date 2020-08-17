@@ -100,8 +100,6 @@ export default class RoomScene extends Phaser.Scene {
 
     const camera = this.cameras.main;
     camera.setBounds(
-      // -300 + map.widthInPixels / 2,
-      // -300 + map.heightInPixels / 2,
       width - map.widthInPixels > 0
         ? -Math.floor((width - map.widthInPixels) / 2)
         : 0,

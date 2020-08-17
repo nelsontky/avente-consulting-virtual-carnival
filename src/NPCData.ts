@@ -282,7 +282,7 @@ export const DONALD: NPCDataInterface = {
     content: `Hi! I’m Donald, the Strategic Development Director of Avente Consulting!`,
     choices: nextButtonOnlyChoices,
     dialogAfterCorrect: {
-      content: `What is the Unabridged series & Pinnacle series about?`,
+      content: `Do you know what the Unabridged series & Pinnacle series about?`,
       choices: nextButtonOnlyChoices,
       dialogAfterCorrect: {
         content: `Avente works with different SMEs with the help of SMU UOB-AEI. We are a community that hopes to grow SMU students into capable consultants with the help of our signature programmes like the Unabridged series & Pinnacle series!`,

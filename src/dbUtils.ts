@@ -6,6 +6,7 @@ const db = getFirebase().firestore();
 export interface DbSchema {
   matricNumber?: string;
   timeCompleted?: Date;
+  telegramHandle?: string;
   stationData?: {
     "Min Hern"?: boolean;
     "Wai Siang"?: boolean;

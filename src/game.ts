@@ -200,6 +200,7 @@ getFirebase()
   .onAuthStateChanged(async (user) => {
     if (user) {
       await addMatricNumberToDb(user);
+      await addTeleToDb(user);
       sessionStorage.setItem("uid", user.uid);
       const game = new Phaser.Game(config);
     }
@@ -233,4 +234,27 @@ async function addMatricNumberToDb(user: firebase.User): Promise<string> {
   updateUser(user.uid, { matricNumber: newMatricNumber });
 
   return newMatricNumber;
+}
+
+async function addTeleToDb(user: firebase.User): Promise<string> {
+  const userDoc = await getUser(user.uid);
+
+  if (userDoc !== undefined) {
+    const { telegramHandle } = userDoc;
+
+    if (telegramHandle !== undefined && telegramHandle.length > 0) {
+      return telegramHandle;
+    }
+  }
+
+  let promptText = `Enter your Telegram username. Submit "NIL" if you do not have Telegram!`;
+  let newTelegramHandle: any = "";
+  while (newTelegramHandle.length <= 0) {
+    newTelegramHandle = prompt(promptText);
+    promptText = `Invalid input. Please try again.\nEnter your Telegram username. Submit "NIL" if you do not have Telegram!`;
+  }
+
+  updateUser(user.uid, { telegramHandle: newTelegramHandle });
+
+  return newTelegramHandle;
 }
