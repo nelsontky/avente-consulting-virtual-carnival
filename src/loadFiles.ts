@@ -243,6 +243,26 @@ export default function loadFiles(scene: Phaser.Scene) {
     "lim kee pau",
     "assets/tiles/overworld/Editted Image/Logo/lim kee pau.png"
   );
+  scene.load.image(
+    "Station1",
+    "assets/tiles/rooms/../New Updated Tiles/Station1.png"
+  );
+  scene.load.image(
+    "Station5",
+    "assets/tiles/rooms/../New Updated Tiles/Station5.png"
+  );
+  scene.load.image(
+    "Station2",
+    "assets/tiles/rooms/../New Updated Tiles/Station2.png"
+  );
+  scene.load.image(
+    "Station4",
+    "assets/tiles/rooms/../New Updated Tiles/Station4.png"
+  );
+  scene.load.image(
+    "grass",
+    "assets/tiles/rooms/../New Updated Tiles/grass.png"
+  );
 
   // Rooms
   scene.load.image(

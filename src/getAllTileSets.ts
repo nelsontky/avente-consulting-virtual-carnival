@@ -59,6 +59,11 @@ export function getOverWorld(map: Phaser.Tilemaps.Tilemap) {
     map.addTilesetImage("ezbuy", "ezbuy"),
     map.addTilesetImage("avalon", "avalon"),
     map.addTilesetImage("lim kee pau", "lim kee pau"),
+    map.addTilesetImage("Station1", "Station1"),
+    map.addTilesetImage("Station5", "Station5"),
+    map.addTilesetImage("Station2", "Station2"),
+    map.addTilesetImage("Station4", "Station4"),
+    map.addTilesetImage("grass", "grass"),
   ];
 }
 
