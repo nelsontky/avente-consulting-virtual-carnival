@@ -888,7 +888,7 @@ class SingleQuizDialog {
         100,
         100,
         20,
-        0x3e2723
+        0xf2f2f2
       ),
 
       title: this.scene.rexUI.add.label({
@@ -898,10 +898,12 @@ class SingleQuizDialog {
           100,
           40,
           20,
-          0x1b0000
+          0xadacac
         ),
         text: this.scene.add.text(0, 0, "Score: " + this.score, {
-          fontSize: "12px",
+          fontSize: "16px",
+          fontFamily: "Helvetica",
+          color: "black",
         }),
         space: {
           left: 15,
@@ -912,8 +914,9 @@ class SingleQuizDialog {
       }),
 
       content: this.scene.add.text(0, 0, this.question, {
-        fontSize: "12px",
-        fontFamily: "Arial",
+        fontSize: "16px",
+        fontFamily: "Helvetica",
+        color: "black",
         wordWrap: { width: 400 },
       }),
 
@@ -1001,7 +1004,7 @@ class SingleQuizDialog {
           (!this.isAnswered ||
             groupName === "actions" ||
             index === this.config.choices.length - 1) &&
-            button.getElement("background").setStrokeStyle(1, 0xffffff);
+            button.getElement("background").setStrokeStyle(1, 0x000000);
         })
         .on("button.out", (button: any, groupName: string, index: number) => {
           (!this.isAnswered ||
@@ -1024,12 +1027,12 @@ class SingleQuizDialog {
         100,
         40,
         20,
-        0x6a4f4b
+        0xadacac
       ),
 
       text: this.scene.add.text(0, 0, text, {
-        fontSize: "12px",
-        fontFamily: "Arial",
+        fontSize: "16px",
+        fontFamily: "Helvetica",
         wordWrap: { width: 400 },
       }),
 

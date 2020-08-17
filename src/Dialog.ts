@@ -35,7 +35,7 @@ export default class Dialog {
         100,
         100,
         20,
-        0x1fbeba
+        0xf2f2f2
       ),
 
       content: this.scene.add.text(0, 0, dialogData.content, {
@@ -117,12 +117,12 @@ export default class Dialog {
         100,
         40,
         20,
-        0x16313c
+        0xadacac
       ),
 
       text: this.scene.add.text(0, 0, text, {
         fontSize: "16px",
-        fontFamily: "Arial",
+        fontFamily: "Helvetica",
         wordWrap: { width: 400 },
       }),
 
