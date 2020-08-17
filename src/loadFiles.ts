@@ -257,12 +257,20 @@ export default function loadFiles(scene: Phaser.Scene) {
     "assets/tiles/rooms/../New Updated Tiles/Station2.png"
   );
   scene.load.image(
-    "Station4",
-    "assets/tiles/rooms/../New Updated Tiles/Station4.png"
-  );
-  scene.load.image(
     "grass",
     "assets/tiles/rooms/../New Updated Tiles/grass.png"
+  );
+  scene.load.image(
+    "Station3",
+    "assets/tiles/rooms/../Newer Updated Tiles/Station3.png"
+  );
+  scene.load.image(
+    "LOGO",
+    "assets/tiles/rooms/../Newer Updated Tiles/LOGO.png"
+  );
+  scene.load.image(
+    "A Dark",
+    "assets/tiles/rooms/../Newer Updated Tiles/A Dark.png"
   );
 
   // Rooms

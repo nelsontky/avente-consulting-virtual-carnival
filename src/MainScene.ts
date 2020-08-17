@@ -320,7 +320,7 @@ export default class MainScene extends Phaser.Scene {
     await new Dialog(
       this,
       {
-        content: `Intro here`,
+        content: `Welcome to Avente Consulting's Welfare Day Game!\n\nTo redeem your welfare pack, visit all 5 stations and talk to all 13 members from our Avente Exco! Be amongst the first 250 players to complete the game and redeem your welfare pack. Let our adventure begin!`,
         choices: nextButtonOnlyChoices,
       },
       false

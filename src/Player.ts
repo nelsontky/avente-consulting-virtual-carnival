@@ -82,7 +82,7 @@ export default class Player {
   }
 
   update() {
-    const speed = 1750;
+    const speed = 175;
 
     if (this.sprite.body !== undefined) {
       if (this.isFrozen) {
