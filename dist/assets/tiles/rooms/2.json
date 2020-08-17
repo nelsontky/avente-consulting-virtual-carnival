@@ -4,7 +4,7 @@
      "export":
         {
          "format":"json",
-         "target":"2.json"
+         "target":"3.json"
         }
     },
  "height":21,
@@ -60,7 +60,7 @@
                 {
                  "height":0,
                  "id":1,
-                 "name":"Wai Siang",
+                 "name":"Svarnim",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -72,7 +72,7 @@
                 {
                  "height":0,
                  "id":2,
-                 "name":"Svarnim",
+                 "name":"Wai Siang",
                  "point":true,
                  "rotation":0,
                  "type":"",

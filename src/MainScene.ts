@@ -240,7 +240,7 @@ export default class MainScene extends Phaser.Scene {
       !this.isRoomLockedDialogOpen
     ) {
       // Boss room still locked
-      this.player.sprite.setY(this.player.sprite.y + 50);
+      this.player.sprite.setY(this.player.sprite.y + 60);
       this.isRoomLockedDialogOpen = true;
       this.player.isFrozen = true;
       await new Dialog(
