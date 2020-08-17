@@ -242,7 +242,7 @@ async function addTeleToDb(user: firebase.User): Promise<string> {
   if (userDoc !== undefined) {
     const { telegramHandle } = userDoc;
 
-    if (telegramHandle !== undefined && telegramHandle.length > 0) {
+    if (telegramHandle != undefined && telegramHandle.length > 0) {
       return telegramHandle;
     }
   }
