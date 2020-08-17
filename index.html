@@ -18,11 +18,14 @@
     />
     <script src="initFirebase.js"></script>
     <script src="auth.js"></script>
-    <script src="utils.js"></script>
     <script src="game.js"></script>
     <style>
       html {
-        background-color: black;
+        background: url("assets/bg.png") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
       }
       iframe {
         overflow: hidden;
@@ -44,11 +47,13 @@
         position: absolute;
         top: 132px;
         left: 100px;
+        display: none;
       }
       #avalon {
         position: absolute;
         top: 100px;
         left: 200px;
+        display: none;
       }
     </style>
   </head>
@@ -74,9 +79,11 @@
             background-color: rgb(250, 255, 228);
           "
         >
+          <img src="assets/crossword.png" />
           <span
             style="
-              margin-left: 420px;
+              position: absolute;
+              margin-left: 20px;
               cursor: default;
               font-size: 32px;
               font-family: Arial;
@@ -92,12 +99,8 @@
           >
         </div>
       </div>
-      <!-- <div id="youtrip">
-        <video id="youtrip_vid" width="600" src="assets/youtrip.m4v"></video>
-      </div> -->
-      <!-- <div id="avalon">
-        <video id="avalon_vis" width="400" src="assets/avalon.m4v"></video>
-      </div> -->
+      <video id="youtrip" width="600" src="assets/youtrip.m4v"></video>
+      <video id="avalon" width="400" src="assets/avalon.m4v"></video>
     </div>
   </body>
 </html>
