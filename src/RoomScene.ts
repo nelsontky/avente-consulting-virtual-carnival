@@ -27,6 +27,7 @@ import {
   getRoom3,
   getRoom4,
 } from "./getAllTileSets";
+import { width, height } from "./config";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
@@ -101,8 +102,12 @@ export default class RoomScene extends Phaser.Scene {
     camera.setBounds(
       // -300 + map.widthInPixels / 2,
       // -300 + map.heightInPixels / 2,
-      0,
-      0,
+      width - map.widthInPixels > 0
+        ? -Math.floor((width - map.widthInPixels) / 2)
+        : 0,
+      height - map.heightInPixels > 0
+        ? -Math.floor((height - map.heightInPixels) / 2)
+        : 0,
       map.widthInPixels,
       map.heightInPixels,
       true
