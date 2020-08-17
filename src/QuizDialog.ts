@@ -921,7 +921,6 @@ class SingleQuizDialog {
         ...this.options.map((choice) => this.createLabel(choice.option)),
         this.createLabel("Next"),
       ],
-      actions: [this.createLabel("Close")],
 
       space: {
         title: 26,
@@ -1054,7 +1053,7 @@ export default class QuizDialog {
   constructor(scene: Phaser.Scene) {
     this.scene = scene;
     this.currScore = 0;
-    this.secondsLeft = 30;
+    this.secondsLeft = 60;
     shuffle(questions);
 
     this.timeLeftText = scene.add

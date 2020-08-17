@@ -71,6 +71,17 @@ export async function updateStationData(
       console.log("Retry update station data");
     }
   }
+
+  const { timeCompleted, stationData } = await getUser(uid);
+  const isGameCompleted =
+    stationData !== undefined &&
+    Object.values(stationData).filter((data: any) => data || data === 0)
+      .length === 13;
+
+  if (timeCompleted === undefined && isGameCompleted) {
+    // Add time completed if it does not exist yet
+    await updateUser(uid, { timeCompleted: new Date() });
+  }
 }
 
 export async function getUser(uid: string): Promise<DbSchema> {

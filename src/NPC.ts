@@ -146,15 +146,12 @@ export default class NPC {
   isAlertVisible() {
     const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
 
-    const stationDataExistsAndIsTrue =
-      playerData.stationData[this.data.name] === true ||
-      (playerData.stationData[this.data.name] !== undefined &&
-        playerData.stationData[this.data.name] >= 0);
-
     return (
       playerData === undefined ||
       playerData.stationData === undefined ||
-      !stationDataExistsAndIsTrue
+      !playerData.stationData[this.data.name] ||
+      (playerData.stationData[this.data.name] !== undefined &&
+        playerData.stationData[this.data.name] < 0)
     );
   }
 
@@ -165,7 +162,6 @@ export default class NPC {
       const dialog = new Dialog(
         this.scene,
         currDialog,
-        !!currDialog.dialogAfterCorrect || !!currDialog.dialogAfterWrong,
         this.data.name === "Samantha"
       );
       const outcome = await dialog.create();
@@ -203,12 +199,8 @@ export default class NPC {
     let currDialog = this.data.dialogs;
 
     while (currDialog !== undefined) {
-      const dialog = new Dialog(this.scene, currDialog, true, false, true);
+      const dialog = new Dialog(this.scene, currDialog, false, true);
       const outcome = await dialog.create();
-
-      if (outcome === "closed") {
-        return;
-      }
 
       // Add score to result
       const categoryChosen = currDialog.choices.find(
@@ -254,27 +246,20 @@ export default class NPC {
     const outcome = await new Dialog(
       this.scene,
       {
-        content: `Hi! I’m Punnag, the President of Avente Consulting and the head of Strat-Acad Department! In this station, you have 30 seconds to answer as many questions as possible!`,
+        content: `Hi! I’m Punnag, the President of Avente Consulting and the head of Strat-Acad Department! In this station, you have 1 minute to answer as many questions as possible!`,
         choices: [{ choiceText: `Let's begin!`, isAnswer: true }],
       },
       true
     ).create();
-    if (outcome === "closed") {
-      return;
-    }
 
     const score = await new QuizDialog(this.scene).run();
 
     if (score > -1) {
       // -1 is returned when closed
-      await new Dialog(
-        this.scene,
-        {
-          content: `Your score is ${score}!`,
-          choices: [{ choiceText: `Next`, isAnswer: true }],
-        },
-        false
-      ).create();
+      await new Dialog(this.scene, {
+        content: `Your score is ${score}!`,
+        choices: [{ choiceText: `Next`, isAnswer: true }],
+      }).create();
 
       await updateStationData(
         sessionStorage.getItem("uid"),
@@ -285,36 +270,20 @@ export default class NPC {
   }
 
   async runDialogHaris() {
-    const outcome = await new Dialog(
-      this.scene,
-      {
-        content: `Hi! I’m Haris, the Vice President of Avente Consulting and the head of Marcomms Department! This station is a Spot-The-Difference game, and you have 30 seconds to find 10 differences!`,
-        choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
-      },
-      true
-    ).create();
+    const outcome = await new Dialog(this.scene, {
+      content: `Hi! I’m Haris, the Vice President of Avente Consulting and the head of Marcomms Department! This station is a Spot-The-Difference game, and you have 30 seconds to find 10 differences!`,
+      choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
+    }).create();
 
-    if (outcome === "closed") {
-      return;
-    }
     this.scene.scene.pause();
     this.scene.scene.run("diff");
   }
 
   async runDialogManeesha() {
-    const outcome = await new Dialog(
-      this.scene,
-      {
-        content: `Hi! I’m Maneesha, the Honorary General Secretary of Avente Consulting and the head of Operations Department! In this station, you get to play a word search game! You can exit the puzzle at any time.`,
-        choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
-      },
-      true
-    ).create();
-
-    if (outcome === "closed") {
-      return;
-    }
-
+    const outcome = await new Dialog(this.scene, {
+      content: `Hi! I’m Maneesha, the Honorary General Secretary of Avente Consulting and the head of Operations Department! In this station, you get to play a word search game! You can exit the puzzle at any time.`,
+      choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
+    }).create();
     // Reload iframe
     const iframe: any = document.getElementById("game-iframe");
     iframe.src += "";

@@ -89,25 +89,9 @@ export default class SpotTheDiffScene extends Phaser.Scene {
       .setColor("white")
       .setOrigin(0, 0);
 
-    const closeText = this.add
-      .text(width - 100, 16, "Close", {
-        fontSize: "20px",
-        fontFamily: "Arial",
-      })
-      .setColor("red")
-      .setBackgroundColor("white")
-      .setOrigin(0, 0)
-      .setInteractive();
-
     this.input.on(
       "gameobjectdown",
       (pointer: { worldX: number; worldY: number }, gameObject: any) => {
-        // Quit game
-        if (gameObject === closeText) {
-          this.quitGame();
-          return;
-        }
-
         const differenceClicked = diffAreas.find((area) =>
           this.isPointContainedInRectangle(pointer.worldX, pointer.worldY, area)
         );

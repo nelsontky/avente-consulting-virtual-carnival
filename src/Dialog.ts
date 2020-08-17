@@ -7,13 +7,11 @@ export default class Dialog {
   config: any;
   correctAnswer: string;
   isPersonalityQuiz: boolean;
-  isShowCloseButton: boolean;
   isSamantha: boolean;
 
   constructor(
     scene: Phaser.Scene,
     dialogData: IDialog,
-    isShowCloseButton: boolean,
     isSamantha?: boolean,
     isPersonalityQuiz?: boolean
   ) {
@@ -26,7 +24,6 @@ export default class Dialog {
     }
     this.isPersonalityQuiz = !!isPersonalityQuiz;
     this.isSamantha = !!isSamantha;
-    this.isShowCloseButton = isShowCloseButton;
     this.scene = scene;
     this.config = {
       x: Math.floor(this.scene.cameras.main.scrollX + width / 2),
@@ -50,7 +47,6 @@ export default class Dialog {
       choices: dialogData.choices.map((choice) =>
         this.createLabel(choice.choiceText)
       ),
-      actions: this.isShowCloseButton ? [this.createLabel("Close")] : undefined,
 
       space: {
         content: 26,
@@ -78,10 +74,7 @@ export default class Dialog {
         .on(
           "button.click",
           (button: { text: string }, groupName: string, index: number) => {
-            if (groupName === "actions") {
-              this.destroy();
-              resolve("closed");
-            } else if (this.isPersonalityQuiz) {
+            if (this.isPersonalityQuiz) {
               this.destroy();
               // resolve to option text if is personality quiz
               resolve(button.text);
