@@ -22,7 +22,11 @@
     <script src="game.js"></script>
     <style>
       html {
-        background-color: black;
+        background: url("assets/bg.png") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
       }
       iframe {
         overflow: hidden;
@@ -76,9 +80,11 @@
             background-color: rgb(250, 255, 228);
           "
         >
+          <img src="assets/crossword.png" />
           <span
             style="
-              margin-left: 420px;
+              position: absolute;
+              margin-left: 20px;
               cursor: default;
               font-size: 32px;
               font-family: Arial;
