@@ -5,6 +5,9 @@ import {
   getIsBossRoomUnlocked,
   getNumberOfBossesCleared,
   getNumberOfNpcsCleared,
+  getIsRoom1Unlocked,
+  getIsRoom2Unlocked,
+  getIsRoom3Unlocked,
 } from "./dbUtils";
 import { getOverWorld } from "./getAllTileSets";
 import Dialog from "./Dialog";
@@ -203,7 +206,67 @@ export default class MainScene extends Phaser.Scene {
       await new Dialog(
         this,
         {
-          content: `Room locked! Please talk to all the other NPCs in the other rooms before trying to enter again!`,
+          content: `Station locked! Please talk to all the other NPCs in the other stations before trying to enter again!`,
+          choices: nextButtonOnlyChoices,
+        },
+        false
+      ).create();
+      this.isRoomLockedDialogOpen = false;
+      this.player.isFrozen = false;
+      return;
+    } else if (
+      doorId === 1 &&
+      !getIsRoom1Unlocked() &&
+      !this.isRoomLockedDialogOpen
+    ) {
+      // Boss room still locked
+      this.player.sprite.setY(this.player.sprite.y + 50);
+      this.isRoomLockedDialogOpen = true;
+      this.player.isFrozen = true;
+      await new Dialog(
+        this,
+        {
+          content: `Station locked! Please talk to all the NPCs in station 1 before trying to enter again!`,
+          choices: nextButtonOnlyChoices,
+        },
+        false
+      ).create();
+      this.isRoomLockedDialogOpen = false;
+      this.player.isFrozen = false;
+      return;
+    } else if (
+      doorId === 2 &&
+      !getIsRoom2Unlocked() &&
+      !this.isRoomLockedDialogOpen
+    ) {
+      // Boss room still locked
+      this.player.sprite.setY(this.player.sprite.y + 50);
+      this.isRoomLockedDialogOpen = true;
+      this.player.isFrozen = true;
+      await new Dialog(
+        this,
+        {
+          content: `Station locked! Please talk to all the NPCs in station 2 before trying to enter again!`,
+          choices: nextButtonOnlyChoices,
+        },
+        false
+      ).create();
+      this.isRoomLockedDialogOpen = false;
+      this.player.isFrozen = false;
+      return;
+    } else if (
+      doorId === 3 &&
+      !getIsRoom3Unlocked() &&
+      !this.isRoomLockedDialogOpen
+    ) {
+      // Boss room still locked
+      this.player.sprite.setY(this.player.sprite.y + 60);
+      this.isRoomLockedDialogOpen = true;
+      this.player.isFrozen = true;
+      await new Dialog(
+        this,
+        {
+          content: `Station locked! Please talk to all the NPCs in station 3 before trying to enter again!`,
           choices: nextButtonOnlyChoices,
         },
         false

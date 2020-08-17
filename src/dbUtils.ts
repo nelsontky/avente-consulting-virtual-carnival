@@ -7,6 +7,8 @@ export interface DbSchema {
   matricNumber?: string;
   timeCompleted?: Date;
   telegramHandle?: string;
+  isAvalonWatched?: boolean;
+  isYouTripWatched?: boolean;
   stationData?: {
     "Min Hern"?: boolean;
     "Wai Siang"?: boolean;
@@ -119,6 +121,50 @@ export function getNumberOfNpcsCleared() {
 
 export function getIsBossRoomUnlocked(): boolean {
   return getNumberOfNpcsCleared() === 10;
+}
+
+export function getIsRoom1Unlocked(): boolean {
+  const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+  if (playerData === undefined || playerData.stationData === undefined) {
+    return false;
+  }
+
+  const { stationData } = playerData;
+  return (
+    [
+      stationData.Benedict,
+      stationData.Kingston,
+      stationData["Min Hein"],
+    ].filter((data: any) => data || data === 0).length === 3
+  );
+}
+
+export function getIsRoom2Unlocked(): boolean {
+  const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+  if (playerData === undefined || playerData.stationData === undefined) {
+    return false;
+  }
+
+  const { stationData } = playerData;
+  return (
+    [stationData.Adrian, stationData.Chloe, stationData.Gregory].filter(
+      (data: any) => data || data === 0
+    ).length === 3
+  );
+}
+
+export function getIsRoom3Unlocked(): boolean {
+  const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+  if (playerData === undefined || playerData.stationData === undefined) {
+    return false;
+  }
+
+  const { stationData } = playerData;
+  return (
+    [stationData.Svarnim, stationData["Wai Siang"]].filter(
+      (data: any) => data || data === 0
+    ).length === 2
+  );
 }
 
 export function getNumberOfBossesCleared() {
