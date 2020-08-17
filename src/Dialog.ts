@@ -35,12 +35,13 @@ export default class Dialog {
         100,
         100,
         20,
-        0x3e2723
+        0x1fbeba
       ),
 
       content: this.scene.add.text(0, 0, dialogData.content, {
-        fontSize: "12px",
-        fontFamily: "Arial",
+        fontSize: "16px",
+        fontFamily: "Helvetica",
+        color: "black",
         wordWrap: { width: 400 },
       }),
 
@@ -96,7 +97,7 @@ export default class Dialog {
           this.scene
         )
         .on("button.over", (button: any) => {
-          button.getElement("background").setStrokeStyle(1, 0xffffff);
+          button.getElement("background").setStrokeStyle(1, 0x000000);
         })
         .on("button.out", (button: any) => {
           button.getElement("background").setStrokeStyle();
@@ -116,11 +117,11 @@ export default class Dialog {
         100,
         40,
         20,
-        0x6a4f4b
+        0x16313c
       ),
 
       text: this.scene.add.text(0, 0, text, {
-        fontSize: "12px",
+        fontSize: "16px",
         fontFamily: "Arial",
         wordWrap: { width: 400 },
       }),

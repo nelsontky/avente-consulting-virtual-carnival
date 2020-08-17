@@ -93,6 +93,10 @@ export default class MainScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.setBounds(0, 0, 4480, 3200);
     camera.startFollow(this.player.sprite);
+
+    if (this.player.sprite.x === spawnX && this.player.sprite.y === spawnY) {
+      this.openIntro();
+    }
   }
 
   createChunk(id: number) {
@@ -308,6 +312,21 @@ export default class MainScene extends Phaser.Scene {
 
     chunksToDelete.forEach((chunk) => this.deleteChunk(chunk));
     chunksToCreate.forEach((chunk) => this.createChunk(chunk));
+  }
+
+  async openIntro() {
+    this.isRoomLockedDialogOpen = true;
+    this.player.isFrozen = true;
+    await new Dialog(
+      this,
+      {
+        content: `Intro here`,
+        choices: nextButtonOnlyChoices,
+      },
+      false
+    ).create();
+    this.isRoomLockedDialogOpen = false;
+    this.player.isFrozen = false;
   }
 }
 

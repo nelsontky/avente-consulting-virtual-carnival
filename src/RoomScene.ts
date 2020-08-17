@@ -3,8 +3,12 @@ import "phaser";
 import Player from "./Player";
 import NPC from "./NPC";
 import Dialog from "./Dialog";
-import NPCDataInterface from "./NPCDataInterface";
-import { updateStationData, DbSchema } from "./dbUtils";
+import {
+  updateStationData,
+  DbSchema,
+  updateUser,
+  getIsGameCompleted,
+} from "./dbUtils";
 import {
   ADRIAN,
   BENEDICT,
@@ -194,6 +198,34 @@ export default class RoomScene extends Phaser.Scene {
   update() {
     this.player.update();
     this.npcs.forEach((npc) => npc.update());
+    this.openOutro();
+  }
+
+  async openOutro() {
+    const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+
+    if (
+      playerData != undefined &&
+      !playerData.hasReadOutro &&
+      getIsGameCompleted() &&
+      !this.isHarrisDialogOpen
+    ) {
+      this.isHarrisDialogOpen = true;
+      this.player.isFrozen = true;
+
+      await new Dialog(
+        this,
+        {
+          content: `Outtro text`,
+          choices: [{ choiceText: `Next`, isAnswer: true }],
+        },
+        false
+      ).create();
+
+      await updateUser(sessionStorage.getItem("uid"), { hasReadOutro: true });
+      this.player.isFrozen = false;
+      this.isHarrisDialogOpen = false;
+    }
   }
 
   async openHarisLastDialog(score: number) {
