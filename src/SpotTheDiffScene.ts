@@ -3,6 +3,8 @@ import "phaser";
 import loadFiles from "./loadFiles";
 import { height, width } from "./config";
 
+const offsetX = 100;
+
 // Interface representing top left and bottom right point of a rectangle
 interface Rectangle {
   topX: number;
@@ -22,7 +24,11 @@ const diffAreas: Rectangle[] = [
   { topX: 503, topY: 180, bottomX: 600, bottomY: 235 }, // triangles
   { topX: 529, topY: 293, bottomX: 546, bottomY: 309 }, // heart
   { topX: 559, topY: 316, bottomX: 600, bottomY: 380 }, // ferris wheel
-];
+].map((area) => {
+  area.topX += offsetX;
+  area.bottomX += offsetX;
+  return area;
+});
 
 export default class SpotTheDiffScene extends Phaser.Scene {
   numberFound: number;
@@ -58,10 +64,10 @@ export default class SpotTheDiffScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(0, 180, "changed").setOrigin(0, 0).setInteractive();
-    this.add.image(0, 400, "original").setOrigin(0, 0);
+    this.add.image(offsetX, 180, "changed").setOrigin(0, 0).setInteractive();
+    this.add.image(offsetX, 400, "original").setOrigin(0, 0);
     this.scoreText = this.add
-      .text(16, 16, "Found: 0 / 10", {
+      .text(16 + offsetX, 16, "Found: 0 / 10", {
         fontSize: "32px",
         fontFamily: "Arial",
       })
@@ -69,7 +75,7 @@ export default class SpotTheDiffScene extends Phaser.Scene {
       .setOrigin(0, 0);
 
     this.timeLeftText = this.add
-      .text(16, 70, "Time left: " + this.timeLeft, {
+      .text(16 + offsetX, 70, "Time left: " + this.timeLeft, {
         fontSize: "32px",
         fontFamily: "Arial",
       })
@@ -78,7 +84,7 @@ export default class SpotTheDiffScene extends Phaser.Scene {
 
     this.add
       .text(
-        16,
+        16 + offsetX,
         124,
         "Find all the differences by clicking on the top picture!",
         {
