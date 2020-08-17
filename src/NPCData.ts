@@ -457,7 +457,7 @@ export const ADRIAN: NPCDataInterface = {
                   category: "Marketing",
                 },
                 {
-                  choiceText: `Art of solving problem`,
+                  choiceText: `Art of problem solving`,
                   isAnswer: true,
                   category: "Management",
                 },

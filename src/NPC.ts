@@ -16,6 +16,7 @@ export default class NPC {
   isInteractionOngoing: boolean;
   data: NPCDataInterface;
   alert: Phaser.GameObjects.Image;
+  tick: Phaser.GameObjects.Image;
 
   constructor(
     scene: Phaser.Scene,
@@ -66,11 +67,16 @@ export default class NPC {
     this.touchPlayerObj = { isTouching: false };
     this.spaceKey = this.scene.input.keyboard.addKey("SPACE");
 
-    // Checkbox
+    // Tick/alert
     this.alert = this.scene.add
       .image(this.sprite.x, this.sprite.y - 40, "alert")
       .setScale(0.2, 0.2);
     this.alert.setVisible(this.isAlertVisible());
+
+    this.tick = this.scene.add
+      .image(this.sprite.x, this.sprite.y - 40, "tick")
+      .setScale(0.2, 0.2);
+    this.alert.setVisible(!this.isAlertVisible());
   }
 
   checkDirectionToFace(): string {
@@ -139,8 +145,9 @@ export default class NPC {
       this.touchPlayerObj = { isTouching: false };
     }
 
-    // Render alert
+    // Render alert/tick
     this.alert.setVisible(this.isAlertVisible());
+    this.tick.setVisible(!this.isAlertVisible());
   }
 
   isAlertVisible() {
