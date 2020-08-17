@@ -71,6 +71,7 @@ export default class Dialog {
 
   create(): Promise<string> {
     this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
+    this.dialog.setDepth(100);
 
     return new Promise((resolve, reject) => {
       this.dialog

@@ -79,6 +79,8 @@ export default class RoomScene extends Phaser.Scene {
     const blocking = map.createStaticLayer("OBJECTS", allTileSets);
     const sky = map.createStaticLayer("SKY / PASSABLE", allTileSets);
 
+    sky.setDepth(10);
+
     blocking.setCollisionByExclusion([-1]);
 
     const spawnPoint: any = map.findObject(
@@ -87,6 +89,13 @@ export default class RoomScene extends Phaser.Scene {
     );
     this.player = new Player(this, spawnPoint.x, spawnPoint.y);
     this.physics.add.collider(this.player.sprite, blocking);
+
+    // const debugGraphics = this.add.graphics().setAlpha(0.75);
+    // blocking.renderDebug(debugGraphics, {
+    //   tileColor: null, // Color of non-colliding tiles
+    //   collidingTileColor: new Phaser.Display.Color(255, 0, 0, 255), // Color of colliding tiles
+    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
+    // });
 
     const camera = this.cameras.main;
     camera.setBounds(

@@ -941,6 +941,7 @@ class SingleQuizDialog {
     };
     this.dialog = this.scene.rexUI.add.dialog(this.config).layout();
     this.dialog.hideChoice(this.config.choices.length - 1);
+    this.dialog.setDepth(100);
 
     return new Promise<number>((resolve, reject) => {
       const listenerCb = () => {

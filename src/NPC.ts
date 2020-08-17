@@ -15,7 +15,7 @@ export default class NPC {
   spaceKey: Phaser.Input.Keyboard.Key;
   isInteractionOngoing: boolean;
   data: NPCDataInterface;
-  tick: Phaser.GameObjects.Image;
+  alert: Phaser.GameObjects.Image;
 
   constructor(
     scene: Phaser.Scene,
@@ -67,10 +67,10 @@ export default class NPC {
     this.spaceKey = this.scene.input.keyboard.addKey("SPACE");
 
     // Checkbox
-    this.tick = this.scene.add
-      .image(this.sprite.x, this.sprite.y - 40, "tick")
+    this.alert = this.scene.add
+      .image(this.sprite.x, this.sprite.y - 40, "alert")
       .setScale(0.2, 0.2);
-    this.tick.setVisible(false);
+    this.alert.setVisible(this.isAlertVisible());
   }
 
   checkDirectionToFace(): string {
@@ -139,16 +139,23 @@ export default class NPC {
       this.touchPlayerObj = { isTouching: false };
     }
 
-    // Render tick
+    // Render alert
+    this.alert.setVisible(this.isAlertVisible());
+  }
+
+  isAlertVisible() {
     const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
-    const isDoneWithNpc =
-      playerData !== undefined &&
-      playerData.stationData !== undefined &&
-      (playerData.stationData[this.data.name] ||
-        playerData.stationData[this.data.name] === 0);
-    if (isDoneWithNpc) {
-      this.tick.setVisible(true);
-    }
+
+    const stationDataExistsAndIsTrue =
+      playerData.stationData[this.data.name] === true ||
+      (playerData.stationData[this.data.name] !== undefined &&
+        playerData.stationData[this.data.name] >= 0);
+
+    return (
+      playerData === undefined ||
+      playerData.stationData === undefined ||
+      !stationDataExistsAndIsTrue
+    );
   }
 
   async runDialog() {
