@@ -11,6 +11,26 @@ const uiConfig = {
       // The widget is rendered.
       // Hide the loader.
       document.getElementById("loader").style.display = "none";
+
+      const intervalId = setInterval(() => {
+        if (
+          $(".firebaseui-id-submit").length &&
+          $(".firebaseui-id-email").length &&
+          $(".firebaseui-title").length
+        ) {
+          $(".firebaseui-id-submit").attr("disabled", true);
+          $(".firebaseui-id-email").on("input", (e) => {
+            const input = e.target.value;
+            if (isSmuEmail(input)) {
+              $(".firebaseui-id-submit").attr("disabled", false);
+            }
+          });
+          $(".firebaseui-title").text(
+            "Sign in with SMU email. Example: johndoe@smu.edu.sg"
+          );
+          clearInterval(intervalId);
+        }
+      }, 100);
     },
   },
   signInOptions: [
@@ -32,3 +52,8 @@ firebase.auth().onAuthStateChanged((user) => {
     document.getElementById("game").style.display = "block";
   }
 });
+
+function isSmuEmail(input) {
+  const domain = input.split("@").pop();
+  return domain === "smu.edu.sg";
+}
