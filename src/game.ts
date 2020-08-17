@@ -8,6 +8,7 @@ import getFirebase from "./firebase";
 import { getUser, updateUser, getIsGameCompleted } from "./dbUtils";
 import { width, height } from "./config";
 import loadFiles from "./loadFiles";
+import VideoAdScene from "./VideoAdScene";
 
 export default class Game extends Phaser.Scene {
   currScene: any;
@@ -183,7 +184,7 @@ const config = {
   },
   parent: "game",
   physics: { default: "arcade", arcade: { gravity: { y: 0 } } },
-  scene: [Game, MainScene, RoomScene, SpotTheDiffScene],
+  scene: [Game, MainScene, RoomScene, SpotTheDiffScene, VideoAdScene],
   plugins: {
     scene: [
       {

@@ -4,7 +4,7 @@ import Player from "./Player";
 import NPC from "./NPC";
 import Dialog from "./Dialog";
 import NPCDataInterface from "./NPCDataInterface";
-import { updateStationData } from "./dbUtils";
+import { updateStationData, DbSchema } from "./dbUtils";
 import {
   ADRIAN,
   BENEDICT,
@@ -181,6 +181,8 @@ export default class RoomScene extends Phaser.Scene {
           break;
       }
     }
+    this.openAd();
+
     // Open Haris ending dialog
     this.events.on(
       "resume",
@@ -211,6 +213,28 @@ export default class RoomScene extends Phaser.Scene {
       await updateStationData(sessionStorage.getItem("uid"), "Haris", score);
       this.player.isFrozen = false;
       this.isHarrisDialogOpen = false;
+    }
+  }
+
+  openAd() {
+    const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+
+    if (
+      playerData != undefined &&
+      this.roomId === 1 &&
+      !playerData.isAvalonWatched
+    ) {
+      this.scene.pause();
+      this.scene.run("ad", { videoId: "avalon" });
+    }
+
+    if (
+      playerData != undefined &&
+      this.roomId === 2 &&
+      !playerData.isYouTripWatched
+    ) {
+      this.scene.pause();
+      this.scene.run("ad", { videoId: "youtrip" });
     }
   }
 }

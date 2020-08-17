@@ -9,6 +9,7 @@ export interface DbSchema {
   telegramHandle?: string;
   isAvalonWatched?: boolean;
   isYouTripWatched?: boolean;
+  hasReadOutro?: boolean;
   stationData?: {
     "Min Hern"?: boolean;
     "Wai Siang"?: boolean;

@@ -1,7 +1,6 @@
 import "phaser";
 
 import loadFiles from "./loadFiles";
-import { height, width } from "./config";
 
 const offsetX = 100;
 
