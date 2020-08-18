@@ -288,7 +288,7 @@ export default class NPC {
 
   async runDialogManeesha() {
     const outcome = await new Dialog(this.scene, {
-      content: `Hi! I’m Maneesha, the Honorary General Secretary of Avente Consulting and the head of Operations Department! In this station, you get to play a word search game! You can exit the puzzle at any time.`,
+      content: `Hi! I’m Maneesha, the Honorary General Secretary of Avente Consulting and the head of Operations Department! In this station, you get to play a word search game! You can exit the puzzle at any time. (Note that the puzzle only works on Google Chrome)`,
       choices: [{ choiceText: `Let’s begin!`, isAnswer: true }],
     }).create();
     // Reload iframe

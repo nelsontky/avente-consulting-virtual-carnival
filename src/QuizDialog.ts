@@ -759,7 +759,7 @@ let questions: IQuestion[] = [
         isAnswer: false,
       },
       {
-        option: "(c)",
+        option: "(c) Antecedent",
         isAnswer: false,
       },
       {
