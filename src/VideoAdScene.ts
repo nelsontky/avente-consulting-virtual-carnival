@@ -65,6 +65,12 @@ export default class VideoAdScene extends Phaser.Scene {
 
     this.input.on("gameobjectdown", async (_, gameObject: any) => {
       if (gameObject === this.closeText) {
+        const video: any = document.getElementById(this.videoId);
+        video.style.display = "none";
+        video.pause();
+        video.currentTime = 0;
+        this.scene.stop();
+        this.scene.run("room");
 
         if (this.videoId === "avalon") {
           await updateUser(sessionStorage.getItem("uid"), {
@@ -75,13 +81,6 @@ export default class VideoAdScene extends Phaser.Scene {
             isYouTripWatched: true,
           });
         }
-        
-        const video: any = document.getElementById(this.videoId);
-        video.style.display = "none";
-        video.pause();
-        video.currentTime = 0;
-        this.scene.stop();
-        this.scene.run("room");
       }
     });
   }

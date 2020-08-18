@@ -2,10 +2,6 @@ import "phaser";
 
 export default function loadFiles(scene: Phaser.Scene) {
   scene.load.tilemapTiledJSON(
-    "overworld",
-    "assets/tiles/overworld/overworld.json"
-  );
-  scene.load.tilemapTiledJSON(
     "overworld0",
     "assets/tiles/overworld/overworld0.json"
   );
@@ -263,6 +259,10 @@ export default function loadFiles(scene: Phaser.Scene) {
   scene.load.image(
     "Station3",
     "assets/tiles/rooms/../Newer Updated Tiles/Station3.png"
+  );
+  scene.load.image(
+    "Station4",
+    "assets/tiles/rooms/../Newer Updated Tiles/Station4.png"
   );
   scene.load.image(
     "LOGO",
