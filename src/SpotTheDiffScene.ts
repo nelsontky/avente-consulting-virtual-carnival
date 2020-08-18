@@ -41,12 +41,14 @@ export default class SpotTheDiffScene extends Phaser.Scene {
     y: number;
     overWorldDoorLocation: { x: number; y: number };
   };
+  alreadyClicked: Rectangle[];
 
   constructor() {
     super("diff");
     this.numberFound = 0;
     this.timeLeft = 30;
     this.timer = 0;
+    this.alreadyClicked = [];
   }
 
   init(harisData: {
@@ -101,11 +103,13 @@ export default class SpotTheDiffScene extends Phaser.Scene {
           this.isPointContainedInRectangle(pointer.worldX, pointer.worldY, area)
         );
 
-        if (differenceClicked === undefined) {
-          return;
+        if (
+          differenceClicked !== undefined &&
+          !this.alreadyClicked.includes(differenceClicked)
+        ) {
+          this.alreadyClicked.push(differenceClicked);
+          this.differenceClickedAction(differenceClicked);
         }
-
-        this.differenceClickedAction(differenceClicked);
       }
     );
   }
@@ -148,9 +152,10 @@ export default class SpotTheDiffScene extends Phaser.Scene {
 
   quitGame() {
     const score = this.numberFound;
+    this.numberFound = 0;
     this.timeLeft = 30;
     this.timer = 0;
-    this.numberFound = 0;
+    this.alreadyClicked = [];
     this.scene.stop();
     this.scene.run("room", {
       score,
