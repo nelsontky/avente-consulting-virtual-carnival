@@ -10,3 +10,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+$(document).ready(() => {
+  db.collection("users")
+    .doc("completedEqSh08tt4zrvMdsGf4Mj")
+    .onSnapshot((doc) => {
+      console.log(doc.data());
+      $("#number-completed").text(doc.data().numberCompleted);
+    });
+});
