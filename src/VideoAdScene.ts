@@ -56,7 +56,7 @@ export default class VideoAdScene extends Phaser.Scene {
       .setVisible(false);
 
     const graphics = this.add.graphics();
-    graphics.fillStyle(0xffff00, 1);
+    graphics.fillStyle(0xf2f2f2, 1);
     graphics.fillRoundedRect(this.x, this.y, this.width, this.height, 20);
 
     const video: any = document.getElementById(this.videoId);

@@ -16,7 +16,7 @@ const uiConfig = {
         if (
           $(".firebaseui-id-submit").length &&
           $(".firebaseui-id-email").length &&
-          $(".firebaseui-title").length &&
+          $(".firebaseui-card-header").length &&
           $(".firebaseui-id-secondary-link").length
         ) {
           $(".firebaseui-id-submit").attr("disabled", true);
@@ -29,8 +29,8 @@ const uiConfig = {
               $(".firebaseui-id-submit").attr("disabled", true);
             }
           });
-          $(".firebaseui-title").text(
-            "Sign in with SMU email. Example: johndoe@smu.edu.sg"
+          $(".firebaseui-card-header").html(
+            "<h1 class='firebaseui-title'>Welcome to Avente's Welfare Day!</h1><p>Sign in with your SMU Email for verification</p><p>Example: johndoe.2020@smu.edu.sg</p>"
           );
           clearInterval(intervalId);
         }
