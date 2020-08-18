@@ -39,6 +39,10 @@
       rel="apple-touch-icon"
       href="https://www.aventeconsulting.com/wp-content/uploads/2019/08/cropped-A-Dark-1-180x180.png"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <meta
       name="msapplication-TileImage"
       content="https://www.aventeconsulting.com/wp-content/uploads/2019/08/cropped-A-Dark-1-270x270.png"
@@ -96,6 +100,10 @@
         left: 200px;
         display: none;
       }
+      .instruction {
+        color: white;
+        font-family: "Roboto", sans-serif;
+      }
     </style>
   </head>
   <body>
@@ -142,6 +150,36 @@
       </div>
       <video id="youtrip" width="600" src="assets/youtrip.m4v"></video>
       <video id="avalon" width="400" src="assets/avalon.m4v"></video>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        width: 800px;
+        margin: auto;
+        margin-top: 10px;
+      "
+    >
+      <div>
+        <img width="64px" src="assets/instructions/arrow.png" />
+        <span class="instruction">Move</span>
+      </div>
+      <div>
+        <img width="72px" src="assets/instructions/space.png" />
+        <span class="instruction">Talk</span>
+      </div>
+      <div>
+        <img width="64px" src="assets/instructions/click.png" />
+        <span class="instruction">Select</span>
+      </div>
+      <div>
+        <img width="64px" src="assets/instructions/zoom.png" /><span
+          class="instruction"
+          >Zoom</span
+        >
+      </div>
     </div>
   </body>
 </html>

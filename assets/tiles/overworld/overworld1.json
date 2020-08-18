@@ -4,7 +4,7 @@
      "export":
         {
          "format":"json",
-         "target":"overworld0.json"
+         "target":"overworld1.json"
         }
     },
  "height":50,
@@ -188,7 +188,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":19,
+ "nextobjectid":22,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
