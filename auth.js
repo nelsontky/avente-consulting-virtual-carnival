@@ -16,9 +16,11 @@ const uiConfig = {
         if (
           $(".firebaseui-id-submit").length &&
           $(".firebaseui-id-email").length &&
-          $(".firebaseui-title").length
+          $(".firebaseui-title").length &&
+          $(".firebaseui-id-secondary-link").length
         ) {
           $(".firebaseui-id-submit").attr("disabled", true);
+          $(".firebaseui-id-secondary-link").remove();
           $(".firebaseui-id-email").on("input", (e) => {
             const input = e.target.value;
             if (isSmuEmail(input)) {
