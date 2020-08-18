@@ -152,14 +152,13 @@ export default class NPC {
 
   isAlertVisible() {
     const playerData: DbSchema = JSON.parse(sessionStorage.getItem("userData"));
+    if (playerData === undefined || playerData.stationData === undefined) {
+      return true;
+    }
 
-    return (
-      playerData === undefined ||
-      playerData.stationData === undefined ||
-      !playerData.stationData[this.data.name] ||
-      (playerData.stationData[this.data.name] !== undefined &&
-        playerData.stationData[this.data.name] < 0)
-    );
+    const npcData: any = playerData.stationData[this.data.name];
+    
+    return (!npcData && npcData !== 0) || npcData < 0;
   }
 
   async runDialog() {

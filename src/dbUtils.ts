@@ -1,3 +1,4 @@
+import firebase from "firebase";
 import getFirebase from "./firebase";
 
 const db = getFirebase().firestore();
@@ -85,6 +86,12 @@ export async function updateStationData(
   if (timeCompleted === undefined && isGameCompleted) {
     // Add time completed if it does not exist yet
     await updateUser(uid, { timeCompleted: new Date() });
+
+    // Add to users who've completed the game
+    await db
+      .collection("users")
+      .doc("completedEqSh08tt4zrvMdsGf4Mj")
+      .update({ numberCompleted: firebase.firestore.FieldValue.increment(1) });
   }
 }
 
