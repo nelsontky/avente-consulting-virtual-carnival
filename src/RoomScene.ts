@@ -185,7 +185,8 @@ export default class RoomScene extends Phaser.Scene {
           break;
       }
     }
-    this.openAd();
+
+    setTimeout(() => this.openAd(), 300);
 
     // Open Haris ending dialog
     this.events.on(
