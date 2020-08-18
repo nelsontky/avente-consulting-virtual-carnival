@@ -4,7 +4,7 @@
      "export":
         {
          "format":"json",
-         "target":"overworld.json"
+         "target":"overworld3.json"
         }
     },
  "height":50,
@@ -179,7 +179,7 @@
                  "visible":true,
                  "width":32,
                  "x":1136,
-                 "y":1552
+                 "y":1600
                 }, 
                 {
                  "gid":7697,
@@ -197,7 +197,7 @@
                  "visible":true,
                  "width":32,
                  "x":1168,
-                 "y":1552
+                 "y":1600
                 }],
          "opacity":1,
          "type":"objectgroup",
