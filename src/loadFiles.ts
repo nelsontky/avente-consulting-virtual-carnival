@@ -272,6 +272,10 @@ export default function loadFiles(scene: Phaser.Scene) {
     "A Dark",
     "assets/tiles/rooms/../Newer Updated Tiles/A Dark.png"
   );
+  scene.load.image(
+    "Zoom In Out",
+    "assets/tiles/rooms/../Instruction tilesets/Zoom In Out.png"
+  );
 
   // Rooms
   scene.load.image(

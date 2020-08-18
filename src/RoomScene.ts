@@ -32,6 +32,7 @@ import {
   getRoom4,
 } from "./getAllTileSets";
 import { width, height } from "./config";
+import showOutro from "./showOutro";
 
 export default class RoomScene extends Phaser.Scene {
   player: Player;
@@ -186,13 +187,15 @@ export default class RoomScene extends Phaser.Scene {
       }
     }
 
-    setTimeout(() => this.openAd(), 300);
+    setTimeout(() => this.openAd(), 100);
 
     // Open Haris ending dialog
     this.events.on(
       "resume",
       (_, data: { score: number }) =>
-        this.roomId === 4 && this.openHarisLastDialog(data.score)
+        data !== undefined &&
+        this.roomId === 4 &&
+        this.openHarisLastDialog(data.score)
     );
   }
 
@@ -208,24 +211,10 @@ export default class RoomScene extends Phaser.Scene {
     if (
       playerData != undefined &&
       !playerData.hasReadOutro &&
-      getIsGameCompleted() &&
-      !this.isHarrisDialogOpen
+      getIsGameCompleted()
     ) {
-      this.isHarrisDialogOpen = true;
-      this.player.isFrozen = true;
-
-      await new Dialog(
-        this,
-        {
-          content: `Outtro text`,
-          choices: [{ choiceText: `Next`, isAnswer: true }],
-        },
-        false
-      ).create();
-
+      showOutro(this);
       await updateUser(sessionStorage.getItem("uid"), { hasReadOutro: true });
-      this.player.isFrozen = false;
-      this.isHarrisDialogOpen = false;
     }
   }
 
