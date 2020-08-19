@@ -13,11 +13,14 @@ const app = admin.initializeApp({
 const auth = app.auth();
 const db = app.firestore();
 
-async function getAllUsers(): Promise<{ uid: string; email: string }[]> {
+async function getAllUsers(): Promise<
+  { uid: string; email: string; creationTime: string }[]
+> {
   const listUsersRes = await auth.listUsers();
   return listUsersRes.users.map((user) => ({
     email: user.email,
     uid: user.uid,
+    creationTime: user.metadata.creationTime,
   }));
 }
 
@@ -51,10 +54,17 @@ async function getAllDocs() {
 
   for (const user of users) {
     if (data[user.uid] != undefined) {
-      res.push({
+      const userData = {
         ...data[user.uid],
         email: user.email,
-      });
+        creationTime: user.creationTime,
+      };
+
+      if (!user.email.includes("smu.edu.sg")) {
+        console.log(userData);
+      } else {
+        res.push(userData);
+      }
     }
   }
 
