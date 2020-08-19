@@ -21,6 +21,7 @@
   "homepage": "https://github.com/photonstorm/phaser3-typescript-project-template#readme",
   "dependencies": {
     "firebase": "^7.18.0",
+    "firebase-admin": "^9.1.0",
     "phaser3-rex-plugins": "^1.1.23"
   },
   "devDependencies": {
