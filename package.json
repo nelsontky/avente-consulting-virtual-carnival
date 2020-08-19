@@ -7,7 +7,8 @@
     "dev": "rollup --config rollup.config.dev.js",
     "build": "rollup --config rollup.config.dist.js",
     "watch": "rollup --watch --config rollup.config.dev.js",
-    "deploy": "rollup --config rollup.config.dist.js && gh-pages -d dist"
+    "deploy": "rollup --config rollup.config.dist.js && gh-pages -d dist",
+    "export": "tsc --resolveJsonModule --esModuleInterop scripts/firebaseToJson.ts && node scripts/firebaseToJson.js"
   },
   "repository": {
     "type": "git",
