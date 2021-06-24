@@ -23,7 +23,7 @@ const uiConfig = {
           $(".firebaseui-id-secondary-link").remove();
           $(".firebaseui-id-email").on("input", (e) => {
             const input = e.target.value;
-            if (isSmuEmail(input)) {
+            if (/* isSmuEmail(input) */ true) {
               $(".firebaseui-id-submit").attr("disabled", false);
             } else {
               $(".firebaseui-id-submit").attr("disabled", true);
