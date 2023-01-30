@@ -30,7 +30,7 @@ const uiConfig = {
             }
           });
           $(".firebaseui-card-header").html(
-            "<h1 class='firebaseui-title'>Welcome to Avente's Welfare Day!</h1><p>Sign in with your SMU Email for verification</p><p>Example: johndoe.2020@smu.edu.sg</p>"
+            "<h1 class='firebaseui-title'>Welcome to Avente's Welfare Day!</h1><p>Sign in with your email for to save your progress</p><p>Example: nelson@hotmail.com</p>"
           );
           clearInterval(intervalId);
         }
