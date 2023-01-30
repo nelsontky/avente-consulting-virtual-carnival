@@ -223,18 +223,18 @@ async function addMatricNumberToDb(user: firebase.User): Promise<string> {
     }
   }
 
-  let promptText =
-    "Enter your SMU matric number (8 digits). Make sure you enter the correct number, you will not get to edit this!";
-  let newMatricNumber: any = "";
-  while (!isValidMatricNumber(newMatricNumber)) {
-    newMatricNumber = prompt(promptText);
-    promptText =
-      "Invalid input. Please try again.\nEnter your SMU matric number (8 digits). Make sure you enter the correct number, you will not get to edit this!";
-  }
+  // let promptText =
+  //   "Enter your SMU matric number (8 digits). Make sure you enter the correct number, you will not get to edit this!";
+  // let newMatricNumber: any = "";
+  // while (!isValidMatricNumber(newMatricNumber)) {
+  //   newMatricNumber = prompt(promptText);
+  //   promptText =
+  //     "Invalid input. Please try again.\nEnter your SMU matric number (8 digits). Make sure you enter the correct number, you will not get to edit this!";
+  // }
 
-  updateUser(user.uid, { matricNumber: newMatricNumber });
+  updateUser(user.uid, { matricNumber: "NIL" });
 
-  return newMatricNumber;
+  return "NIL";
 }
 
 async function addTeleToDb(user: firebase.User): Promise<string> {
@@ -248,14 +248,14 @@ async function addTeleToDb(user: firebase.User): Promise<string> {
     }
   }
 
-  let promptText = `Enter your Telegram username. Submit "NIL" if you do not have Telegram!`;
-  let newTelegramHandle: any = "";
-  while (newTelegramHandle.length <= 0) {
-    newTelegramHandle = prompt(promptText);
-    promptText = `Invalid input. Please try again.\nEnter your Telegram username. Submit "NIL" if you do not have Telegram!`;
-  }
+  // let promptText = `Enter your Telegram username. Submit "NIL" if you do not have Telegram!`;
+  // let newTelegramHandle: any = "";
+  // while (newTelegramHandle.length <= 0) {
+  //   newTelegramHandle = prompt(promptText);
+  //   promptText = `Invalid input. Please try again.\nEnter your Telegram username. Submit "NIL" if you do not have Telegram!`;
+  // }
 
-  updateUser(user.uid, { telegramHandle: newTelegramHandle });
+  updateUser(user.uid, { telegramHandle: "NIL" });
 
-  return newTelegramHandle;
+  return "NIL";
 }
